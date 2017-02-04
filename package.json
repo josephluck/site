@@ -1,0 +1,23 @@
+{
+  "name": "josephluck.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo --live",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephluck/josephluck.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josephluck/josephluck.github.io/issues"
+  },
+  "homepage": "https://github.com/josephluck/josephluck.github.io#readme",
+  "devDependencies": {
+    "budo": "^9.4.7"
+  }
+}
