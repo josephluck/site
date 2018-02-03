@@ -3,7 +3,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-size: 20px;
-  font-family: 'EB Garamond', sans-serif;
+  font-family: "EB Garamond", sans-serif;
   background-color: rgb(253, 253, 253);
   color: rgb(20, 20, 20);
   display: flex;
@@ -12,19 +12,21 @@ body {
   /* font-weight: 500; */
 }
 
-/* h1 {
-  font-weight: bold;
-} */
+h1,
+h2,
+h3 {
+  margin: 0rem;
+}
+
+main {
+  padding: 2rem 10vw;
+}
 
 @media screen and (min-width: 50em) {
   html,
   body {
     font-size: 24px;
   }
-}
-
-main {
-  padding: 5vh 10vw;
 }
 
 a {
