@@ -20,12 +20,14 @@
   },
   "dependencies": {
     "gh-pages": "^1.1.0",
-    "sparkdown": "^0.0.8"
+    "sparkdown": "^0.0.9"
   },
   "sparkdown": {
     "source": "./src",
     "output": "./dist",
     "bodyFont": "EB Garamond",
-    "monospaceFont": "Inconsolata"
+    "monospaceFont": "Inconsolata",
+    "title": "Joseph Luck",
+    "author": "Joseph Luck"
   }
 }
