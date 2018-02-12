@@ -1,23 +1,31 @@
 {
-  "name": "josephluck.github.io",
+  "name": "site",
+  "homepage": "http://josephluck.github.io/site",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "budo --live",
+    "predeploy": "npm run build",
+    "build": "sparkdown",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/josephluck/josephluck.github.io.git"
-  },
-  "author": "",
+  "repository": "git+https://github.com/josephluck/site.git",
+  "author": "Joseph Luck <joseph.luck@sky.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/josephluck/josephluck.github.io/issues"
+    "url": "https://github.com/josephluck/site/issues"
   },
-  "homepage": "https://github.com/josephluck/josephluck.github.io#readme",
   "devDependencies": {
     "budo": "^9.4.7"
+  },
+  "dependencies": {
+    "gh-pages": "^1.1.0",
+    "sparkdown": "^0.0.8"
+  },
+  "sparkdown": {
+    "source": "./src",
+    "output": "./dist",
+    "bodyFont": "EB Garamond",
+    "monospaceFont": "Inconsolata"
   }
 }
