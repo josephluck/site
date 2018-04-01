@@ -10,7 +10,13 @@ I have commercial experience in a wide range of front-end tools and libraries. W
 
 ## Experience
 
-**Goodlord** _Software Engineer - November 2016 to Present_
+**Fantastec** _Front End Lead - April 2018 to Present_
+
+* Heading up frontend efforts of a global fan engagement platform
+* Working in a small, agile engineering team
+* Training and mentoring junior members of the team
+
+**Goodlord** _Software Engineer - November 2016 to April 2018_
 
 * Feature development in a small, agile team
 * Build and maintenance of an extensive in-house component library and framework spanning multiple products
