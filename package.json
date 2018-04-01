@@ -7,7 +7,7 @@
     "predeploy": "npm run build",
     "build": "sparkdown",
     "deploy": "gh-pages -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "yarn build && serve ./dist"
   },
   "repository": "git+https://github.com/josephluck/site.git",
   "author": "Joseph Luck <joseph.luck@sky.com>",
@@ -15,12 +15,10 @@
   "bugs": {
     "url": "https://github.com/josephluck/site/issues"
   },
-  "devDependencies": {
-    "budo": "^9.4.7"
-  },
   "dependencies": {
     "gh-pages": "^1.1.0",
-    "sparkdown": "^0.0.9"
+    "serve": "^6.5.3",
+    "sparkdown": "^0.1.1"
   },
   "sparkdown": {
     "source": "./src",
@@ -28,6 +26,7 @@
     "bodyFont": "EB Garamond",
     "monospaceFont": "Inconsolata",
     "title": "Joseph Luck",
-    "author": "Joseph Luck"
+    "author": "Joseph Luck",
+    "description": "Functional programmer with a profound interest in UI/UX"
   }
 }
