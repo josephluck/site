@@ -1,6 +1,6 @@
 # [Joseph Luck](./index)
 
-##### London | josephreubenluck@gmail.com | [Resume](./resume)
+##### London | josephreubenluck@gmail.com | [Resume](./resume) | [Recommendations](./recommendations)
 
 ## Software engineer passionate about design and functional front-end code
 
