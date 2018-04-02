@@ -15,6 +15,8 @@ Joseph is a great person to work with. He has excellent technical capabilities a
 
 It was a pleasure to work with Joseph in our squad at Goodlord. He has the respect of his peers and technical lead. It would be great to work with Joseph again. 
 
+---
+
 ## Michael Leung
 
 > _Michael is a backend software engineer and I worked with him at Goodlord during 2017 and 2018. We were on the same squad for around 9 months where we frequently pair-programmed and designed features and solutions together._
