@@ -1,48 +1,96 @@
 
       <html>
         <head>
-          <title>Joseph Luck</title>
+          <title>Joseph Luck - Index</title>
           <meta name="description" content="Functional programmer with a profound interest in UI/UX">
           <meta name="author" content="Joseph Luck">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <link href="https://fonts.googleapis.com/css?family=EB+Garamond" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+          <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.0/css/tachyons.min.css" />
+          <link rel="stylesheet" href="/style.css" />
           <!--[if lt IE 9]>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
           <![endif]-->
-          <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.0/css/tachyons.min.css" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.1.1/turbolinks.js"></script>
+          <script>
+            function openNav() {
+              var nav = document.querySelector('nav')
+              var main = document.querySelector('main')
+              if (nav && main) {
+                nav.classList.remove('slide-out')
+                main.classList.add('fade-out')
+              }
+            }
+
+            function closeNav() {
+              var nav = document.querySelector('nav')
+              var main = document.querySelector('main')
+              if (nav && main) {
+                nav.classList.add('slide-out')
+                main.classList.remove('fade-out')
+              }
+            }
+
+            function closeNavIfClickOutside(e) {
+              var nav = document.querySelector('nav')
+              var navOpenElm = document.getElementById('nav-toggle')
+              if (nav && navOpenElm && !nav.contains(e.target) && !navOpenElm.contains(e.target)) {
+                closeNav()
+              }
+            }
+
+            function bindEventListeners() {
+              var navOpenElm = document.getElementById('nav-toggle')
+              var main = document.querySelector('main')
+              var nav = document.querySelector('nav')
+              if (navOpenElm) {
+                navOpenElm.addEventListener('click', openNav)
+              }
+              if (nav && main) {
+                document.body.addEventListener('click', closeNavIfClickOutside)
+              }
+            }
+
+            document.addEventListener("turbolinks:load", bindEventListeners);
+          </script>
         </head>
-        <style>
-          html, body {
-            margin: 0px;
-            padding: 0px;
-            font-size: 20px;
-            font-family: "EB Garamond", sans-serif;
-            background-color: white;
-            color: rgb(20, 20, 20);
-            display: flex;
-            align-items: center;
-            min-height: 100%;
-          }
-          .mono { font-family: "Inconsolata", monospace; }
-          main { padding: 2rem 10vw; }
-          h1, h2, h3, h4, h5, h6, p, ul { margin: 0rem; }
-          ul, li { list-style-type: none; }
-          h1 a, h2 a, h3 a, h4 a { text-decoration: none; border-bottom: none; }
-          .df { display: flex; }
-          .flex-1 { flex: 1; }
-          .material-icons { font-size: inherit; line-height: inherit; }
-          a {
-            color: #0086b3;
-          }
-          @media screen and (min-width: 50em) {
-            html, body { font-size: 24px; }
-          }
-        </style>
-        <body>
-          <main>
-            <h1 class="f1 lh-solid mv3"><a href="/index.html" title="Joseph Luck">Joseph Luck</a></h1><h5 class="normal f6 lh-copy gray">London | josephreubenluck@gmail.com | <a href="/resume.html" title="Resume">Resume</a> | <a href="/recommendations.html" title="Recommendations">Recommendations</a></h5><h2 class="normal f3 lh-copy mv3">Software engineer passionate about design and functional front-end code</h2><div class="mv3"><div class="lh-copy mv1 df"><i class="material-icons light-silver mr1">radio_button_unchecked</i><span class="flex-1">Creator and maintainer of <a href="https://josephluck.gitbooks.io/helix/" title="Helix">Helix</a></span></div><div class="lh-copy mv1 df"><i class="material-icons light-silver mr1">radio_button_unchecked</i><span class="flex-1">Pushing open source at <a href="https://github.com/josephluck" title="Github">Github</a></span></div><div class="lh-copy mv1 df"><i class="material-icons light-silver mr1">radio_button_unchecked</i><span class="flex-1">The occasional fun project like <a href="https://github.com/josephluck/wtf" title="Wtf.js">Wtf.js</a></span></div></div>
+        <body class="df">
+          <nav class="bg-near-white pv4 overflow-auto lh-copy transition slide-out">
+            <div class="pv3 pl3 pr4 w-100">
+              <div class="mb2 ml3">
+                <a href="/" title="Home">Home</a>
+              </div>
+              
+    <div class="mb2 ml3">
+      
+          <div class="mb2">
+            <a href="/recommendations.html" title="Recommendations">Recommendations</a>
+          </div>
+        
+      
+    </div>
+  
+    <div class="mb2 ml3">
+      
+          <div class="mb2">
+            <a href="/resume.html" title="Resume">Resume</a>
+          </div>
+        
+      
+    </div>
+  
+            </div>
+          </nav>
+          <main class="flex-1 h-100 overflow-auto transition">
+            <div class="ph10vw pv4">
+              <div class="df pointer mv3" id="nav-toggle">
+                <i class="material-icons mr1 light-silver">menu</i>
+                <span class="grey">Menu</span>
+              </div>
+              <h1 class="f1 lh-solid mv3">Joseph Luck</h1><h5 class="normal f6 lh-copy gray">josephreubenluck@gmail.com</h5><h2 class="normal f3 lh-copy mv3">London based software engineer passionate about design and functional front-end code</h2><div class="mv3"><div class="lh-copy mv1 df"><i class="material-icons light-silver mr1">radio_button_unchecked</i><span class="flex-1">Creator and maintainer of <a href="https://josephluck.gitbooks.io/helix/" title="Helix">Helix</a></span></div><div class="lh-copy mv1 df"><i class="material-icons light-silver mr1">radio_button_unchecked</i><span class="flex-1">Pushing open source at <a href="https://github.com/josephluck" title="Github">Github</a></span></div><div class="lh-copy mv1 df"><i class="material-icons light-silver mr1">radio_button_unchecked</i><span class="flex-1">The occasional fun project like <a href="https://github.com/josephluck/wtf" title="Wtf.js">Wtf.js</a></span></div></div>
+            </div>
           </main>
         </body>
       </html>
