@@ -1,6 +1,6 @@
-# [Joseph Luck](./index)
+# Joseph Luck
 
-##### London | josephreubenluck@gmail.com | [Resume](./resume) | [Recommendations](./recommendations)
+##### josephreubenluck@gmail.com
 
 I'm a software engineer with a profound interest in design, user experience and functional programming in languages such as JavaScript and TypeScript. I'm also a passionate contributor to open source having published libraries through [GitHub](https://github.com/josephluck) and [Npm](https://www.npmjs.com/~josephluck).
 

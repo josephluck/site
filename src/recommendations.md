@@ -1,11 +1,19 @@
-# [Joseph Luck](./index)
+# Joseph Luck
 
-##### London | josephreubenluck@gmail.com | [Resume](./resume) | [Recommendations](./recommendations)
+##### josephreubenluck@gmail.com
 
 
 Below you'll find some kind words former colleagues have been kind enough to share.
 
 ---
+
+## Andrea Magnorsky
+
+> _Andrea is a senior software engineer and I worked under her for around 9 months at Goodlord. We worked very closely together designing features and improvements to the core Goodlord platform._
+
+Joseph is a great person to work with. He has excellent technical capabilities and gets the job done. He is also curious, dedicated and reacts in an excellent way to feedback.
+
+It was a pleasure to work with Joseph in our squad at Goodlord. He has the respect of his peers and technical lead. It would be great to work with Joseph again. 
 
 ## Michael Leung
 

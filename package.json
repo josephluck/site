@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && cp ./CNAME ./dist/CNAME",
     "build": "sparkdown",
     "deploy": "gh-pages -d dist",
     "start": "npm run build && serve ./dist"
@@ -18,7 +18,7 @@
   "dependencies": {
     "gh-pages": "^1.1.0",
     "serve": "^6.5.3",
-    "sparkdown": "^0.1.1"
+    "sparkdown": "^0.3.1"
   },
   "sparkdown": {
     "source": "./src",

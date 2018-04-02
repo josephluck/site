@@ -1,8 +1,8 @@
-# [Joseph Luck](./index)
+# Joseph Luck
 
-##### London | josephreubenluck@gmail.com | [Resume](./resume) | [Recommendations](./recommendations)
+##### josephreubenluck@gmail.com
 
-## Software engineer passionate about design and functional front-end code
+## London based software engineer passionate about design and functional front-end code
 
 * Creator and maintainer of [Helix](https://josephluck.gitbooks.io/helix/)
 * Pushing open source at [Github](https://github.com/josephluck)
