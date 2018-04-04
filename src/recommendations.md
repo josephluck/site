@@ -5,6 +5,15 @@
 
 Below you'll find some kind words former colleagues have been kind enough to share.
 
+
+---
+
+## Catherine Oddy
+
+> _Catherine is a user experience designer. We worked together at Goodlord between 2017 and 2018 where we frequently designed and iterated on features together._
+
+Joe and I worked together on a squad addressing the needs of users in the property rental space. He is an excellent collaborator and problem solver. His contribution was unmatched at every step in the process - from ideation to code to iteration. He’s the first to volunteer to unpick a particularly difficult problem and operates with a user-centric attitude in his solutions. Additionally, he will always offer to get the team coffee when he’s going to get one for himself — what more can you ask for?
+
 ---
 
 ## Andrea Magnorsky
