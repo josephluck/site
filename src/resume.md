@@ -8,7 +8,7 @@ I'm a software engineer with a profound interest in design, user experience and 
 
 ## Skills
 
-I have commercial experience in a wide range of front-end tools and libraries. Whilst there are many to list, I am particularly experienced with functional programming in TypeScript using libraries such as React, Redux, Ramda and Jest. I also have experience with CoffeeScript, ES6/7 and NodeJS as well as other popular MVC libraries such as Vue, Angular and Backbone. Aside from my technical skills, I pride myself on being an excellent problem solver with a focus on design and user experience.
+I have commercial experience in a wide range of front-end tools and libraries. Whilst there are many to list, I am particularly experienced with functional programming in TypeScript using libraries such as React, Redux, Ramda and Jest. I also have experience with CoffeeScript, ES6/7 and NodeJS as well as other popular MVC libraries such as Vue, Angular and Backbone. Aside from my technical skills, I'm a keen visual and user-experience designer and I pride myself on being an excellent problem solver, meticulously solving complex business problems.
 
 ---
 
@@ -16,27 +16,19 @@ I have commercial experience in a wide range of front-end tools and libraries. W
 
 **Fantastec** _Front End Lead - April 2018 to Present_
 
-* Heading up frontend efforts of a global fan engagement platform
-* Working in a small, agile engineering team
-* Training and mentoring junior members of the team
+Working in a small, focussed engineering team, I head up Fantastec's front-end team.
 
 **Goodlord** _Software Engineer - November 2016 to April 2018_
 
-* Feature development in a small, agile team
-* Build and maintenance of an extensive in-house component library and framework spanning multiple products
-* Pair programming, code reviews and training junior members of the team
+Goodlord is a property technology company, primarily serving estate agents and tenants in the UK. I worked at Goodlord during a period of high growth both comercially and internally. I saw the core engineering team grow from a mere 6 to over 20 strong and during that period, I was involved and helped build features for several projects both customer-facing and internal. Whilst at Goodlord, I helped design and engineer a framework built around React called Helix and introduced the team to modern front-end techniques such as component-driven design and unidirectional data flow.
 
 **Commusoft** _Senior front-end engineer - March 2016 to November 2016_
 
-* UI/UX design of all features for both customer-facing products and internal tools
-* Front-end architecture design and migrating a large legacy Angular codebase to React
-* Introducing modern agile practises including Kanban and pair programming
-* Recruitment and traning of junior members of the team
+Commusoft is a large customer relationship management system catered for the service industry. I lead Commusoft's small front-end team for 8 months where I had a lead role in product and design as well as developing the front-end for the customer facing and internal products using a mixture of technologies such as Angular, React and Backbone. During this time, I also mentored a junior front-end engineer and implemented modern software engineering / agile practises such as kanban, pair programming, code review and git-flow.
 
 **Commusoft** _Junior front-end developer - July 2014 - March 2016_
 
-* Feature development and bug fixes to core customer-facing product
-* Introduction to modern web application development including building a large Angular application
+I started my software engineering career at Commusoft where I quickly became autonomous under the direction of a senior front-end engineer. I was responsible for core feature development and design of a large CRM platform spanning multiple products. Towards the end of my position, I was single-handedly responsible for a customer facing product that I engineered using React and liased with an off-shore backend team to see the product through to production.
 
 ---
 
