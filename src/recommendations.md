@@ -3,7 +3,7 @@
 ##### josephreubenluck@gmail.com
 
 
-Below you'll find some kind words former colleagues have been kind enough to share.
+Below you'll find some words former colleagues have been kind enough to share.
 
 
 ---
@@ -34,7 +34,7 @@ Joseph is one of the most conscientious, thoughtful and capable developers I've 
 
 One of his best characteristics is his ability to collaborate. He has an open ear for other opinions and proposals and a deliberate way of communicating that effectively conveys his views and mediates discourse. An outstanding partner to pair program with, his attention to detail results in issues being caught well ahead of time. He has a great work ethic and laser-sharp focus which shows in the excellent quality of his independently written code - an example of which is the front-end framework he authored, Helix.
 
-Joseph is a fantastic presence in the workplace, instinctively standing up for what’s best for the product and relentless in doing his part for the team. He is naturally sociable and a frequent face at out-of-work gatherings. Always willing to offer a hand in help whether it be for a code review, pairing or even for some heavy lifting or candidate interviews, his natural charisma and accommodating personality brighten up the workplace and his keen eye for detail and natural talent as a developer have reaped huge benefits for our product. He will be sorely missed but I wish him all the best in the future and hope that we might work together again.
+Joseph is a fantastic presence in the workplace, instinctively standing up for what's best for the product and relentless in doing his part for the team. He is naturally sociable and a frequent face at out-of-work gatherings. Always willing to offer a hand in help whether it be for a code review, pairing or even for some heavy lifting or candidate interviews, his natural charisma and accommodating personality brighten up the workplace and his keen eye for detail and natural talent as a developer have reaped huge benefits for our product. He will be sorely missed but I wish him all the best in the future and hope that we might work together again.
 
 ---
 
@@ -59,3 +59,17 @@ I couldn't have asked for a better manager and mentor for my first role in devel
 Joe's been a brilliant teacher, able to explain and illustrate ideas in different ways if I wasn't sure I fully understood a concept. Whenever there's something I'm struggling with, Joe is always more than happy to help resolve the issue. Because of his willingness to work through the problems together, I've become a much better developer much more quickly than I otherwise would have.
 
 Joe clearly cares about developing the skills of the people on his team and is more than willing to share what he knows. I'm going to miss Joe immensely, and would love to work with him again in the future.
+
+---
+
+## Callum Hart
+
+> _Callum is a senior front-end engineer and designer. I worked directly under him at Commusoft as a junior engineer for the best part of 2 years._
+
+Joseph is a Front-end Engineer you want on your team. I had the pleasure of working with him at Commusoft for nearly two years. He joined as a junior front-end developer and quickly impressed. I was immediately struck by his motivation, ability to learn, and healthy attitude to feedback and collaboration.
+
+Joseph's ability to grasp the problem in hand is second to none. A methodical, detail-orientated, and user-centric approach see him consistently solve complex technical and design tasks with ease. 
+
+Joseph's commitment to open-source is a testament to his unwavering dedication to self-improvement. Some of his most notable projects to date: Helix, Twine and sparkdown are great examples of this. 
+
+Personally, Joseph is an absolute delight to work with. Quietly confident, always curious, and super passionate about what he does, his motivation and energy is contagious. I highly recommend Joseph, and hope we work together again.
