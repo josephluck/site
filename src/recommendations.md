@@ -12,7 +12,10 @@ Below you'll find some words former colleagues have been kind enough to share.
 
 > _Catherine is a user experience designer. We worked together at Goodlord between 2017 and 2018 where we frequently designed and iterated on features together._
 
-Joe and I worked together on a squad addressing the needs of users in the property rental space. He is an excellent collaborator and problem solver. His contribution was unmatched at every step in the process - from ideation to code to iteration. He’s the first to volunteer to unpick a particularly difficult problem and operates with a user-centric attitude in his solutions. Additionally, he will always offer to get the team coffee when he’s going to get one for himself — what more can you ask for?
+Joe and I worked together on a squad addressing the needs of users in the property rental space. He is an excellent
+collaborator and problem solver. His contribution was unmatched at every step in the process - from ideation to code to
+iteration. He's the first to volunteer to unpick a particularly difficult problem and operates with a user-centric attitude
+in his solutions. Additionally, he will always offer to get the team coffee when he's going to get one for himself what more can you ask for?
 
 ---
 
@@ -72,4 +75,5 @@ Joseph's ability to grasp the problem in hand is second to none. A methodical, d
 
 Joseph's commitment to open-source is a testament to his unwavering dedication to self-improvement. Some of his most notable projects to date: Helix, Twine and sparkdown are great examples of this. 
 
-Personally, Joseph is an absolute delight to work with. Quietly confident, always curious, and super passionate about what he does, his motivation and energy is contagious. I highly recommend Joseph, and hope we work together again.
+Personally, Joseph is an absolute delight to work with. Quietly confident, always curious, and super passionate about what
+he does, his motivation and energy is contagious. I highly recommend Joseph, and hope we work together again.
