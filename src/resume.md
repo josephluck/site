@@ -8,15 +8,15 @@ I'm a software engineer with a profound interest in design, user experience and 
 
 ## Skills
 
-I have commercial experience in a wide range of front-end tools and libraries. Whilst there are many to list, I am particularly experienced with functional programming in TypeScript using libraries such as React, Redux, Ramda and Jest. I also have experience with CoffeeScript, ES6/7 and NodeJS as well as other popular MVC libraries such as Vue, Angular and Backbone. Aside from my technical skills, I'm a keen visual and user-experience designer and I pride myself on being an excellent problem solver, meticulously solving complex business problems.
+I have commercial experience in a wide range of front-end tools and libraries. Whilst there are many to list, I am particularly experienced with functional programming in TypeScript using libraries such as React, Redux, Ramda and Jest. I also have experience with CoffeeScript, ES6/7 and NodeJS as well as other popular MVC libraries such as Vue, Angular and Backbone. Aside from my technical skills, I'm a keen visual and user-experience designer and I pride myself on being an excellent problem solver.
 
 ---
 
 ## Experience
 
-**Fantastec** _Front End Lead - April 2018 to Present_
+**Fantastec Technology** _Front End Lead - April 2018 to Present_
 
-Working in a small, focussed engineering team, I head up Fantastec's front-end team.
+Fantastec is a sports technology start-up dedicated to helping sports fans engage with their favourite sports, teams, and players. I lead Fantastec's front-end team and liase with the wider product team and stakeholders to build several products. During Fanstastec's early stages I have a large part to play in the UI and UX of several products and I have been fortunate enough to establish several best practises such as style-guides, atomic design, functional / typesafe programming and component-based architecture. During my first month, I lead a migration away from a proprietary framework that severly hindered productivity to a modern stack consisting of Typescript, Styled Components, Next and React. 
 
 **Goodlord** _Software Engineer - November 2016 to April 2018_
 
@@ -28,7 +28,7 @@ Commusoft is a large customer relationship management system catered for the ser
 
 **Commusoft** _Junior front-end developer - July 2014 - March 2016_
 
-I started my software engineering career at Commusoft where I quickly became autonomous under the direction of a senior front-end engineer. I was responsible for core feature development and design of a large CRM platform spanning multiple products. Towards the end of my position, I was single-handedly responsible for a customer facing product that I engineered using React and liased with an off-shore backend team to see the product through to production.
+I started my software engineering career at Commusoft where I quickly became autonomous under the direction of a senior front-end engineer. I was responsible for core feature development and design of a large CRM platform spanning multiple products. Towards the end of my position, I was single-handedly responsible for a customer facing product that I engineered using React and liased with a remote backend team to see the product through to production.
 
 ---
 
