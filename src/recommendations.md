@@ -64,7 +64,7 @@ Joe clearly cares about developing the skills of the people on his team and is m
 
 ## Callum Hart
 
-> _Callum is a senior front-end engineer and designer. I worked directly under him at Commusoft as a junior engineer for the best part of 2 years._
+> _Callum is a senior front-end engineer and designer. I worked directly under him at Commusoft as a junior engineer for the best part of 2 years. I helped Callum design and develop an large CRM platform encompassing many complex features such as calendar / diary management, purchase order creation and invoicing. I frequently pair-programmed with Callum where he taught me how to build complex user interfaces using Angular and LESS. After Callum left Commusoft, I took over full responsibility over the front-end Angular project, as well as a internal administration platform written in Backbone with Coffeescript._
 
 Joseph is a Front-end Engineer you want on your team. I had the pleasure of working with him at Commusoft for nearly two years. He joined as a junior front-end developer and quickly impressed. I was immediately struck by his motivation, ability to learn, and healthy attitude to feedback and collaboration.
 
