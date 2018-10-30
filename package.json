@@ -23,7 +23,7 @@
   "sparkdown": {
     "source": "./src",
     "output": "./dist",
-    "bodyFont": "EB Garamond",
+    "bodyFont": "Mukta",
     "monospaceFont": "Inconsolata",
     "title": "Joseph Luck",
     "author": "Joseph Luck",
