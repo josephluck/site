@@ -2,9 +2,7 @@
 
 ##### josephreubenluck@gmail.com
 
-
 Below you'll find some words former colleagues have been kind enough to share.
-
 
 ---
 
@@ -25,7 +23,7 @@ in his solutions. Additionally, he will always offer to get the team coffee when
 
 Joseph is a great person to work with. He has excellent technical capabilities and gets the job done. He is also curious, dedicated and reacts in an excellent way to feedback.
 
-It was a pleasure to work with Joseph in our squad at Goodlord. He has the respect of his peers and technical lead. It would be great to work with Joseph again. 
+It was a pleasure to work with Joseph in our squad at Goodlord. He has the respect of his peers and technical lead. It would be great to work with Joseph again.
 
 ---
 
@@ -43,7 +41,7 @@ Joseph is a fantastic presence in the workplace, instinctively standing up for w
 
 ## Francesca Malpass
 
-> _Francesca is a product manager and I worked with her at Goodlord between 2016 and 2018. I worked with Francesca closely when we were both part of the same small, agile delivery squad aimed at tackling a core business focus for around 6 months. Prior to that, we worked together as part of a larger team focussed on replatforming the Goodlord system over the course of just over a year._
+> _Francesca is a product manager and I worked with her at Goodlord between 2016 and 2018. I worked with Francesca closely when we were both part of the same small, agile delivery squad aimed at tackling a core business focus for around 6 months. Prior to that, we worked together as part of a larger team focussed on re-platforming the Goodlord system over the course of just over a year._
 
 Joseph is an excellent engineer and colleague. Not only is he extremely talented as a developer, his passion for solving problems and applying his skills extends beyond coding. Joseph always keeps the user at the forefront of his work, consistently demonstrating and applying his empathy towards users and knowledge of the problem-areas and industry.
 
@@ -71,9 +69,9 @@ Joe clearly cares about developing the skills of the people on his team and is m
 
 Joseph is a Front-end Engineer you want on your team. I had the pleasure of working with him at Commusoft for nearly two years. He joined as a junior front-end developer and quickly impressed. I was immediately struck by his motivation, ability to learn, and healthy attitude to feedback and collaboration.
 
-Joseph's ability to grasp the problem in hand is second to none. A methodical, detail-orientated, and user-centric approach see him consistently solve complex technical and design tasks with ease. 
+Joseph's ability to grasp the problem in hand is second to none. A methodical, detail-orientated, and user-centric approach see him consistently solve complex technical and design tasks with ease.
 
-Joseph's commitment to open-source is a testament to his unwavering dedication to self-improvement. Some of his most notable projects to date: Helix, Twine and sparkdown are great examples of this. 
+Joseph's commitment to open-source is a testament to his unwavering dedication to self-improvement. Some of his most notable projects to date: Helix, Twine and sparkdown are great examples of this.
 
 Personally, Joseph is an absolute delight to work with. Quietly confident, always curious, and super passionate about what
 he does, his motivation and energy is contagious. I highly recommend Joseph, and hope we work together again.

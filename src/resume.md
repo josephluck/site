@@ -16,11 +16,11 @@ I have commercial experience in a wide range of front-end tools and libraries. W
 
 **Fantastec Technology** _Front End Lead - April 2018 to Present_
 
-Fantastec is a sports technology start-up dedicated to helping sports fans engage with their favourite sports, teams, and players. I lead Fantastec's front-end team and liase with the wider product team and stakeholders to build several products. During Fanstastec's early stages I have a large part to play in the UI and UX of several products and I have been fortunate enough to establish several best practises such as style-guides, atomic design, functional / typesafe programming and component-based architecture. During my first month, I lead a migration away from a proprietary framework that severly hindered productivity to a modern stack consisting of Typescript, Styled Components, Next and React. 
+Fantastec is a sports technology start-up dedicated to helping sports fans engage with their favourite sports, teams, and players. I lead Fantastec's front-end team and liaise with the wider product team and stakeholders to build several products. During Fanstastec's early stages I have a large part to play in the UI and UX of several products and I have been fortunate enough to establish several best practises such as style-guides, atomic design, functional / typesafe programming and component-based architecture. During my first month, I lead a migration away from a proprietary framework that severely hindered productivity to a modern stack consisting of Typescript, Styled Components, Next and React.
 
 **Goodlord** _Software Engineer - November 2016 to April 2018_
 
-Goodlord is a property technology company, primarily serving estate agents and tenants in the UK. I worked at Goodlord during a period of high growth both comercially and internally. I saw the core engineering team grow from a mere 6 to over 20 strong and during that period, I was involved and helped build features for several projects both customer-facing and internal. Whilst at Goodlord, I helped design and engineer a framework built around React called Helix and introduced the team to modern front-end techniques such as component-driven design and unidirectional data flow.
+Goodlord is a property technology company, primarily serving estate agents and tenants in the UK. I worked at Goodlord during a period of high growth both commercially and internally. I saw the core engineering team grow from a mere 6 to over 20 strong and during that period, I was involved and helped build features for several projects both customer-facing and internal. Whilst at Goodlord, I helped design and engineer a framework built around React called Helix and introduced the team to modern front-end techniques such as component-driven design and unidirectional data flow.
 
 **Commusoft** _Senior front-end engineer - March 2016 to November 2016_
 
@@ -28,7 +28,7 @@ Commusoft is a large customer relationship management system catered for the ser
 
 **Commusoft** _Junior front-end developer - July 2014 - March 2016_
 
-I started my software engineering career at Commusoft where I quickly became autonomous under the direction of a senior front-end engineer. I was responsible for core feature development and design of a large CRM platform spanning multiple products. Towards the end of my position, I was single-handedly responsible for a customer facing product that I engineered using React and liased with a remote backend team to see the product through to production.
+I started my software engineering career at Commusoft where I quickly became autonomous under the direction of a senior front-end engineer. I was responsible for core feature development and design of a large CRM platform spanning multiple products. Towards the end of my position, I was single-handedly responsible for a customer facing product that I engineered using React and liaised with a remote backend team to see the product through to production.
 
 ---
 
@@ -44,10 +44,10 @@ This website is generated from markdown files using one of my projects, [sparkdo
 
 **Ravensbourne** _BA(hons) Sound Design - November 2011 - July 2014_
 
-I achived a first-class honours from Ravensbourne where I studied sound engineering, acoustics, synthesis and audio programming. For my final project, I built an audio game using a combination of C# and JavaScript in the Unity game engine. During my studies I became a freelance web designer whilst working for Three Men and a Camera as a freelance audio engineer shooting documentaties and promos for many of London's leading digital agencies.
+I achieved a first-class honours from Ravensbourne where I studied sound engineering, acoustics, synthesis and audio programming. For my final project, I built an audio game using a combination of C# and JavaScript in the Unity game engine. During my studies I became a freelance web designer whilst working for Three Men and a Camera as a freelance audio engineer shooting documentaries and promos for many of London's leading digital agencies.
 
 ---
 
 ## Interests
 
-I play table tennis competitively and compete in many local leagues around the South East London and North West Kent areas. I'm also a keen traveller and have been fortunate to scuba dive in many of the worlds famous dive sites including the Great Barrer Reef.
+I play table tennis competitively and compete in many local leagues around the South East London and North West Kent areas. I'm also a keen traveller and have been fortunate to scuba dive in many of the worlds famous dive sites including the Great Barrier Reef.
