@@ -1,0 +1,115 @@
+
+      <html>
+        <head>
+          <title>Joseph Luck - Fantastec</title>
+          <meta name="description" content="Functional programmer with a profound interest in UI/UX">
+          <meta name="author" content="Joseph Luck">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <link href="https://fonts.googleapis.com/css?family=Mukta" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+          <link rel="stylesheet" href="https://unpkg.com/tachyons@4.9.0/css/tachyons.min.css" />
+          <link rel="stylesheet" href="/style.css" />
+          <!--[if lt IE 9]>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+          <![endif]-->
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.1.1/turbolinks.js"></script>
+          <script>
+            function openNav() {
+              var nav = document.querySelector('nav')
+              var main = document.querySelector('main')
+              if (nav && main) {
+                nav.classList.remove('slide-out')
+                main.classList.add('fade-out')
+              }
+            }
+
+            function closeNav() {
+              var nav = document.querySelector('nav')
+              var main = document.querySelector('main')
+              if (nav && main) {
+                nav.classList.add('slide-out')
+                main.classList.remove('fade-out')
+              }
+            }
+
+            function closeNavIfClickOutside(e) {
+              var nav = document.querySelector('nav')
+              var navOpenElm = document.getElementById('nav-toggle')
+              if (nav && navOpenElm && !nav.contains(e.target) && !navOpenElm.contains(e.target)) {
+                closeNav()
+              }
+            }
+
+            function bindEventListeners() {
+              var navOpenElm = document.getElementById('nav-toggle')
+              var main = document.querySelector('main')
+              var nav = document.querySelector('nav')
+              if (navOpenElm) {
+                navOpenElm.addEventListener('click', openNav)
+              }
+              if (nav && main) {
+                document.body.addEventListener('click', closeNavIfClickOutside)
+              }
+            }
+
+            document.addEventListener("turbolinks:load", bindEventListeners);
+          </script>
+        </head>
+        <body class="df">
+          <nav class="bg-near-white pv4 overflow-auto lh-copy mw5 transition slide-out">
+            <div class="pv3 pl3 pr4 w-100">
+              <div class="mb1 ml3 overflow-hidden truncate">
+                <a href="/" title="Home">Home</a>
+              </div>
+              
+    <div class="mb1 ml3">
+      
+          <div class="mb1 truncate">
+            <a href="/work/fantastec.html" title="Work">Work</a>
+          </div>
+        
+      
+    <div class="mb1 ml3">
+      
+          <div class="mb1 truncate">
+            <a href="/work/fantastec.html" title="Fantastec">Fantastec</a>
+          </div>
+        
+      
+    </div>
+  
+    </div>
+  
+    <div class="mb1 ml3">
+      
+          <div class="mb1 truncate">
+            <a href="/recommendations.html" title="Recommendations">Recommendations</a>
+          </div>
+        
+      
+    </div>
+  
+    <div class="mb1 ml3">
+      
+          <div class="mb1 truncate">
+            <a href="/resume.html" title="Resume">Resume</a>
+          </div>
+        
+      
+    </div>
+  
+            </div>
+          </nav>
+          <main class="flex-1 h-100 overflow-auto transition">
+            <div class="ph10vw pv4">
+              <div class="df pointer mv3" id="nav-toggle">
+                <i class="material-icons mr1 gray">menu</i>
+                <span class="gray b">Menu</span>
+              </div>
+              <h1 class="f1 lh-solid mv3">Joseph Luck</h1><h5 class="normal f6 lh-copy gray">josephreubenluck@gmail.com</h5><p class="lh-copy mv3">Fantastec is a sports technology start-up dedicated to helping sports fans engage with their favourite sports, teams, and players. I lead Fantastec&#39;s front-end team and started working there in April 2018.</p><p class="lh-copy mv3">Below you&#39;ll find some mini posts documenting some of the things I&#39;ve been up to.</p><div class="mv4 bb b--black-10"></div><h2 class="normal f3 lh-copy mv3">Productivity</h2><h5 class="normal f6 lh-copy gray">Tuesday 30th October 2018</h5><p class="lh-copy mv3">In the first post in a series of mini posts, I&#39;ll be detailing how our small team achieves productivity whilst working on multiple products at the same time.</p><h3 class="normal f4 lh-copy mv2 gray">Language and tooling</h3><p class="lh-copy mv3">We&#39;re using <a href="https://reactjs.org/" title="React">React</a>, <a href="https://nextjs.org/" title="Next.js">Next.js</a> and <a href="https://www.styled-components.com/" title="Styled Components">Styled Components</a> all written in <a href="https://www.typescriptlang.org/" title="Typescript">Typescript</a>.</p><p class="lh-copy mv3">Out of all the tools we&#39;re using, I would say that Typescript brings the biggest productivity boost since it allows engineers to write code iteratively with the ability to safely refactor and improve later. Both React and Styled Components work very well out of the box with Typescript. As a bonus, <a href="https://code.visualstudio.com/" title="Visual Studio Code">Visual Studio Code</a> has fantastic built-in Typescript support.</p><h3 class="normal f4 lh-copy mv2 gray">Project set up</h3><p class="lh-copy mv3">Fantastec has several web products built on top of the same technology stack. As a result, we&#39;ve been able to share a fair amount of project boilerplate, configuration, UI components and utilities between projects.</p><p class="lh-copy mv3">To facilitate the sharing of code safely and easily, we&#39;re using <a href="https://yarnpkg.com/lang/en/docs/workspaces/" title="Yarn Workspaces">Yarn Workspaces</a> to manage packages of code between products.</p><h3 class="normal f4 lh-copy mv2 gray">Communicating with the back-end</h3><p class="lh-copy mv3">One of the biggest sources of lost productivity I have seen in engineering teams is due to a poor contract between front-end and back-end engineers when it comes to HTTP communication. The problem is two-fold. First, API <a href="https://stackoverflow.com/questions/1051182/what-is-data-transfer-object" title="data transfer objects">data transfer objects</a> are often agreed on informally (on slack, in the office etc) but are rarely enforced in the code leading to inconsistencies over time or <a href="https://medium.com/web-engineering-vox/the-art-of-defensive-programming-6789a9743ed4" title="defensive programming">defensive programming</a>. Second, front-end engineers are often blocked when they build a new feature, having to wait for the back-end team to finish the APIs that are required to power the feature.</p><p class="lh-copy mv3">At Fantastec, we&#39;ve attempted to tackle both of these issues with one approach: defining data transfer objects in Typescript on the front-end and transpiling them in to C# view models for the back-end to use. From these DTOs the front-end also creates a simple mock-server using a combination of <a href="https://github.com/typicode/json-server" title="JSON server">JSON server</a> and <a href="https://github.com/marak/Faker.js/" title="Faker">Faker</a>. The result is a fully autonomous front-end team that can finish features as if the real API exists.</p><h3 class="normal f4 lh-copy mv2 gray">Working with designers</h3><p class="lh-copy mv3">Working with designers is a topic that warrants it&#39;s own series of mini posts, however I wanted to share one particular aspect of the process that Fantastec has iterated upon: &quot;treat everything as a component&quot;. Designs are completed in <a href="https://www.sketchapp.com/" title="Sketch">Sketch</a> and presented via <a href="https://www.invisionapp.com" title="Invision">Invision</a>. Front-end engineers pick up the designs and implement them using React and Styled Components inside a <a href="https://storybook.js.org/" title="Storybook">Storybook</a> in isolation from the main application. Once the components are finished, they are placed inside the application and tweaked with designers during a sign-off process.</p><p class="lh-copy mv3">The key point here is that we&#39;re building our UI components inside Storybook in isolation from the main application. The Storybook is published to a public URL for the purpose of documenting existing components when working on new interfaces.</p><h3 class="normal f4 lh-copy mv2 gray">Effective planning</h3><p class="lh-copy mv3">As with any productive team, planning is as important as execution and tooling.</p><p class="lh-copy mv3">Since I started Fantastec, the product team has grown four fold and continues to grow at a rapid pace. Consequently, we&#39;ve had to invest time in our process. We&#39;ve settled on two week &quot;focussed&quot; sprints where each sprint has a consistent theme. This helps everyone stay in the same context and encourages collaboration and pair-programming.</p>
+            </div>
+          </main>
+        </body>
+      </html>
+    
