@@ -2,10 +2,6 @@
 
 ##### josephreubenluck@gmail.com
 
-Fantastec is a sports technology start-up dedicated to helping sports fans engage with their favourite sports, teams, and players. I lead Fantastec's front-end team and started working there in April 2018.
-
-Below you'll find some mini posts documenting some of the things my team and I been up to.
-
 ---
 
 ## Productivity
