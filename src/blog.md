@@ -4,11 +4,178 @@
 
 ---
 
+## Type-safe generic React components
+
+#### Saturday 1st December 2018
+
+A colleague of mine showed me a neat little unknown feature of Typescript in combination with React that makes it a delight to achieve type-safe generic React components.
+
+### Generic React components
+
+When I say "generic", I mean React components that take in a [generic data shape]() and expose props that operate upon that data shape. I.e. a carousel component that takes in an array of a data and exposes a [render-prop]() to render each slide within the carousel. For example ():
+
+```
+// slider.tsx
+import React from 'react'
+
+interface Props {
+  slides: any[]
+  renderSlide: (slide: any): React.ReactNode
+}
+
+export function Slider(props: Props) {
+  return (
+    <SliderContainer>
+      <LeftArrow />
+      {props.slides.map((slide, i) => (
+        <SlideContainer key={i}>
+          {props.renderSlide(slide)}
+        </SlideContainer>
+      ))}
+      <RightArrow />
+    </SliderContainer>
+  )
+}
+
+// app.tsx
+interface Cat {
+  name: string,
+  image: string
+}
+
+const cats: Cat[] = [
+  { name: 'Cute cat', image: 'cure-cat.png' },
+  { name: 'Evil cat', image: 'evil-cat.png }
+]
+
+export default () {
+  return (
+    <Slider
+      slides={cats}
+      renderSlide={cat => (
+        <div>
+          <img src={cat.image} />
+          <h2>{cat.name}</h2>
+        </div>
+      )}
+    />
+  )
+}
+```
+
+> Slider implementation details have been left out for brevity
+
+The example above is perfectly fine however, you'll notice that the component's `slides` and `renderSlide` props are typed using `any`. This means that when using the component, there will be no inferred type in the render prop `renderSlide` even though we know ahead of time what the data shape of `slides` is. However, we can do better!
+
+### Adding type safety
+
+It's clear that our `<Slider />` component is designed to be flexible enough to work with varying data shapes in it's `slides` prop, however it does not provide any mechanism for ensuring that `renderSlide` is type-safe in combination with it's `slides` prop. For those who are well versed with Typescript, you'll know that [generics]() are the missing ingredient. For those who don't know, generics allow us to pass around information about the type of data a function, class, or in this case, component is dealing with.
+
+We can change our `<Slider />` component to take a generic type argument:
+
+```
+// slider.tsx
+import React from 'react'
+
+interface Props<T> {
+  slides: T[]
+  renderSlide: (slide: T): React.ReactNode
+}
+
+export function Slider<T>(props: Props<T>) {
+  return (
+    <SliderContainer>
+      <LeftArrow />
+      {props.slides.map((slide, i) => (
+        <SlideContainer key={i}>
+          {props.renderSlide(slide)}
+        </SlideContainer>
+      ))}
+      <RightArrow />
+    </SliderContainer>
+  )
+}
+```
+
+> Adding a generic type argument `<T>` and passing it to the `Props` interface allows the data shape to be passed around
+
+Now it's set up, let's explore how this can be used in our app.
+
+### A nieve approach
+
+```
+// app.tsx
+interface Cat {
+  name: string,
+  image: string
+}
+
+const cats: Cat[] = [
+  { name: 'Cute cat', image: 'cure-cat.png' },
+  { name: 'Evil cat', image: 'evil-cat.png }
+]
+
+const CatSlider = Slider<Cat>
+
+export default () {
+  return (
+    <CatSlider
+      slides={cats}
+      renderSlide={cat => (
+        <div>
+          <img src={cat.image} />
+          <h2>{cat.name}</h2>
+        </div>
+      )}
+    />
+  )
+}
+```
+
+By assigning a new constant, `const CatSlider = Slider<Cat>`, we've passed the `Cat` interface to the `T` generic, and as a result, `renderSlide` is correctly typed as a `Cat` and immediately the application has become more type-safe. However, it feels a little hacky to assign a new constant to achieve this.
+
+### A neat little trick
+
+Wouldn't it be nicer if we didn't have to use an intermediary constant just to enable type-safety on our `CatSlider`? Well, a little known feature of Typescript with React allows us to pass generic type arguments directly in to React components:
+
+```
+// app.tsx
+interface Cat {
+  name: string,
+  image: string
+}
+
+const cats: Cat[] = [
+  { name: 'Cute cat', image: 'cure-cat.png' },
+  { name: 'Evil cat', image: 'evil-cat.png }
+]
+
+const CatSlider = Slider<Cat>
+
+export default () {
+  return (
+    <Slider<Cat>
+      slides={cats}
+      renderSlide={cat => (
+        <div>
+          <img src={cat.image} />
+          <h2>{cat.name}</h2>
+        </div>
+      )}
+    />
+  )
+}
+```
+
+By passing the generic inside the TSX via `<Slider<Cat> />` we can omit the intermediary constant. It looks a little weird but works a charm!
+
+---
+
 ## Productivity
 
 ##### Tuesday 30th October 2018
 
-In the first post in a series of mini posts, I'll be detailing how our small team achieves productivity whilst working on multiple products at the same time.
+Read about how our small engineering achieves productivity whilst working on multiple products at the same time.
 
 ### Language and tooling
 
