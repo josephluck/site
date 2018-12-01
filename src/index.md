@@ -2,8 +2,10 @@
 
 ##### josephreubenluck@gmail.com
 
-## London based software engineer passionate about design and functional front-end code
+## 👋 I'm a product engineer based in London.
 
-- Creator and maintainer of [Helix](https://josephluck.gitbooks.io/helix/) and [Sparkdown](https://github.com/josephluck/sparkdown)
-- Open source libraries and products on [Github](https://github.com/josephluck)
-- The occasional fun project like [Wtf.js](https://github.com/josephluck/wtf)
+Lead front-end engineer at [Fantastec](https://www.fantastec.game/). Previously senior front-end engineer at [Goodlord](https://www.goodlord.co/).
+
+Passionate about design, user experience and functional programming. Expert at React and Typescript.
+
+Maker of [Helix](https://josephluck.gitbooks.io/helix/), [Sparkdown](https://github.com/josephluck/sparkdown), [Keepies](https://github.com/josephluck/sparkdown), [wtf.js](https://github.com/josephluck/wtf), [Internote](https://github.com/josephluck/internote) and [many more](https://github.com/josephluck).
