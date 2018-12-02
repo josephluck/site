@@ -111,7 +111,7 @@ interface Cat {
 }
 
 const cats: Cat[] = [
-  { name: 'Cute cat', image: 'cure-cat.png' },
+  { name: 'Cute cat', image: 'cute-cat.png' },
   { name: 'Evil cat', image: 'evil-cat.png }
 ]
 

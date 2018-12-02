@@ -1280,10 +1280,10 @@ source-map@~0.5.1:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
-sparkdown@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/sparkdown/-/sparkdown-1.0.2.tgz#3c11d050811eb4a056a030e703fdae056b200a4e"
-  integrity sha512-hiCVwGnTFYwEKEap8yULl1tUqBIofZHiKKRmw36cPRdIHQ5NWpBIsc9ThZrP+vSpf8zya+RGhgxddCY32w+1LQ==
+sparkdown@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/sparkdown/-/sparkdown-1.0.4.tgz#a1466504d3ed232002e99c7437e8d1e03f0c9e6e"
+  integrity sha512-BH5Dv1nhAZvqFpmUPhzbj/AwriHU9ib2GgLpoqvBJ58Y/NZ50oKbP8GDUXXIsO6YxFvmWHXQiypW/rNrLoLnYg==
   dependencies:
     "@types/fs-extra" "^5.0.0"
     "@types/highlight.js" "^9.12.3"
