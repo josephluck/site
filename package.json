@@ -18,15 +18,15 @@
   "dependencies": {
     "gh-pages": "^1.1.0",
     "serve": "^6.5.3",
-    "sparkdown": "^0.3.1"
+    "sparkdown": "^1.0.1"
   },
   "sparkdown": {
     "source": "./src",
     "output": "./dist",
     "bodyFont": "Mukta",
-    "monospaceFont": "Inconsolata",
+    "monospaceFont": "Fira Mono",
     "title": "Joseph Luck",
     "author": "Joseph Luck",
-    "description": "Functional programmer with a profound interest in UI/UX"
+    "description": "Product engineer with a passion for design"
   }
 }

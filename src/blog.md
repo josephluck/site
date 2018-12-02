@@ -12,7 +12,7 @@ A colleague of mine showed me a neat little unknown feature of Typescript in com
 
 ### Generic React components
 
-When I say "generic", I mean React components that take in a [generic data shape]() and expose props that operate upon that data shape. I.e. a carousel component that takes in an array of a data and exposes a [render-prop]() to render each slide within the carousel. For example ():
+When I say "generic", I mean React components that take in a [generic data shape](https://www.typescriptlang.org/docs/handbook/generics.html) and expose props that operate upon that data shape. I.e. a carousel component that takes in an array of a data and exposes a [render-prop](https://reactjs.org/docs/render-props.html) to render each slide within the carousel. For example:
 
 ```
 // slider.tsx
@@ -69,7 +69,7 @@ The example above is perfectly fine however, you'll notice that the component's 
 
 ### Adding type safety
 
-It's clear that our `<Slider />` component is designed to be flexible enough to work with varying data shapes in it's `slides` prop, however it does not provide any mechanism for ensuring that `renderSlide` is type-safe in combination with it's `slides` prop. For those who are well versed with Typescript, you'll know that [generics]() are the missing ingredient. For those who don't know, generics allow us to pass around information about the type of data a function, class, or in this case, component is dealing with.
+It's clear that our `<Slider />` component is designed to be flexible enough to work with varying data shapes in it's `slides` prop, however it does not provide any mechanism for ensuring that `renderSlide` is type-safe in combination with it's `slides` prop. For those who are well versed with Typescript, you'll know that [generics](https://www.typescriptlang.org/docs/handbook/generics.html) are the missing ingredient. For those who don't know, generics allow us to pass around information about the type of data a function, class, or in this case, component is dealing with.
 
 We can change our `<Slider />` component to take a generic type argument:
 
