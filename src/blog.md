@@ -12,7 +12,7 @@ A colleague of mine showed me a neat little unknown feature of Typescript in com
 
 ### Generic React components
 
-When I say "generic", I mean React components that take in a [generic data shape](https://www.typescriptlang.org/docs/handbook/generics.html) and expose props that operate upon that data shape. I.e. a carousel component that takes in an array of a data and exposes a [render-prop](https://reactjs.org/docs/render-props.html) to render each slide within the carousel. For example:
+Generic React components are components that take in a [generic data shape](https://www.typescriptlang.org/docs/handbook/generics.html) and expose props that operate upon that data shape. For example, a carousel component that takes in an array of a data and exposes a [render-prop](https://reactjs.org/docs/render-props.html) to render each slide within the carousel:
 
 ```
 // slider.tsx
@@ -69,7 +69,7 @@ The example above is perfectly fine however, you'll notice that the component's 
 
 ### Adding type safety
 
-It's clear that our `<Slider />` component is designed to be flexible enough to work with varying data shapes in it's `slides` prop, however it does not provide any mechanism for ensuring that `renderSlide` is type-safe in combination with it's `slides` prop. For those who are well versed with Typescript, you'll know that [generics](https://www.typescriptlang.org/docs/handbook/generics.html) are the missing ingredient. For those who don't know, generics allow us to pass around information about the type of data a function, class, or in this case, component is dealing with.
+It's clear that the `<Slider />` component is designed to be flexible enough to work with varying data shapes, however it does not provide any mechanism for ensuring that the `renderSlide` prop is type-safe in combination with it's `slides` prop. For those who are well versed with Typescript, you'll know that [generics](https://www.typescriptlang.org/docs/handbook/generics.html) are the missing ingredient. For those who don't know, generics allow us to pass around information about the type of data a function, class, or in this case, component is dealing with.
 
 We can change our `<Slider />` component to take a generic type argument:
 
@@ -136,7 +136,7 @@ By assigning a new constant, `const CatSlider = Slider<Cat>`, we've passed the `
 
 ### A neat little trick
 
-Wouldn't it be nicer if we didn't have to use an intermediary constant just to enable type-safety on our `CatSlider`? Well, a little known feature of Typescript with React allows us to pass generic type arguments directly in to React components:
+It would be much nicer if we didn't have to use an intermediary constant just to enable type-safety on our `CatSlider`. Well, a little known feature of Typescript with React allows us to pass generic type arguments directly in to React components:
 
 ```
 // app.tsx
@@ -149,8 +149,6 @@ const cats: Cat[] = [
   { name: 'Cute cat', image: 'cure-cat.png' },
   { name: 'Evil cat', image: 'evil-cat.png }
 ]
-
-const CatSlider = Slider<Cat>
 
 export default () {
   return (
@@ -167,7 +165,7 @@ export default () {
 }
 ```
 
-By passing the generic inside the TSX via `<Slider<Cat> />` we can omit the intermediary constant. It looks a little weird but works a charm!
+By passing the generic type argument inside the TSX via `<Slider<Cat> />` we can omit the intermediary constant. It looks a little weird but works a charm!
 
 ---
 

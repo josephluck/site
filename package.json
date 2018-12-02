@@ -18,7 +18,7 @@
   "dependencies": {
     "gh-pages": "^1.1.0",
     "serve": "^6.5.3",
-    "sparkdown": "^1.0.1"
+    "sparkdown": "^1.0.2"
   },
   "sparkdown": {
     "source": "./src",
