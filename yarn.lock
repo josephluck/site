@@ -8,6 +8,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/highlight.js@^9.12.3":
+  version "9.12.3"
+  resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.3.tgz#b672cfaac25cbbc634a0fd92c515f66faa18dbca"
+  integrity sha512-pGF/zvYOACZ/gLGWdQH8zSwteQS1epp68yRcVLJMgUck/MjEn/FBYmPub9pXT8C1e4a8YZfHo1CKyV8q1vKUnQ==
+
 "@types/marked@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.3.0.tgz#583c223dd33385a1dda01aaf77b0cd0411c4b524"
@@ -629,6 +634,11 @@ has@^1.0.1, has@~1.0.1:
   resolved "https://registry.yarnpkg.com/has/-/has-1.0.1.tgz#8461733f538b0837c9361e39a9ab9e9704dc2f28"
   dependencies:
     function-bind "^1.0.2"
+
+highlight.js@^9.13.1:
+  version "9.13.1"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.13.1.tgz#054586d53a6863311168488a0f58d6c505ce641e"
+  integrity sha512-Sc28JNQNDzaH6PORtRLMvif9RSn1mYuOoX3omVjnb0+HbpPygU2ALBI0R/wsiqCb4/fcp07Gdo8g+fhtFrQl6A==
 
 homedir-polyfill@^1.0.1:
   version "1.0.1"
@@ -1270,16 +1280,19 @@ source-map@~0.5.1:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
-sparkdown@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/sparkdown/-/sparkdown-0.3.1.tgz#fc019b9b7d71be0c519155bda9bed1e98529cca2"
+sparkdown@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/sparkdown/-/sparkdown-1.0.1.tgz#fcd2f22b434e79240054e133aadf7e70fc7ebc05"
+  integrity sha512-1pPU/CTGyrGuTXB5x5OLlFG25rLif45nPlwD/jcD+gEcqrO53jDQ3VagoayM6Lr+ghheys18T+v2g9zWF92H1A==
   dependencies:
     "@types/fs-extra" "^5.0.0"
+    "@types/highlight.js" "^9.12.3"
     "@types/marked" "^0.3.0"
     "@types/tape" "^4.2.31"
     "@types/yargs" "^10.0.1"
     dir-to-json "^0.0.3"
     fs-extra "^5.0.0"
+    highlight.js "^9.13.1"
     marked "^0.3.12"
     prettier "^1.10.2"
     serve "^6.5.3"
