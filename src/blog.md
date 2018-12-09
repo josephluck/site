@@ -4,6 +4,11 @@
 
 ---
 
+- [Type-safe generic React components](#typesafegenericreactcomponents)
+- [Productivity](#productivity)
+
+---
+
 ## Type-safe generic React components
 
 #### Saturday 1st December 2018
