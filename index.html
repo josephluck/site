@@ -15,59 +15,19 @@
           <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
           <![endif]-->
           <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.1.1/turbolinks.js"></script>
-          <script>
-            function openNav() {
-              var nav = document.querySelector('nav')
-              var main = document.querySelector('main')
-              if (nav && main) {
-                nav.classList.remove('slide-out')
-                main.classList.add('fade-out')
-              }
-            }
-
-            function closeNav() {
-              var nav = document.querySelector('nav')
-              var main = document.querySelector('main')
-              if (nav && main) {
-                nav.classList.add('slide-out')
-                main.classList.remove('fade-out')
-              }
-            }
-
-            function closeNavIfClickOutside(e) {
-              var nav = document.querySelector('nav')
-              var navOpenElm = document.getElementById('nav-toggle')
-              if (nav && navOpenElm && !nav.contains(e.target) && !navOpenElm.contains(e.target)) {
-                closeNav()
-              }
-            }
-
-            function bindEventListeners() {
-              var navOpenElm = document.getElementById('nav-toggle')
-              var main = document.querySelector('main')
-              var nav = document.querySelector('nav')
-              if (navOpenElm) {
-                navOpenElm.addEventListener('click', openNav)
-              }
-              if (nav && main) {
-                document.body.addEventListener('click', closeNavIfClickOutside)
-              }
-            }
-
-            document.addEventListener("turbolinks:load", bindEventListeners);
-          </script>
+          <script src="/runtime.js"></script>
         </head>
         <body class="df">
           <nav class="bg-near-white pv4 overflow-auto lh-copy mw5 transition slide-out">
             <div class="pv3 pl3 pr4 w-100">
               <div class="mb1 ml3 overflow-hidden truncate">
-                <a href="/" title="Home" data-type="link">Home</a>
+                <a href="/" title="Home" target="_self" data-type="link">Home</a>
               </div>
               
     <div class="mb1 ml3">
       
           <div class="mb1 truncate">
-            <a href="/blog.html" title="Blog" data-type="link">Blog</a>
+            <a href="/blog.html" title="Blog" target="_self" data-type="link">Blog</a>
           </div>
         
       
@@ -76,7 +36,7 @@
     <div class="mb1 ml3">
       
           <div class="mb1 truncate">
-            <a href="/recommendations.html" title="Recommendations" data-type="link">Recommendations</a>
+            <a href="/recommendations.html" title="Recommendations" target="_self" data-type="link">Recommendations</a>
           </div>
         
       
@@ -85,7 +45,7 @@
     <div class="mb1 ml3">
       
           <div class="mb1 truncate">
-            <a href="/resume.html" title="Resume" data-type="link">Resume</a>
+            <a href="/resume.html" title="Resume" target="_self" data-type="link">Resume</a>
           </div>
         
       
@@ -99,7 +59,7 @@
                 <i class="material-icons mr1 gray">menu</i>
                 <span class="gray b">Menu</span>
               </div>
-              <h1 class="f1 lh-solid mv3" data-type="heading-1">Joseph Luck</h1><h5 class="normal f6 lh-copy gray" data-type="heading-5"><a href="/mailto:josephreubenluck@gmail.com.html" title="josephreubenluck@gmail.com" data-type="link">josephreubenluck@gmail.com</a></h5><h2 class="normal f3 lh-copy mv3" data-type="heading-2">👋 I&#39;m a product engineer based in London.</h2><p class="lh-copy mv3" data-type="paragraph">Lead front-end engineer at <a href="https://www.fantastec.game/" title="Fantastec" data-type="link">Fantastec</a>. Previously senior front-end engineer at <a href="https://www.goodlord.co/" title="Goodlord" data-type="link">Goodlord</a>.</p><p class="lh-copy mv3" data-type="paragraph">Passionate about design, user experience and functional programming. Expert at React and Typescript.</p><p class="lh-copy mv3" data-type="paragraph">Maker of <a href="https://josephluck.gitbooks.io/helix/" title="Helix" data-type="link">Helix</a>, <a href="https://github.com/josephluck/sparkdown" title="Sparkdown" data-type="link">Sparkdown</a>, <a href="https://github.com/josephluck/sparkdown" title="Keepies" data-type="link">Keepies</a>, <a href="https://github.com/josephluck/wtf" title="wtf.js" data-type="link">wtf.js</a>, <a href="https://github.com/josephluck/internote" title="Internote" data-type="link">Internote</a> and <a href="https://github.com/josephluck" title="many more" data-type="link">many more</a>.</p>
+              <h1 id=josephluck class="f1 lh-solid mv3" data-type="heading-1"><a style="color: inherit" href="/index.html#josephluck">Joseph Luck</a></h1><h5 id=ahrefmailtojosephreubenluckgmailcomhtmltitlejosephreubenluckgmailcomtarget_selfdatatypelinkjosephreubenluckgmailcoma class="normal f6 lh-copy gray" data-type="heading-5"><a style="color: inherit" href="/index.html#ahrefmailtojosephreubenluckgmailcomhtmltitlejosephreubenluckgmailcomtarget_selfdatatypelinkjosephreubenluckgmailcoma"><a href="/mailto:josephreubenluck@gmail.com.html" title="josephreubenluck@gmail.com" target="_self" data-type="link">josephreubenluck@gmail.com</a></a></h5><h2 id=i39maproductengineerbasedinlondon class="normal f3 lh-copy mv3" data-type="heading-2"><a style="color: inherit" href="/index.html#i39maproductengineerbasedinlondon">👋 I&#39;m a product engineer based in London.</a></h2><p class="lh-copy mv3" data-type="paragraph">Lead front-end engineer at <a href="https://www.fantastec.game/" title="Fantastec" target="_blank" data-type="link">Fantastec</a>. Previously senior front-end engineer at <a href="https://www.goodlord.co/" title="Goodlord" target="_blank" data-type="link">Goodlord</a>.</p><p class="lh-copy mv3" data-type="paragraph">Passionate about design, user experience and functional programming. Expert at React and Typescript.</p><p class="lh-copy mv3" data-type="paragraph">Maker of <a href="https://josephluck.gitbooks.io/helix/" title="Helix" target="_blank" data-type="link">Helix</a>, <a href="https://github.com/josephluck/sparkdown" title="Sparkdown" target="_blank" data-type="link">Sparkdown</a>, <a href="https://github.com/josephluck/keepies" title="Keepies" target="_blank" data-type="link">Keepies</a>, <a href="https://github.com/josephluck/wtf" title="wtf.js" target="_blank" data-type="link">wtf.js</a>, <a href="https://github.com/josephluck/internote" title="Internote" target="_blank" data-type="link">Internote</a> and <a href="https://github.com/josephluck" title="many more" target="_blank" data-type="link">many more</a>.</p>
             </div>
           </main>
         </body>
