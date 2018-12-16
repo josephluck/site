@@ -1,13 +1,12 @@
 {
   "name": "site",
-  "homepage": "http://josephluck.co.uk",
+  "homepage": "https://josephluck.co.uk",
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "predeploy": "npm run build && cp ./CNAME ./dist/CNAME",
-    "build": "sparkdown",
-    "deploy": "gh-pages -d dist",
-    "start": "npm run build && serve ./dist"
+    "now-build": "sparkdown",
+    "deploy": "now && now alias",
+    "dev": "npm run build && serve ./dist"
   },
   "repository": "git+https://github.com/josephluck/site.git",
   "author": "Joseph Luck <joseph.luck@sky.com>",
