@@ -28,7 +28,7 @@ const components = {
         {children}
       </a>
     ) : (
-      <Link href={href} passHref>
+      <Link href={href} passHref prefetch>
         <a>{children}</a>
       </Link>
     );

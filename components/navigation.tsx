@@ -73,7 +73,7 @@ export const Navigation = withRouter<{ className?: string }>(props => {
   return (
     <Wrapper className={className}>
       <LogoWrap>
-        <Link href="/" passHref>
+        <Link href="/" passHref prefetch>
           <a>
             <Logo>JL</Logo>{" "}
           </a>
@@ -82,17 +82,17 @@ export const Navigation = withRouter<{ className?: string }>(props => {
       <NavLink
         active={asPath === "/blog" || blogPostsPaths.indexOf(asPath) > -1}
       >
-        <Link href={blogPostsPaths[0]} passHref>
+        <Link href="/blog" passHref prefetch>
           <a>Blog</a>
         </Link>
       </NavLink>
       <NavLink active={asPath === "/resume"}>
-        <Link href="/resume" passHref>
+        <Link href="/resume" passHref prefetch>
           <a>Resume</a>
         </Link>
       </NavLink>
       <NavLink active={asPath === "/references"}>
-        <Link href="/references" passHref>
+        <Link href="/references" passHref prefetch>
           <a>References</a>
         </Link>
       </NavLink>
