@@ -5,10 +5,7 @@
   "description": "",
   "scripts": {
     "dev": "next",
-    "build": "next build",
-    "preexport": "npm run build",
-    "export": "next export",
-    "now-build": "sparkdown",
+    "now-build": "next build && next export",
     "deploy": "now && now alias"
   },
   "repository": "git+https://github.com/josephluck/site.git",

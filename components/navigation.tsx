@@ -58,14 +58,14 @@ const LogoWrap = styled.div`
 const blogPosts = [
   {
     name: "Typesafe react components",
-    path: "typesafe-react-components"
+    path: "/blog/typesafe-react-components/"
   },
   {
     name: "Productivity",
-    path: "productivity"
+    path: "/blog/productivity/"
   }
 ];
-const blogPostsPaths = blogPosts.map(post => `/blog/${post.path}`);
+const blogPostsPaths = blogPosts.map(post => post.path);
 
 export const Navigation = withRouter<{ className?: string }>(props => {
   const { asPath } = props.router;
@@ -80,18 +80,18 @@ export const Navigation = withRouter<{ className?: string }>(props => {
         </Link>
       </LogoWrap>
       <NavLink
-        active={asPath === "/blog" || blogPostsPaths.indexOf(asPath) > -1}
+        active={asPath === "/blog/" || blogPostsPaths.indexOf(asPath) > -1}
       >
         <Link href="/blog" passHref prefetch>
           <a>Blog</a>
         </Link>
       </NavLink>
-      <NavLink active={asPath === "/resume"}>
+      <NavLink active={asPath === "/resume/"}>
         <Link href="/resume" passHref prefetch>
           <a>Resume</a>
         </Link>
       </NavLink>
-      <NavLink active={asPath === "/references"}>
+      <NavLink active={asPath === "/references/"}>
         <Link href="/references" passHref prefetch>
           <a>References</a>
         </Link>
