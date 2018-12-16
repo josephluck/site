@@ -1,44 +1,58 @@
 import * as React from "react";
 import styled from "styled-components";
-import { symbols } from "./theme";
-import { HeadingTwo } from "./typography";
+import { theme } from "./theme";
 import Link from "next/link";
 import { withRouter } from "next/router";
-import { Collapse } from "react-collapse";
 
-const RouteHeading = styled(HeadingTwo)<{ active: boolean }>`
+const NavLink = styled.span<{ active: boolean }>`
+  font-size: ${theme.font._12.size};
+  line-height: ${theme.font._12.size};
+  font-weight: ${theme.fontWeight._500};
   color: ${props =>
-    props.active ? symbols.color.linkHover : symbols.color.text};
-  margin: ${symbols.spacing._16} 0 ${symbols.spacing._12};
-  line-height: 1.2;
-  &:first-of-type {
-    margin-top: 0;
-  }
+    props.active ? theme.color.linkHover : theme.color.linkTertiary};
   a {
     color: inherit;
   }
-`;
-
-const SubRoutes = styled.div`
-  padding: 0 ${symbols.spacing._8};
-`;
-
-const SubRoute = styled(RouteHeading)`
-  color: ${props =>
-    props.active ? symbols.color.linkHover : symbols.color.linkTertiary};
-  font-size: ${symbols.font._12.size};
-  margin: ${symbols.spacing._8} 0;
+  margin-right: ${theme.spacing._8};
+  @media (min-width: ${theme.media.tablet}) {
+    margin-right: ${theme.spacing._16};
+  }
 `;
 
 const Wrapper = styled.div`
-  padding: ${symbols.spacing._32};
-  background: ${symbols.color.navigationBackground};
-  height: 100%;
-  border-right: solid 1px ${symbols.color.border};
+  position: sticky;
+  top: 0;
+  background: ${theme.color.navigationBackground};
+  border-bottom: solid 1px ${theme.color.border};
+  padding: ${theme.spacing._8} ${theme.spacing._16};
+  display: flex;
+  align-items: center;
+
+  @media (min-width: ${theme.media.tablet}) {
+    padding: ${theme.spacing._8} ${theme.spacing._32};
+    display: block;
+  }
 `;
 
-const CollapseInner = styled.div`
-  overflow: hidden;
+const Logo = styled.span`
+  font-size: ${theme.font._12.size};
+  line-height: ${theme.font._12.size};
+  text-transform: uppercase;
+  font-weight: ${theme.fontWeight._700};
+  letter-spacing: 2px;
+  color: ${theme.color.text};
+  margin-right: ${theme.spacing._16};
+  @media (min-width: ${theme.media.tablet}) {
+    margin-right: ${theme.spacing._32};
+  }
+`;
+
+const LogoWrap = styled.div`
+  flex: 1;
+
+  @media (min-width: ${theme.media.tablet}) {
+    display: inline-block;
+  }
 `;
 
 const blogPosts = [
@@ -58,37 +72,30 @@ export const Navigation = withRouter<{ className?: string }>(props => {
   const { className = "" } = props;
   return (
     <Wrapper className={className}>
-      <RouteHeading active={asPath === "/"}>
+      <LogoWrap>
         <Link href="/" passHref>
-          <a>Home</a>
+          <a>
+            <Logo>JL</Logo>{" "}
+          </a>
         </Link>
-      </RouteHeading>
-      <RouteHeading
+      </LogoWrap>
+      <NavLink
         active={asPath === "/blog" || blogPostsPaths.indexOf(asPath) > -1}
       >
         <Link href={blogPostsPaths[0]} passHref>
           <a>Blog</a>
         </Link>
-      </RouteHeading>
-      <Collapse
-        isOpened={asPath === "/blog" || blogPostsPaths.indexOf(asPath) > -1}
-        hasNestedCollapse
-      >
-        <CollapseInner>
-          <SubRoutes>
-            {blogPosts.map(post => (
-              <SubRoute
-                active={asPath === `/blog/${post.path}`}
-                key={post.path}
-              >
-                <Link href={`/blog/${post.path}`} passHref>
-                  <a>{post.name}</a>
-                </Link>
-              </SubRoute>
-            ))}
-          </SubRoutes>
-        </CollapseInner>
-      </Collapse>
+      </NavLink>
+      <NavLink active={asPath === "/resume"}>
+        <Link href="/resume" passHref>
+          <a>Resume</a>
+        </Link>
+      </NavLink>
+      <NavLink active={asPath === "/references"}>
+        <Link href="/references" passHref>
+          <a>References</a>
+        </Link>
+      </NavLink>
     </Wrapper>
   );
 });

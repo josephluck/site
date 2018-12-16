@@ -1,4 +1,4 @@
-import { symbols } from "../components/theme";
+import { theme } from "../components/theme";
 import * as React from "react";
 import { ServerStyleSheet } from "styled-components";
 import Document, { Head, Main, NextScript } from "next/document";
@@ -26,13 +26,22 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta name="theme-color" content={symbols.color.border} />
+          <meta name="theme-color" content={theme.color.border} />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
           {this.props.styles}
 
           <link
             type="text/css"
             rel="stylesheet"
             href="https://rsms.me/inter/inter-ui.css"
+          />
+          <link type="text/css" rel="stylesheet" href="/static/prism.css" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Inconsolata"
+            rel="stylesheet"
           />
         </Head>
 

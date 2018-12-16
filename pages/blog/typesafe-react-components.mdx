@@ -4,7 +4,7 @@ A colleague of mine showed me a neat little unknown feature of Typescript in com
 
 Generic React components are components that take in a [generic data shape](https://www.typescriptlang.org/docs/handbook/generics.html) and expose props that operate upon that data shape. For example, a carousel component that takes in an array of a data and exposes a [render-prop](https://reactjs.org/docs/render-props.html) to render each slide within the carousel:
 
-```
+```tsx
 // slider.tsx
 import React from 'react'
 
@@ -34,8 +34,8 @@ interface Cat {
 }
 
 const cats: Cat[] = [
-  { name: 'Cute cat', image: 'cure-cat.png' },
-  { name: 'Evil cat', image: 'evil-cat.png }
+  { name: 'Cute cat', image: 'cute-cat.png' },
+  { name: 'Evil cat', image: 'evil-cat.png' }
 ]
 
 export default () {
