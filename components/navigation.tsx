@@ -8,7 +8,7 @@ import { Collapse } from "react-collapse";
 
 const RouteHeading = styled(HeadingTwo)<{ active: boolean }>`
   color: ${props =>
-    props.active ? symbols.color.linkHover : symbols.color.link};
+    props.active ? symbols.color.linkHover : symbols.color.text};
   transition: ${symbols.transition.standard};
   &:hover {
     color: ${symbols.color.linkHover};
@@ -26,12 +26,18 @@ const SubRoutes = styled.div`
 const SubRoute = styled(RouteHeading)`
   color: ${props =>
     props.active ? symbols.color.linkHover : symbols.color.linkTertiary};
+  font-size: ${symbols.font._14.size};
+  line-height: ${symbols.font._14.lineHeight};
 `;
 
 const blogPosts = [
   {
     name: "Typesafe react components",
     path: "typesafe-react-components"
+  },
+  {
+    name: "Productivity",
+    path: "productivity"
   }
 ];
 const blogPostsPaths = blogPosts.map(post => `/blog/${post.path}`);
@@ -54,6 +60,7 @@ export const Navigation = withRouter<{}>(props => {
       </RouteHeading>
       <Collapse
         isOpened={asPath === "/blog" || blogPostsPaths.indexOf(asPath) > -1}
+        hasNestedCollapse
       >
         <SubRoutes>
           {blogPosts.map(post => (

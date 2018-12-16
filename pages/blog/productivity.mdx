@@ -1,0 +1,31 @@
+Read about how our small engineering achieves productivity whilst working on multiple products at the same time.
+
+### Language and tooling
+
+We're using [React](https://reactjs.org/), [Next.js](https://nextjs.org/) and [Styled Components](https://www.styled-components.com/) all written in [Typescript](https://www.typescriptlang.org/).
+
+Out of all the tools we're using, I would say that Typescript brings the biggest productivity boost since it allows engineers to write code iteratively with the ability to safely refactor and improve later. Both React and Styled Components work very well out of the box with Typescript. As a bonus, [Visual Studio Code](https://code.visualstudio.com/) has fantastic built-in Typescript support.
+
+### Project set up
+
+Fantastec has several web products built on top of the same technology stack. As a result, we've been able to share a fair amount of project boilerplate, configuration, UI components and utilities between projects.
+
+To facilitate the sharing of code safely and easily, we're using [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) to manage packages of code between products.
+
+### Communicating with the back-end
+
+One of the biggest sources of lost productivity I have seen in engineering teams is due to a poor contract between front-end and back-end engineers when it comes to HTTP communication. The problem is two-fold. First, API [data transfer objects](https://stackoverflow.com/questions/1051182/what-is-data-transfer-object) are often agreed on informally (on slack, in the office etc) but are rarely enforced in the code leading to inconsistencies over time or [defensive programming](https://medium.com/web-engineering-vox/the-art-of-defensive-programming-6789a9743ed4). Second, front-end engineers are often blocked when they build a new feature, having to wait for the back-end team to finish the APIs that are required to power the feature.
+
+At Fantastec, we've attempted to tackle both of these issues with one approach: defining data transfer objects in Typescript on the front-end and transpiling them in to C# view models for the back-end to use. From these DTOs the front-end also creates a simple mock-server using a combination of [JSON server](https://github.com/typicode/json-server) and [Faker](https://github.com/marak/Faker.js/). The result is a fully autonomous front-end team that can finish features as if the real API exists.
+
+### Working with designers
+
+Working with designers is a topic that warrants it's own series of mini posts, however I wanted to share one particular aspect of the process that Fantastec has iterated upon: "treat everything as a component". Designs are completed in [Sketch](https://www.sketchapp.com/) and presented via [Invision](https://www.invisionapp.com). Front-end engineers pick up the designs and implement them using React and Styled Components inside a [Storybook](https://storybook.js.org/) in isolation from the main application. Once the components are finished, they are placed inside the application and tweaked with designers during a sign-off process.
+
+The key point here is that we're building our UI components inside Storybook in isolation from the main application. The Storybook is published to a public URL for the purpose of documenting existing components when working on new interfaces.
+
+### Effective planning
+
+As with any productive team, planning is as important as execution and tooling.
+
+Since I started Fantastec, the product team has grown four fold and continues to grow at a rapid pace. Consequently, we've had to invest time in our process. We've settled on two week "focussed" sprints where each sprint has a consistent theme. This helps everyone stay in the same context and encourages collaboration and pair-programming.

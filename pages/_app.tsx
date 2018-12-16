@@ -19,6 +19,12 @@ const GlobalStyle = styled.createGlobalStyle`
     padding: 0;
     font-family: "Inter UI", sans-serif;
   }
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+  }
 `;
 
 export default class MyApp extends App {
