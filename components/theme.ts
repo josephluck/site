@@ -11,23 +11,23 @@ export const symbols = {
     },
     _14: {
       size: rem(14),
-      lineHeight: rem(17)
+      lineHeight: rem(18)
     },
     _16: {
       size: rem(16),
-      lineHeight: rem(19)
+      lineHeight: rem(21)
     },
     _18: {
       size: rem(18),
-      lineHeight: rem(21)
+      lineHeight: rem(24)
     },
     _24: {
       size: rem(24),
-      lineHeight: rem(28)
+      lineHeight: rem(30)
     },
     _26: {
       size: rem(26),
-      lineHeight: rem(30)
+      lineHeight: rem(34)
     }
   },
   fontWeight: {
@@ -42,10 +42,15 @@ export const symbols = {
     link: "#2C92DD",
     linkHover: "#2A59B9",
     linkTertiary: "#BAC5CB",
-    border: "#BAC5CB"
+    border: "#BAC5CB",
+    navigationBackground: "#FFFFFF"
   },
   spacing: {
-    _16: rem(16)
+    _4: rem(4),
+    _8: rem(8),
+    _12: rem(12),
+    _16: rem(16),
+    _32: rem(32)
   },
   transition: {
     standard: "all 200ms ease"
