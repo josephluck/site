@@ -2,18 +2,18 @@ import styled from "styled-components";
 import { theme } from "./theme";
 
 export const HeadingOne = styled.h1`
-  font-size: ${theme.font._24.size};
-  line-height: ${theme.font._24.lineHeight};
+  font-size: ${theme.font._28.size};
+  line-height: ${theme.font._28.lineHeight};
   font-weight: ${theme.fontWeight._600};
 `;
 export const HeadingTwo = styled.h2`
-  font-size: ${theme.font._18.size};
-  line-height: ${theme.font._18.lineHeight};
+  font-size: ${theme.font._22.size};
+  line-height: ${theme.font._22.lineHeight};
   font-weight: ${theme.fontWeight._500};
 `;
 export const HeadingThree = styled.h3`
-  font-size: ${theme.font._16.size};
-  line-height: ${theme.font._16.lineHeight};
+  font-size: ${theme.font._18.size};
+  line-height: ${theme.font._18.lineHeight};
   font-weight: ${theme.fontWeight._500};
 `;
 export const HeadingFour = styled.h4`
@@ -43,6 +43,18 @@ export const ContentHeadingFour = styled(HeadingFour)`
 `;
 export const ContentParagraph = styled(Paragraph)`
   margin: ${theme.spacing._16} 0;
+  code {
+    font-family: "Inconsolata", monospace;
+    font-size: ${theme.font._12.size};
+    line-height: ${theme.font._12.size};
+    border: solid 1px ${theme.color.border};
+    border-radius: 6px;
+    padding: ${theme.spacing._2};
+  }
+`;
+
+export const Code = styled.code`
+  font-family: "Inconsolata", monospace;
 `;
 
 export const Hr = styled.hr`

@@ -34,7 +34,8 @@ const components = {
     );
   },
   strong: ({ children }) => <Base.Strong>{children}</Base.Strong>,
-  blockquote: ({ children }) => <Base.BlockQuote>{children}</Base.BlockQuote>
+  blockquote: ({ children }) => <Base.BlockQuote>{children}</Base.BlockQuote>,
+  code: ({ children }) => <Base.Code>{children}</Base.Code>
 };
 
 const GlobalStyles = styled.createGlobalStyle`
@@ -64,14 +65,6 @@ const GlobalStyles = styled.createGlobalStyle`
   img {
     width: 100%;
     height: auto;
-  }
-  p,
-  code,
-  h4 {
-    margin: ${theme.spacing._16} 0;
-  }
-  strong {
-    font-weight: ${theme.fontWeight._600};
   }
   p {
     font-size: ${theme.font.paragraph.size};
@@ -197,6 +190,7 @@ const GlobalStyles = styled.createGlobalStyle`
   .token.function,
   .language-json .token.property {
     color: ${theme.color.syntaxClassName};
+    font-weight: ${theme.fontWeight._700};
   }
 
   .token.tag,

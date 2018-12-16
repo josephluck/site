@@ -25,9 +25,9 @@ export const theme = {
       size: rem(18),
       lineHeight: rem(24)
     },
-    _24: {
-      size: rem(24),
-      lineHeight: rem(30)
+    _22: {
+      size: rem(22),
+      lineHeight: rem(28)
     },
     _26: {
       size: rem(26),
@@ -75,6 +75,7 @@ export const theme = {
     syntaxLineNumberBorder: "#E6E6E6"
   },
   spacing: {
+    _2: rem(2),
     _4: rem(4),
     _8: rem(8),
     _12: rem(12),

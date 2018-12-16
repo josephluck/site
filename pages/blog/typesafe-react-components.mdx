@@ -63,7 +63,7 @@ It's clear that the `<Slider />` component is designed to be flexible enough to 
 
 We can change our `<Slider />` component to take a generic type argument:
 
-```
+```tsx
 // slider.tsx
 import React from 'react'
 
@@ -93,7 +93,7 @@ Now it's set up, let's explore how this can be used in our app.
 
 ## A nieve approach
 
-```
+```tsx
 // app.tsx
 interface Cat {
   name: string,
@@ -128,7 +128,7 @@ By assigning a new constant, `const CatSlider = Slider<Cat>`, we've passed the `
 
 It would be much nicer if we didn't have to use an intermediary constant just to enable type-safety on our `CatSlider`. Well, a little known feature of Typescript with React allows us to pass generic type arguments directly in to React components:
 
-```
+```tsx
 // app.tsx
 interface Cat {
   name: string,
