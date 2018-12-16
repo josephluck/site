@@ -38,7 +38,6 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://rsms.me/inter/inter-ui.css"
           />
-          <link type="text/css" rel="stylesheet" href="/static/prism.css" />
           <link
             href="https://fonts.googleapis.com/css?family=Inconsolata"
             rel="stylesheet"
