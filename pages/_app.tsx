@@ -24,7 +24,7 @@ const components = {
   hr: ({ children }) => <Base.Hr>{children}</Base.Hr>,
   a: ({ children, href }) => {
     return href.indexOf("http") > -1 ? (
-      <a href={href} target="_blank">
+      <a href={href} target="_blank" rel="noopener">
         {children}
       </a>
     ) : (
@@ -47,6 +47,7 @@ const GlobalStyles = styled.createGlobalStyle`
   html,
   body {
     font-weight: ${theme.fontWeight._300};
+    font-display: fallback;
     font-size: 20px;
     line-height: 1.5em;
     margin: 0;

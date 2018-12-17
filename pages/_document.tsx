@@ -26,13 +26,16 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta name="theme-color" content={theme.color.border} />
+          <meta name="theme-color" content="#000" />
+          <title>Joseph Luck - Product Engineer</title>
+          <meta
+            name="description"
+            content="A software engineer with a profound interest in design, user experience and functional programming in languages such as JavaScript and TypeScript."
+          />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          {this.props.styles}
-
           <link
             type="text/css"
             rel="stylesheet"
@@ -42,6 +45,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Inconsolata"
             rel="stylesheet"
           />
+          {this.props.styles}
         </Head>
 
         <body>

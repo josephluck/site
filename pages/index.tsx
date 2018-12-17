@@ -27,11 +27,11 @@ export default function() {
       </HeadingTwo>
       <Paragraph style={{ marginBottom: theme.spacing._16 }}>
         Lead front-end engineer at{" "}
-        <a href="https://www.fantastec.game/" target="_blank">
+        <a href="https://www.fantastec.game/" target="_blank" rel="noopener">
           Fantastec
         </a>
         . Previously senior front-end engineer at{" "}
-        <a href="https://www.goodlord.co/" target="_blank">
+        <a href="https://www.goodlord.co/" target="_blank" rel="noopener">
           Goodlord
         </a>
         .
@@ -42,23 +42,39 @@ export default function() {
       </Paragraph>
       <Paragraph>
         Maker of{" "}
-        <a href="https://josephluck.gitbooks.io/helix/" target="_blank">
+        <a
+          href="https://josephluck.gitbooks.io/helix/"
+          target="_blank"
+          rel="noopener"
+        >
           Helix
         </a>
         ,{" "}
-        <a href="https://github.com/josephluck/sparkdown" target="_blank">
+        <a
+          href="https://github.com/josephluck/sparkdown"
+          target="_blank"
+          rel="noopener"
+        >
           Sparkdown
         </a>
         , <a href="https://github.com/josephluck/keepies">Keepies</a>,{" "}
-        <a href="https://github.com/josephluck/wtf" target="_blank">
+        <a
+          href="https://github.com/josephluck/wtf"
+          target="_blank"
+          rel="noopener"
+        >
           wtf.js
         </a>
         ,{" "}
-        <a href="https://github.com/josephluck/internote" target="_blank">
+        <a
+          href="https://github.com/josephluck/internote"
+          target="_blank"
+          rel="noopener"
+        >
           Internote
         </a>{" "}
         and{" "}
-        <a href="https://github.com/josephluck" target="_blank">
+        <a href="https://github.com/josephluck" target="_blank" rel="noopener">
           many more
         </a>
         .
