@@ -39,7 +39,7 @@ export const ContentHeadingThree = styled(HeadingThree)`
   margin: ${theme.spacing._32} 0 ${theme.spacing._16} 0;
 `;
 export const ContentHeadingFour = styled(HeadingFour)`
-  margin: ${theme.spacing._24} 0 ${theme.spacing._16} 0;
+  margin: ${theme.spacing._32} 0 ${theme.spacing._16} 0;
 `;
 export const ContentParagraph = styled(Paragraph)`
   margin: ${theme.spacing._16} 0;
