@@ -18,6 +18,9 @@ const components = {
   h3: ({ children }) => (
     <Base.ContentHeadingThree>{children}</Base.ContentHeadingThree>
   ),
+  h4: ({ children }) => (
+    <Base.ContentHeadingFour>{children}</Base.ContentHeadingFour>
+  ),
   p: ({ children }) => (
     <Base.ContentParagraph>{children}</Base.ContentParagraph>
   ),
@@ -82,6 +85,10 @@ const GlobalStyles = styled.createGlobalStyle`
   code[class*="language-"],
   pre[class*="language-"] {
     color: ${theme.color.syntaxPunctuation};
+    background: ${theme.color.blockQuoteBackground};
+    border: solid 1px ${theme.color.border};
+    border-radius: 6px;
+    padding: ${theme.spacing._8};
     font-family: "Inconsolata", monospace;
     direction: ltr;
     text-align: left;

@@ -1,0 +1,297 @@
+# Creating a Next.js monorepo project with Typescript
+
+In this post, we'll be exploring how to set up a [Next.js](https://nextjs.org/) project taking advantage of both [yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [Typescript](https://www.typescriptlang.org/).
+
+We'll set up a project from scratch, consisting of an application package, an API package and a shared component library package. After all of that, we'll add Storybook and discuss deployment strategies. The goal of all of this is to be able to make source file changes in one package that instant hot-reloads our Next.js project without having to run any manual build tasks, pull from npm, github or otherwise.
+
+This post assumes you're already familiar with npm, typescript, next.js and react.
+
+It's a long post, so grab a coffee and a fresh terminal.
+
+## Some explanations
+
+#### Why a mono repository?
+
+A monorepo project structure is a popular choice for projects that benefit from sharing code such as open-source projects that publish many libraries from the same codebase such as [Babel](https://github.com/babel/babel) or products that have many deployable applications like [Spectrum](https://github.com/withspectrum/spectrum) does.
+
+#### Next.js
+
+This post focusses specifically on Next.js since it's a popular opinionated framework that provides a simple tool and runtime over the complicated developer tooling necessary to create modern front-end applications.
+
+However, since Next.js is opinionated, it can be tricky pairing it with other libraries and project-specific configuration, and it's even more difficult to use within a monorepo set up.
+
+#### Typescript
+
+Although not a requirement for Next.js monorepo projects, Typescript is a great tool, and there are some specific configurations needed to get Typescript to work well with this kind of project set up.
+
+## Setting things up
+
+We'll be using [Yarn](https://yarnpkg.com/lang/en/) as our dependency management tool and task runner. If you don't have it installed, you can install it using npm:
+
+```bash
+npm i -g yarn
+```
+
+> You may need to use `sudo` if you get a permission error
+
+Go ahead and create a new directory for the monorepo:
+
+```bash
+mkdir acme
+cd acme
+```
+
+Initialize the monorepo with `yarn`:
+
+```bash
+yarn init
+```
+
+Accept the default options and open up the project in your favorite text editor.
+
+## Enabling workspaces
+
+Yarn requires `"private"` to be set to `true` in `/package.json`, you can read more about why [here](https://yarnpkg.com/lang/en/docs/workspaces/#toc-how-to-use-it). Let's go ahead and make that change:
+
+```json
+{
+  ...
+  "private": true
+  ...
+}
+```
+
+## Setting up our first workspace
+
+We'll begin by setting up our main application, a simple blog website:
+
+```bash
+mkdir blog
+cd blog
+yarn init
+```
+
+When yarn prompts, accept the default options again and open up the `/blog/package.json` file that has been created, we'll need to change it's `"name"` property to enable it to be used in our monorepo:
+
+```json
+{
+  ...
+  "name": "@acme/blog"
+  ...
+}
+```
+
+We've changed the `"name"` property to `"@acme/blog"` where `@acme` refers to the package's [scope](https://docs.npmjs.com/about-scopes). We'll use `@acme` as the scope for all of our monorepo packages in this project.
+
+## Telling yarn that we've got a new package
+
+Yarn will read the `"workspaces"` key in the top-level `/package.json` file in your project to lookup workspaces. Let's go ahead and add our new workspace:
+
+```json
+{
+  ...
+  "workspaces": ["blog"]
+  ...
+}
+```
+
+> ⚠️ We tell yarn where to find our workspace in the directory structure rather than what the workspace "name" is.
+
+We'll pick up workspaces again in a bit.
+
+## Building our blog application
+
+We're ready to build out our blog application. Make sure your current working directory is `blog` and install a few dependencies:
+
+```bash
+yarn add next
+yarn add react
+yarn add react-dom
+yarn add @zeit/next-typescript
+yarn add typescript
+yarn add @types/next
+yarn add @types/react
+yarn add @types/react-dom
+```
+
+> If you've been following along correctly, you'll notice that there's a `yarn.lock` file at the root of the repository.
+
+### Setting up development scripts
+
+Let's add a couple of scripts to `/blog/package.json` to allow us to develop the application:
+
+```json
+{
+  ...
+  "scripts": {
+    "dev": "next",
+    "build": "next build"
+  }
+  ...
+}
+```
+
+> If you run `yarn dev` you'll see the error "Couldn't find a `pages` directory. Please create one under the project root".
+
+### Creating our first page
+
+Next's router will serve an exported React component in `/pages/index` when visiting the application's `/` route. Let's create it:
+
+```bash
+mkdir pages
+touch pages/index.tsx
+```
+
+> Note the .tsx file - this is a typescript react file.
+
+Open up `/blog/pages/index.tsx` in your text editor and add the following:
+
+```typescript
+import * as React from "react";
+import { NextStatelessComponent } from "next";
+import Link from "next/link";
+
+interface Props {
+  posts: any[];
+}
+
+const BlogIndex: NextStatelessComponent<Props> = ({ posts }) => {
+  return (
+    <div>
+      <h1>Acme's blog</h1>
+      <ul>
+        {posts.map(post => (
+          <li key={post.id}>
+            <Link passHref href={`/${post.id}`}>
+              <a>{post.title}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+BlogIndex.getInitialProps = async () => {
+  const posts = [
+    { id: 1, title: "10 great drinking games" },
+    { id: 2, title: "3 amazing hangover antidotes!" }
+  ];
+  return { posts };
+};
+
+export default BlogIndex;
+```
+
+> For now, we've used simple HTML elements for the design and hard-coded data. However, we'll replace these when we build our shared component library and API later.
+
+Go ahead and run the app:
+
+```bash
+yarn dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000).
+
+## 😕
+
+We've got a `404` but we were expecting our post listing... What's up?
+
+## Typescript, babel, next, oh my!
+
+So clearly there's some work to be done and welcome to the meat of the post.
+
+### Adding typescript
+
+We've already installed `typescript` in our `blog` workspace, but we haven't created a `tsconfig.json` file yet. We'll be writing our other workspaces in Typescript as well and it's a good idea to share a base configuration so let's create a root level `/tsconfig.json` with the following:
+
+```json
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "esnext"
+  }
+}
+```
+
+> This typescript configuration will be shared between all of our workspaces.
+
+Now we can extend it in `/blog/tsconfig.json` workspace:
+
+```json
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": ["dom", "es2017"]
+  }
+}
+```
+
+> This typescript configuration will inherit the base configuration and add specific configuration for our blog project.
+
+### Transpiling via babel
+
+We need to create a `/babel.config.js` file to instruct `babel` to transpile Typescript files for us.
+
+Make a `babel.config.js` file at the root of the repository so that it is shared between our `blog` workspace and the other workspaces we'll be making later in the post:
+
+```javascript
+module.exports = function(api) {
+  api.cache(true);
+
+  const presets = [
+    "next/babel",
+    ["@babel/preset-typescript", { isTSX: true, allExtensions: true }]
+  ];
+
+  const plugins = [];
+
+  return {
+    presets,
+    plugins
+  };
+};
+```
+
+> You can read more about the `babel.config.js` file [here](https://babeljs.io/docs/en/configuration#what-s-your-use-case).
+
+### Letting Next.js know what we've done
+
+Lastly, let's tie everything together via `/blog/next.config.js`:
+
+```javascript
+const path = require("path");
+const withTypescript = require("@zeit/next-typescript");
+const withCustomBabelConfigFile = require("next-plugin-custom-babel-config");
+
+module.exports = withCustomBabelConfigFile(
+  withTypescript({
+    babelConfigFile: path.resolve("../babel.config.js")
+  })
+);
+```
+
+You'll notice a new dependency `next-plugin-custom-babel-config`, ensure you're in the `blog` directory and install it:
+
+```bash
+yarn add next-plugin-custom-babel-config
+```
+
+This plugin is required to [monkey patch](https://en.wikipedia.org/wiki/Monkey_patch) `next-babel-loader` to use our shared `babel.config.js` file.
+
+### And...
+
+We're done! 🎉🎉🎉
+
+```bash
+yarn dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000).
+
+## On to the API workspace
