@@ -368,7 +368,7 @@ Similar to the blog workspace, add TypeScript configuration to our API workspace
 
 #### Creating the API
 
-We'll only need a single `index.ts` file for our simple fake API. Write the following to `/api/index.ts`:
+We'll only need a single `/api/index.ts` file for our simple fake API:
 
 ```typescript
 import * as express from "express";
@@ -402,7 +402,7 @@ app.listen(5000);
 console.log("API started on port 5000");
 ```
 
-> Note that we export the `Models` namespace of types. We'll use these in the `blog` workspace later.
+> The `Models` namespace of types is exported so that we can type other workspaces that consume the API.
 
 #### Setting up scripts
 
@@ -424,7 +424,7 @@ Go ahead and run the app:
 yarn start
 ```
 
-Visit [http://localhost:5000/posts](http://localhost:5000/posts).
+Visit [http://localhost:5000/posts](http://localhost:5000/posts) to see a listing of random blog posts.
 
 #### API client library
 
@@ -532,7 +532,7 @@ Visit [http://localhost:3000](http://localhost:3000) to inspect our API-driven b
 
 Up till now, we've set up Babel to transpile the TypeScript in our workspaces via a root level `/babel.config.js`, but Babel ignores `node_modules` by default. The blog workspace needs to transpile the the `@acme/api` workspace (which resides as a symlink in the root level `/node_modules/@acme/api`).
 
-Luckily for us, there's another Next.js plugin we can use called [`next-plugin-transpile-modules`](https://www.npmjs.com/package/next-plugin-transpile-modules) that we can take advantage of to add transpilation of specific `node_modules`. Let's install it from the `/blog` directory:
+Luckily for us, there's another Next.js plugin we can use called [next-plugin-transpile-modules](https://www.npmjs.com/package/next-plugin-transpile-modules) that we can take advantage of to add transpilation of specific `node_modules`. Let's install it from the `/blog` directory:
 
 ```bash
 yarn add next-plugin-transpile-modules
@@ -716,7 +716,7 @@ export default BlogIndex;
 
 ---
 
-# Hot reloading
+## Hot reloading
 
 We're not quite done yet! If you run the development server inside the `blog` application and make a change to a component in the `design` workspace, hot reloading does not work. The reason for this is that Webpack does not expose a configuration option for resolving symlinks to their full path, which means that changes inside the source directory do not trigger a reload in WebpackDevServer. You can read more in [this issue](https://github.com/webpack/watchpack/issues/61).
 
@@ -732,6 +732,14 @@ To fix this, we'll add a _super hacky_ `postinstall` script in our root level `p
 }
 ```
 
-# Wrapping up
+> 🤮 Yuck!
 
-So this post has been full of tricks, hacks and monkey patches, however once everything's set up, it's a truly delightful development experience.
+---
+
+## Wrapping up
+
+This post has been full of tricks, hacks and monkey patches, however once everything's set up, working with Next.js and workspaces is a truly delightful developer experience.
+
+I've set up an [example repository](https://github.com/josephluck/next-typescript-monorepo) that accompanies this post which you can use as a boilerplate if you need to.
+
+If you have any questions or problems, feel free to [open an issue](https://github.com/josephluck/site/issues) in GitHub or catch me on [Spectrum](https://spectrum.chat/users/josephluck) and I'll do my best to help you out.
