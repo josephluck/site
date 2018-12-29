@@ -6,6 +6,9 @@ import { theme } from "../components/theme";
 import { MDXProvider } from "@mdx-js/tag";
 import * as Base from "../components/base";
 import Link from "next/link";
+import { GA_CODE } from "../env";
+import Router from "next/router";
+import Head from "next/head";
 
 // Map HTML tags to React components
 const components = {
@@ -246,6 +249,19 @@ const Content = styled.default.div`
 `;
 
 export default class MyApp extends App {
+  componentDidMount() {
+    Router.events.on("routeChangeStart", this.trackPage);
+  }
+
+  trackPage = (url: string) => {
+    if (window && (window as any).gtag) {
+      (window as any).gtag("config", GA_CODE, {
+        page_title: document.title,
+        page_path: url
+      });
+    }
+  };
+
   render() {
     const { Component, pageProps } = this.props;
     return (
@@ -253,6 +269,9 @@ export default class MyApp extends App {
         <GlobalStyles />
         <MDXProvider components={components}>
           <Layout>
+            <Head>
+              <title>Joseph Luck - Product Engineer</title>
+            </Head>
             <Navigation />
             <Content>
               <Component {...pageProps} />

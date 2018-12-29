@@ -1,7 +1,7 @@
-import { theme } from "../components/theme";
 import * as React from "react";
 import { ServerStyleSheet } from "styled-components";
 import Document, { Head, Main, NextScript } from "next/document";
+import { GA_CODE } from "../env";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -27,7 +27,6 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <meta name="theme-color" content="#000" />
-          <title>Joseph Luck - Product Engineer</title>
           <meta
             name="description"
             content="A software engineer with a profound interest in design, user experience and functional programming in languages such as JavaScript and TypeScript."
@@ -51,6 +50,21 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_CODE}`}
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', ${GA_CODE});
+              `
+            }}
+          />
         </body>
       </html>
     );
