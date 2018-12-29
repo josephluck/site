@@ -59,7 +59,7 @@ export const theme = {
     navigationBackground: "#FFFFFF",
     blockQuoteBackground: "#F6F6F6",
     blockQuoteBorder: "#E6E6E6",
-    blockQuoteText: "#6c757a",
+    blockQuoteText: "#808b91",
     syntaxPunctuation: "#373B3F",
     syntaxComment: "#9CA7AD",
     syntaxSelectionBg: "#9CA7AD",
@@ -80,6 +80,7 @@ export const theme = {
     _8: rem(8),
     _12: rem(12),
     _16: rem(16),
+    _24: rem(24),
     _32: rem(32)
   },
   transition: {

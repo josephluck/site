@@ -30,7 +30,7 @@ export const Strong = styled.strong`
 `;
 
 export const ContentHeadingOne = styled(HeadingOne)`
-  margin: ${theme.spacing._32} 0 ${theme.spacing._16} 0;
+  margin: ${theme.spacing._32} 0;
 `;
 export const ContentHeadingTwo = styled(HeadingTwo)`
   margin: ${theme.spacing._32} 0 ${theme.spacing._16} 0;
@@ -53,6 +53,7 @@ export const ContentParagraph = styled(Paragraph)`
   }
 `;
 
+// NB: only applies to formatted code blocks i.e. ```[code]```
 export const Code = styled.code`
   font-family: "Inconsolata", monospace;
 `;
@@ -69,9 +70,9 @@ export const BlockQuote = styled.blockquote`
   padding-left: ${theme.spacing._8};
   font-size: ${theme.font._12.size};
   line-height: ${theme.font._14.lineHeight};
-  font-weight: ${theme.fontWeight._400};
+  font-weight: ${theme.fontWeight._500};
   color: ${theme.color.blockQuoteText};
-  font-style: italic;
+  font-style: normal;
   * {
     margin: 0;
     font-size: inherit;
