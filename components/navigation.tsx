@@ -13,9 +13,9 @@ const NavLink = styled.span<{ active: boolean }>`
   a {
     color: inherit;
   }
-  margin-right: ${theme.spacing._8};
+  margin-left: ${theme.spacing._8};
   @media (min-width: ${theme.media.tablet}) {
-    margin-right: ${theme.spacing._16};
+    margin-left: ${theme.spacing._16};
   }
 `;
 
@@ -41,9 +41,9 @@ const Logo = styled.span`
   font-weight: ${theme.fontWeight._700};
   letter-spacing: 2px;
   color: ${theme.color.text};
-  margin-right: ${theme.spacing._16};
+  margin-right: ${theme.spacing._8};
   @media (min-width: ${theme.media.tablet}) {
-    margin-right: ${theme.spacing._32};
+    margin-right: ${theme.spacing._16};
   }
 `;
 
@@ -54,18 +54,6 @@ const LogoWrap = styled.div`
     display: inline-block;
   }
 `;
-
-const blogPosts = [
-  {
-    name: "Typesafe react components",
-    path: "/blog/typesafe-react-components/"
-  },
-  {
-    name: "Productivity",
-    path: "/blog/productivity/"
-  }
-];
-const blogPostsPaths = blogPosts.map(post => post.path);
 
 export const Navigation = withRouter<{ className?: string }>(props => {
   const { asPath } = props.router;
@@ -79,9 +67,7 @@ export const Navigation = withRouter<{ className?: string }>(props => {
           </a>
         </Link>
       </LogoWrap>
-      <NavLink
-        active={asPath === "/blog/" || blogPostsPaths.indexOf(asPath) > -1}
-      >
+      <NavLink active={asPath.includes("/blog")}>
         <Link href="/blog" passHref prefetch>
           <a>Blog</a>
         </Link>
