@@ -1,0 +1,19 @@
+# Lazy loading images with React
+
+In this post we will be exploring a technique for lazy loading images in React that makes use of the [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) browser API.
+
+The end goal is to build a drop-in replacement for the `<img />` tag that defers loading the actual image file until it's needed.
+
+#### TLDR?
+
+If you prefer to jump straight in to the code, you can visit the [final implementation on GitHub](https://github.com/josephluck/afterimage).
+
+---
+
+## Why?
+
+Defering the load of off-screen images can [significantly improve page performance](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/), and since there's little to no detriment to the user experience, there's really no reason not to.
+
+---
+
+## IntersectionObserver
