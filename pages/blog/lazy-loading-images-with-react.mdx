@@ -12,8 +12,182 @@ If you prefer to jump straight in to the code, you can visit the [final implemen
 
 ## Why?
 
-Defering the load of off-screen images can [significantly improve page performance](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/), and since there's little to no detriment to the user experience, there's really no reason not to.
+Deferring the load of off-screen images can [significantly improve page performance](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/), and since there's very little detriment to the user experience, it's a no-brainer.
 
 ---
 
-## IntersectionObserver
+## How?
+
+We'll be creating a React component that does the following:
+
+1. Create a `IntersectionObserver` (or reuse a cached one)
+2. Configure the `IntersectionObserver` to apply the `src` attribute to the `<img />` tag when the image is at least 10% in the viewport
+3. Create a React component that takes in `props` that extends the default `<img />` tag props and do not include the `src` attribute on the `<img />` tag
+4. Render a placeholder element when the image is not loaded to prevent [image jumping](http://aspiringwebdev.com/stop-your-web-pages-from-jumping-around-while-images-load/)
+5. When the component mounts, add it to the `IntersectionObserver`
+6. Apply some default styling for 💅
+
+Let's tackle each of these in turn.
+
+---
+
+## 1. Creating the IntersectionObserver
+
+> Create a `IntersectionObserver` (or reuses a cached one)
+
+The foundation of our lazy load image component is an `IntersectionObserver` which allows us to know when the image has entered the viewport. We'll create a simple JavaScript function that creates the observer and caches it on the `window` so that if there are many images, they all use the same observer. To ensure backwards compatibility with older browsers that do not support `IntersectionObserver`, we'll exit early.
+
+```typescript
+const CACHE_KEY = "__AFTER_IMAGE_INTERSECTION_OBSERVER__";
+
+function getImageLoaderObserver(): null | IntersectionObserver {
+  // exit if browser does not support IntersectionObserver
+  if (typeof IntersectionObserver === "undefined") {
+    return null;
+  }
+
+  // return the cached observer for performance
+  if (typeof window[CACHE_KEY] !== "undefined") {
+    return window[CACHE_KEY];
+  }
+
+  // create a new observer and cache it on the window
+  window[CACHE_KEY] = new IntersectionObserver(images => {
+    entries.map(entry => {
+      // TODO: implement the lazy load behavior in step 2
+    });
+  });
+  return window[CACHE_KEY];
+}
+```
+
+---
+
+## 2. Configuring the IntersectionObserver
+
+> Configure the `IntersectionObserver` to apply the `src` attribute to the `<img />` tag when the image is at least 10% in the viewport
+
+We'll implement the lazy load behavior by applying the `src` attribute to the `<img />` tag when the image is at least 10% in the viewport.
+
+To make sure that we aren't performing unnecessary work, we will ensure that we only apply the `src` attribute if it has not already been set, and we will put measures in place to ensure that we only apply the `src` attribute if it is provided and there is an `<img />` tag available.
+
+```typescript
+const threshold = 0.1; // 10% in view
+window[CACHE_KEY] = new IntersectionObserver(
+  entries => {
+    entries.map(entry => {
+      const img = entry.target.querySelector("img");
+      if (img && !img.src && entry.intersectionRatio >= threshold) {
+        const src = img.getAttribute("data-src");
+        if (src) {
+          img.src = src;
+        }
+      }
+    });
+  },
+  {
+    threshold
+  }
+);
+```
+
+We get the `src` from another attribute, `data-src` on the `img` tag. This lets the `IntersectionObserver` read from the DOM so it can be cached on the window, agnostic from the React component we'll create in a moment.
+
+The line where we query for the `<img />` tag is necessary to achieve placeholder styling, we'll come back to why in more detail in step 8.
+
+---
+
+## 3. Creating the React component
+
+> Create a React component that takes in `props` that extends the default `<img />` tag props
+
+This step is fairly simple and sets up the React component that we'll be extending with lazy-load behavior in step 4. The only interesting thing here is how we destructure `this.props` in the render method to pull out the `src` attribute and place it as `data-src` and then spread the remaining rest props on the `<img />` tag. This means that the `<img />` tag will not have a `src` attribute on the first-render.
+
+```typescript
+interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
+  src: string;
+}
+
+interface State {}
+
+export class AfterImage extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const { src, ...imgProps } = this.props;
+
+    return <img {...imgProps} data-src={src} />;
+  }
+}
+```
+
+## 4. Placeholder element
+
+> Render a placeholder element when the image is not loaded to prevent [image jumping](http://aspiringwebdev.com/stop-your-web-pages-from-jumping-around-while-images-load/)
+
+This step is more of a nice-to-have, but to ensure a nice user-experience it's a good idea to render a placeholder element in place of the `<img />` tag that assumes the final size of the image when it has been loaded so that the content below the image does not jump when the image does load.
+
+To achieve this, we'll use the [aspect ratio box](https://css-tricks.com/aspect-ratio-boxes/) technique and expose some `props` to configure it.
+
+```typescript
+interface Props extends React.ImgHTMLAttributes<HTMLImageElement> {
+  src: string;
+  aspectHeight?: number;
+  aspectWidth?: number;
+  withPlaceholder?: boolean;
+}
+
+interface State {}
+
+export class AfterImage extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const {
+      src,
+      aspectHeight = 9,
+      aspectWidth = 16,
+      withPlaceholder = true,
+      ...imgProps
+    } = this.props;
+    const aspectRatio = aspectHeight / aspectWidth;
+
+    return (
+      <div style={{ position: "relative" }}>
+        <img
+          {...imgProps}
+          data-src={src}
+          style={{
+            width: "100%",
+            height: "auto",
+            position: withPlaceholder ? "absolute" : "static",
+            left: 0
+          }}
+        />
+        {withPlaceholder && (
+          <div
+            style={{
+              width: "100%",
+              paddingTop: `${aspectRatio * 100}%`
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+}
+```
+
+I'm a big fan of [sensible defaults](https://en.wikipedia.org/wiki/Convention_over_configuration), and for that reason, the placeholder element defaults to a `16:9` size, but can be changed on a per-use basis.
+
+---
+
+## 5. Observing the component
+
+> When the component mounts, add it to the `IntersectionObserver`

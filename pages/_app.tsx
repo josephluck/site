@@ -41,7 +41,8 @@ const components = {
   },
   strong: ({ children }) => <Base.Strong>{children}</Base.Strong>,
   blockquote: ({ children }) => <Base.BlockQuote>{children}</Base.BlockQuote>,
-  code: ({ children }) => <Base.Code>{children}</Base.Code>
+  code: ({ children }) => <Base.Code>{children}</Base.Code>,
+  li: ({ children }) => <Base.ListItem>{children}</Base.ListItem>
 };
 
 const GlobalStyles = styled.createGlobalStyle`
@@ -232,6 +233,16 @@ const GlobalStyles = styled.createGlobalStyle`
 
   .line-highlight {
     background: ${theme.color.syntaxHighlightLine};
+  }
+
+  p code,
+  li code {
+    font-family: "Inconsolata", monospace;
+    font-size: ${theme.font._12.size};
+    line-height: ${theme.font._12.size};
+    border: solid 1px ${theme.color.border};
+    border-radius: 6px;
+    padding: ${theme.spacing._2};
   }
 `;
 
