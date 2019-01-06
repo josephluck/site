@@ -43,14 +43,6 @@ export const ContentHeadingFour = styled(HeadingFour)`
 `;
 export const ContentParagraph = styled(Paragraph)`
   margin: ${theme.spacing._16} 0;
-  code {
-    font-family: "Inconsolata", monospace;
-    font-size: ${theme.font._12.size};
-    line-height: ${theme.font._12.size};
-    border: solid 1px ${theme.color.border};
-    border-radius: 6px;
-    padding: ${theme.spacing._2};
-  }
 `;
 
 // NB: only applies to formatted code blocks i.e. ```[code]```
@@ -80,4 +72,8 @@ export const BlockQuote = styled.blockquote`
     font-weight: inherit;
     color: inherit;
   }
+`;
+
+export const ListItem = styled.li`
+  margin-bottom: ${theme.spacing._4};
 `;
