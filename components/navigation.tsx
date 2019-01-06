@@ -72,12 +72,12 @@ export const Navigation = withRouter<{ className?: string }>(props => {
           <a>Blog</a>
         </Link>
       </NavLink>
-      <NavLink active={asPath === "/resume"}>
+      <NavLink active={asPath.includes("/resume")}>
         <Link href="/resume" passHref prefetch>
           <a>Resume</a>
         </Link>
       </NavLink>
-      <NavLink active={asPath === "/references"}>
+      <NavLink active={asPath.includes("/references")}>
         <Link href="/references" passHref prefetch>
           <a>References</a>
         </Link>
