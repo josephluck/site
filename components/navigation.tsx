@@ -24,13 +24,24 @@ const Wrapper = styled.div`
   top: 0;
   background: ${theme.color.navigationBackground};
   border-bottom: solid 1px ${theme.color.border};
+  display: flex;
+  align-items: center;
+
+  @media (min-width: ${theme.media.tablet}) {
+    display: block;
+  }
+`;
+
+const Inner = styled.div`
+  max-width: 650px;
   padding: ${theme.spacing._8} ${theme.spacing._16};
   display: flex;
   align-items: center;
 
   @media (min-width: ${theme.media.tablet}) {
-    padding: ${theme.spacing._8} ${theme.spacing._32};
     display: block;
+    padding: ${theme.spacing._8} ${theme.spacing._32};
+    margin: 0 auto;
   }
 `;
 
@@ -60,28 +71,30 @@ export const Navigation = withRouter<{ className?: string }>(props => {
   const { className = "" } = props;
   return (
     <Wrapper className={className}>
-      <LogoWrap>
-        <Link href="/" passHref prefetch>
-          <a>
-            <Logo>JL</Logo>{" "}
-          </a>
-        </Link>
-      </LogoWrap>
-      <NavLink active={asPath.includes("/blog")}>
-        <Link href="/blog" passHref prefetch>
-          <a>Blog</a>
-        </Link>
-      </NavLink>
-      <NavLink active={asPath.includes("/resume")}>
-        <Link href="/resume" passHref prefetch>
-          <a>Resume</a>
-        </Link>
-      </NavLink>
-      <NavLink active={asPath.includes("/references")}>
-        <Link href="/references" passHref prefetch>
-          <a>References</a>
-        </Link>
-      </NavLink>
+      <Inner>
+        <LogoWrap>
+          <Link href="/" passHref prefetch>
+            <a>
+              <Logo>JL</Logo>{" "}
+            </a>
+          </Link>
+        </LogoWrap>
+        <NavLink active={asPath.includes("/blog")}>
+          <Link href="/blog" passHref prefetch>
+            <a>Blog</a>
+          </Link>
+        </NavLink>
+        <NavLink active={asPath.includes("/resume")}>
+          <Link href="/resume" passHref prefetch>
+            <a>Resume</a>
+          </Link>
+        </NavLink>
+        <NavLink active={asPath.includes("/references")}>
+          <Link href="/references" passHref prefetch>
+            <a>References</a>
+          </Link>
+        </NavLink>
+      </Inner>
     </Wrapper>
   );
 });
