@@ -1,0 +1,25 @@
+import { Gif } from "../../components/gif";
+
+# A unique approach to tooltips
+
+I've been working on a side project called [Internote](https://internote.app). Internote is a distraction-free web-based text editor with a focus on effortless design and slick user experience.
+
+I've been fortunate that Internote is a side project where I have complete control over the featureset, design, user experience and codebase. It means that I'm able to experiment with technology and design that I am not usually tasked with such as serverless, devops and UI/UX design.
+
+## Tooltips
+
+Since Internote is a distraction-free editor the use of clear iconography was really important, as iconography is able to communicate an idea using much less space than text alone. I chose to use the font-awesome set of icons for editor controls, buttons and toggles for it's wide range of icons.
+
+Many of Internote's icons double up as buttons. For example, in Internote's header there are buttons for full-screen mode, creating new notes and accessing settings. Whilst the icons do a pretty decent job of explaining the intention behind these buttons, I couldn't help but feel that it could be clearer.
+
+Whenever I use an app that utilises iconography heavily, such as Google's suite of apps, I often over over an icon that I _think_ is the right tool for my current task, and I often wait for a little tooltip to appear to confirm I'm on the right track because I don't want to click something that isn't what I want and work backwards to get to where I was.
+
+I have a dilemma though because I despise tooltips that pop underneith, to the left, right top as they feel particularly jarring. I felt inspired to try something new.
+
+<Gif src="/static/internote/tooltips2.gif" />
+
+I decided to combine two UI components in to one with an interaction that morphs between them. In it's inactive state, the icon does quite a good job of saying _I might be the thing you need_, upon becoming active via a hover, the icon expands in to a button and reveals a tooltip that clearly states the intention of the button.
+
+I've been having a lot of fun exploring unique UI/UX design with Internote, and I'll be blogging about features and improvements I make regularly.
+
+Thanks for reading!
