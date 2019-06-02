@@ -1,0 +1,389 @@
+import { Gif } from "../../components/gif";
+
+# Animating width in a React Hooks world
+
+React Hooks is one of the latest features from the React team to cause a ripple in the front-end development world. The [official docs](https://reactjs.org/docs/hooks-intro.html) do a much better job of explaining what React Hooks are for than I will be able to. I'll assume you are already familiar with them in this post.
+
+I'm working on a side-project at the moment called Internote. Internote is a distraction-free text editor with a focus on beautiful design and effortless writing. As you can imagine, subtle and slick animation plays a particularly important role in achieving this vision.
+
+I've blogged about how I designed a [unique approach to tooltips](/blog/a-unique-approach-to-tooltips) but I didn't talk much about how I went about building the animation that powers them.
+
+<Gif src="/static/internote/tooltips2.gif" />
+
+As you can see from the gif above, there's a nice width animation that happens when the user hovers over the icon to reveal the tooltip. Each tooltip is a different width, and I didn't want to hard-code the width as if I change the font-size, spacing, or inner content over time, it wouldn't be a robust solution. I needed to calculate the inner content width at run-time and animate the width value using a transition.
+
+I originally built this feature before React Hooks came out using the familiar class component and React lifecycle pattern. In this post, I'll detail how I went about converting this component in to React Hooks.
+
+### TLDR?
+
+If you want to jump ahead straight to the changes, I pushed them all as a single commit to the Internote repo [here](https://github.com/josephluck/internote/commit/b8fd097a6ab8eac2a45d306e56380e0da546c528).
+
+## If it ain't broke, don't fix it
+
+Before we start the conversion, it's important to see where we came from and potential issues that arise from the current implementation. I've copy-pasta'd the original code from Internote below:
+
+```
+import * as React from "react";
+import { styled } from "../theming/styled";
+
+const Wrapper = styled.div`
+  cursor: ${props => (props.onClick ? "pointer" : "default")};
+`;
+
+const InnerWrap = styled.div`
+  transition: all 300ms ease;
+  width: 0;
+  opacity: 0;
+`;
+
+// Inline block necessary to recompute width on content change
+const CollapsedContent = styled.div`
+  display: inline-block;
+`;
+
+interface RenderProps {
+  renderCollapsedContent: () => React.ReactNode;
+}
+
+interface Props {
+  children: (renderProps: RenderProps) => React.ReactNode;
+  collapsedContent: React.ReactNode;
+  forceShow?: boolean;
+  className?: string;
+  onClick?: () => void;
+}
+
+interface State {
+  isHovering: boolean;
+}
+
+export class CollapseWidthOnHover extends React.Component<Props, State> {
+  collapsedContentRef: React.RefObject<HTMLDivElement>;
+  innerWrapRef: React.RefObject<HTMLDivElement>;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isHovering: false
+    };
+    this.collapsedContentRef = React.createRef();
+    this.innerWrapRef = React.createRef();
+  }
+
+  componentDidUpdate() {
+    window.requestAnimationFrame(this.handleWidth);
+  }
+
+  handleWidth = () => {
+    const refsExist =
+      this.innerWrapRef.current && this.collapsedContentRef.current;
+    if (refsExist) {
+      if (this.state.isHovering || this.props.forceShow) {
+        const childElm = this.collapsedContentRef.current.firstChild as any;
+        const width = childElm.scrollWidth;
+        this.innerWrapRef.current.style.width = `${width}px`;
+        this.innerWrapRef.current.style.opacity = "1";
+        this.innerWrapRef.current.style.pointerEvents = "auto";
+      } else {
+        this.innerWrapRef.current.style.width = "0px";
+        this.innerWrapRef.current.style.opacity = "0";
+        this.innerWrapRef.current.style.pointerEvents = "none";
+      }
+    }
+  };
+
+  onHoverIn = () => {
+    this.setState({ isHovering: true });
+  };
+
+  onHoverOut = () => {
+    this.setState({ isHovering: false });
+  };
+
+  renderCollapsedContent = () => {
+    return (
+      <InnerWrap ref={this.innerWrapRef}>
+        <CollapsedContent ref={this.collapsedContentRef}>
+          {this.props.collapsedContent}
+        </CollapsedContent>
+      </InnerWrap>
+    );
+  };
+
+  render() {
+    const { className, children, onClick } = this.props;
+    return (
+      <Wrapper
+        className={className}
+        onMouseEnter={this.onHoverIn}
+        onMouseLeave={this.onHoverOut}
+        onClick={onClick}
+      >
+        {children({ renderCollapsedContent: this.renderCollapsedContent })}
+      </Wrapper>
+    );
+  }
+}
+```
+
+As you can see, we're relying on a few features of React that Hooks has replaced. Most notably the lifecycle method `componentDidUpdate` and `refs`. You'll notice that the width calculation is performed inside `componentDidUpdate` which is a lifecycle that triggers _after_ a component has rendered. Components in React render under two situations, either after a change in props or a change in state, and it's a change in state that makes this particular code brittle. We have to be careful that we do not perform any state updates in the `componentDidUpdate` method call because if we did, terrible things would happen due to a recursive call. The second issue is that we're using refs in the [_old way_](https://reactjs.org/docs/refs-and-the-dom.html) which may become deprecated in the future.
+
+Let's solve these problems using React Hooks.
+
+## Introducing Hooks
+
+I've been slowly converting Internote to use React Hooks as a learning exercise. Since Internote is a side project, I can experiment with these new technologies without fear of breaking anything critical, though I must admit that despite not having used React Hooks before, the process has been relatively pain-free.
+
+### State
+
+This particular component manages a single simple piece of state. React Hooks introduces a new way of handling component state: the `useState` hook. Let's start there:
+
+```
+render() {
+  const { className, children, onClick } = this.props;
+  const [isHovering, setIsHovering] = React.useState(false)
+
+  return (
+    <Wrapper
+      className={className}
+      onMouseEnter={this.onHoverIn}
+      onMouseLeave={this.onHoverOut}
+      onClick={onClick}
+    >
+      {children({ renderCollapsedContent: this.renderCollapsedContent })}
+    </Wrapper>
+  );
+}
+```
+
+The next thing to do is to extract the methods that use this particular piece of state in to functions inside the render method:
+
+```
+render() {
+  const { className, children, onClick } = this.props;
+  const [isHovering, setIsHovering] = React.useState(false);
+
+  const onHoverIn = () => setIsHovering(true);
+  const onHoverOut = () => setIsHovering(false);
+
+  return (
+    <Wrapper
+      className={className}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+      onClick={onClick}
+    >
+      {children({ renderCollapsedContent: this.renderCollapsedContent })}
+    </Wrapper>
+  );
+}
+```
+
+### Dealing with refs
+
+Before we get to the meat of the conversion, we'll deal with those refs and render props:
+
+```
+render() {
+  const { className, children, onClick, collapsedContent } = this.props;
+  const [isHovering, setIsHovering] = React.useState(false);
+  const innerWrapRef = React.useRef<HTMLDivElement>()
+  const collapsedContentRef = React.useRef<HTMLDivElement>()
+
+  const onHoverIn = () => setIsHovering(true);
+  const onHoverOut = () => setIsHovering(false);
+
+  const renderCollapsedContent = () => (
+    <InnerWrap ref={innerWrapRef}>
+      <CollapsedContent ref={collapsedContentRef}>
+        {collapsedContent}
+      </CollapsedContent>
+    </InnerWrap>
+  );
+
+  return (
+    <Wrapper
+      className={className}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+      onClick={onClick}
+    >
+      {children({ renderCollapsedContent })}
+    </Wrapper>
+  );
+}
+```
+
+Our render function is getting bigger and bigger and is starting to resemble one of React's functional components. Well that's kinda the point of React Hooks!
+
+### Animating width
+
+So managing component state and refs in React Hooks is wonderfully simple, but what about the width animation? Well, React Hooks has another hook called `useEffect` which is designed to perform "side effects" such as API requests, DOM manipulation etc, and it's exactly what we need to use to perform the side effect of animating our component.
+
+In fact, after converting this final piece, we're left with a functional component that is converted to Hooks!
+
+Let's give it a go:
+
+```
+export function CollapseWidthOnHover({
+  className,
+  children,
+  onClick,
+  collapsedContent,
+  forceShow
+}: {
+  children: (renderProps: RenderProps) => React.ReactNode;
+  collapsedContent: React.ReactNode;
+  forceShow?: boolean;
+  className?: string;
+  onClick?: () => void;
+}) {
+  const [isHovering, setIsHovering] = React.useState(false);
+  const innerWrapRef = React.useRef<HTMLDivElement>();
+  const collapsedContentRef = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    function handleWidth() {
+      const refsExist = innerWrapRef.current && collapsedContentRef.current;
+      if (refsExist) {
+        if (isHovering || forceShow) {
+          const childElm = collapsedContentRef.current.firstChild as any;
+          const width = childElm.scrollWidth;
+          innerWrapRef.current.style.width = `${width}px`;
+          innerWrapRef.current.style.opacity = "1";
+          innerWrapRef.current.style.pointerEvents = "auto";
+        } else {
+          innerWrapRef.current.style.width = "0px";
+          innerWrapRef.current.style.opacity = "0";
+          innerWrapRef.current.style.pointerEvents = "none";
+        }
+      }
+    }
+
+    window.requestAnimationFrame(handleWidth);
+  }, [innerWrapRef, collapsedContentRef, isHovering, collapsedContent]);
+
+  const onHoverIn = () => setIsHovering(true);
+  const onHoverOut = () => setIsHovering(false);
+
+  const renderCollapsedContent = () => (
+    <InnerWrap ref={innerWrapRef}>
+      <CollapsedContent ref={collapsedContentRef}>
+        {collapsedContent}
+      </CollapsedContent>
+    </InnerWrap>
+  );
+
+  return (
+    <Wrapper
+      className={className}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+      onClick={onClick}
+    >
+      {children({ renderCollapsedContent })}
+    </Wrapper>
+  );
+}
+```
+
+So how did this hook replace `componentDidUpdate`? Well the `useEffect` hook performs the function passed in the first argument whenever any of the values in the array passed to the second argument change:
+
+```
+React.useEffect(() => {
+  // See above
+}, [innerWrapRef, collapsedContentRef, isHovering, collapsedContent]);
+```
+
+As you can see, we're instructing React to run this effect when either `innerWrapRef`, `collapsedContentRef`, `isHovering` or `collapsedContent` change. Now this particular effect is interesting, because the official docs tell us to place any "dependencies" of the effect in the dependencies array. However, for this component, we also want to trigger the effect when either the hovering state, or the collapsed content changes, so we place those two variables as dependencies too.
+
+## Wrapping up
+
+Having converted the majority of Internote to use React Hooks, I'm feeling confident that the majority of use cases are not only possible, but cleaner using the React Hooks APIs.
+
+Here's the final implementation:
+
+```
+import * as React from "react";
+import { styled } from "../theming/styled";
+
+const Wrapper = styled.div`
+  cursor: ${props => (props.onClick ? "pointer" : "default")};
+`;
+
+const InnerWrap = styled.div`
+  transition: all 300ms ease;
+  width: 0;
+  opacity: 0;
+`;
+
+// Inline block necessary to recompute width on content change
+const CollapsedContent = styled.div`
+  display: inline-block;
+`;
+
+interface RenderProps {
+  renderCollapsedContent: () => React.ReactNode;
+}
+
+export function CollapseWidthOnHover({
+  className,
+  children,
+  onClick,
+  collapsedContent,
+  forceShow
+}: {
+  children: (renderProps: RenderProps) => React.ReactNode;
+  collapsedContent: React.ReactNode;
+  forceShow?: boolean;
+  className?: string;
+  onClick?: () => void;
+}) {
+  const [isHovering, setIsHovering] = React.useState(false);
+  const innerWrapRef = React.useRef<HTMLDivElement>();
+  const collapsedContentRef = React.useRef<HTMLDivElement>();
+
+  React.useEffect(() => {
+    function handleWidth() {
+      const refsExist = innerWrapRef.current && collapsedContentRef.current;
+      if (refsExist) {
+        if (isHovering || forceShow) {
+          const childElm = collapsedContentRef.current.firstChild as any;
+          const width = childElm.scrollWidth;
+          innerWrapRef.current.style.width = `${width}px`;
+          innerWrapRef.current.style.opacity = "1";
+          innerWrapRef.current.style.pointerEvents = "auto";
+        } else {
+          innerWrapRef.current.style.width = "0px";
+          innerWrapRef.current.style.opacity = "0";
+          innerWrapRef.current.style.pointerEvents = "none";
+        }
+      }
+    }
+
+    window.requestAnimationFrame(handleWidth);
+  }, [innerWrapRef, collapsedContentRef, isHovering, collapsedContent]);
+
+  const onHoverIn = () => setIsHovering(true);
+  const onHoverOut = () => setIsHovering(false);
+
+  const renderCollapsedContent = () => (
+    <InnerWrap ref={innerWrapRef}>
+      <CollapsedContent ref={collapsedContentRef}>
+        {collapsedContent}
+      </CollapsedContent>
+    </InnerWrap>
+  );
+
+  return (
+    <Wrapper
+      className={className}
+      onMouseEnter={onHoverIn}
+      onMouseLeave={onHoverOut}
+      onClick={onClick}
+    >
+      {children({ renderCollapsedContent })}
+    </Wrapper>
+  );
+}
+```
