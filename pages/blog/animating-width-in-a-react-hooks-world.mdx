@@ -22,7 +22,7 @@ If you want to jump ahead straight to the changes, I pushed them all as a single
 
 Before we start the conversion, it's important to see where we came from and potential issues that arise from the current implementation. I've copy-pasta'd the original code from Internote below:
 
-```
+```typescript
 import * as React from "react";
 import { styled } from "../theming/styled";
 
@@ -138,7 +138,7 @@ I've been slowly converting Internote to use React Hooks as a learning exercise.
 
 This particular component manages a single simple piece of state. React Hooks introduces a new way of handling component state: the `useState` hook. Let's start there:
 
-```
+```typescript
 render() {
   const { className, children, onClick } = this.props;
   const [isHovering, setIsHovering] = React.useState(false)
@@ -158,7 +158,7 @@ render() {
 
 The next thing to do is to extract the methods that use this particular piece of state in to functions inside the render method:
 
-```
+```typescript
 render() {
   const { className, children, onClick } = this.props;
   const [isHovering, setIsHovering] = React.useState(false);
@@ -183,7 +183,7 @@ render() {
 
 Before we get to the meat of the conversion, we'll deal with those refs and render props:
 
-```
+```typescript
 render() {
   const { className, children, onClick, collapsedContent } = this.props;
   const [isHovering, setIsHovering] = React.useState(false);
@@ -224,7 +224,7 @@ In fact, after converting this final piece, we're left with a functional compone
 
 Let's give it a go:
 
-```
+```typescript
 export function CollapseWidthOnHover({
   className,
   children,
@@ -289,7 +289,7 @@ export function CollapseWidthOnHover({
 
 So how did this hook replace `componentDidUpdate`? Well the `useEffect` hook performs the function passed in the first argument whenever any of the values in the array passed to the second argument change:
 
-```
+```typescript
 React.useEffect(() => {
   // See above
 }, [innerWrapRef, collapsedContentRef, isHovering, collapsedContent]);
@@ -303,7 +303,7 @@ Having converted the majority of Internote to use React Hooks, I'm feeling confi
 
 Here's the final implementation:
 
-```
+```typescript
 import * as React from "react";
 import { styled } from "../theming/styled";
 
