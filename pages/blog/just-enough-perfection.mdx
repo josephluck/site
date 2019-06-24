@@ -1,0 +1,65 @@
+import { Gif } from "../../components/gif";
+
+# Just enough perfection
+
+Last week an engineer on my team reviewed a pull-request of mine and suggested a "_full review of the business logic of our app_". I was taken aback and it got me thinking.
+
+> Fair warning. This is my opinions on how start-ups should prioritize architectural / technical debt vs innovation and agility.
+
+## Start-ups
+
+In start-ups, it's commonplace to shift direction at a moments notice. New ideas come and go frequently and it's very important to be able to accommodate change as quickly and effectively as possible. As a result, engineers, designers and product managers are faced with the challenge of balancing stability, performance and functionality in the face of being first to market and facilitating frequent improvements and new features. Engineers particularly are often not comfortable with the number of hacky solutions and technical debt that accrues as a result of these environments, however, if a company spends all of it's time and money building a perfectly architected, super performant and bug-free app that _nobody uses_, the company may fail to achieve product market fit and run out of money.
+
+Ultimately what matters (especially for an early stage start-up) is whether the product idea is good, fits a need in the market, addresses that need in a timely manner and is "just good enough" to avoid churn and maintain growth.
+
+If the product solves a real problem, or provides sufficient value, often users are prepared to put up with sub-par performance and bugs (within reason of course) which can make it easier to evaluate whether to invest the time in solving technical debt, particularly those that provide little benefit to the end user. 
+
+There's a conflict though, because technical debt has a tendency to snowball, and manifests itself in a buggy / slow products that become increasingly difficult, risky and costly to maintain and iterate upon and if those bugs are detrimental to the value proposition of the product, then user churn is a factor too.
+
+## Prevention is better than cure
+
+I've heard engineers remark in the past "there should be no technical debt as technical debt should be factored in to the planning of the initial task". Whilst an idealistic view, I would bet everything I own that there is not a single company that has no technical debt whatsoever - it implies having a perfect vision 10 steps ahead when working on new features, whilst spending an inordinate amount of time reworking, improving and polishing existing code as the needs of the business change. It's a great philosophy to strive for, but one that should be balanced against the needs of the business and it's users. Where that balance is stuck is entirely dependent on the context of the company, it's position in the market, it's team, it's product etc.
+
+As engineers working on the product, there's a constant need to discern what's the best solution _now_ vs what's going to remain maintainable in a year, two or 10 from now. But for most early stage start-ups, getting to market as quickly as possible whilst being able to iterate quickly and effectively whilst minimizing the amount of technical debt accrued is the ultimate goal. This involves evaluating technical decisions typically based on what's going to be most valuable between now and a few years from now, as it's incredibly unlikely that the product is going to be the same in a few years, let alone the code. What I find more valuable is making decisions in terms of what's going to enable faster, more productive and more reliable iterations and pivots in the near future. This boils down to a few key areas of focus:
+
+- Working from good foundations (languages, frameworks, design patterns)
+- Code decoupling, clear separation of concerns and well defined protocols between services (typed DTOs, effective project structure, adherence to DRY and YAGNI where appropriate)
+- Reliance on effective tooling (type-safe languages, automated testing, continuous integration and delivery)
+- Documentation of architecture and guiding principles (good for hiring and onboarding)
+
+Of course, it's much easier to implement these practices in greenfield projects so what about existing technical debt?
+
+## Technical debt
+
+It's a fine art to balance spending time on tackling existing technical debt and stability improvements vs working on adding or improving functionality for the user. Imagine two hypothetical technical debt suggestion from a member of your team to frame the following sections, one that is a significant architectural change and one that is a minor improvement. Got a few in your mind? Read on:
+
+### Does this suggestion enable shipping improvements and features more quickly and effectively in the future? By how much?
+
+In the context of a start-up that needs to iterate and change direction swiftly, any technical debt suggestion that will facilitate the team's effectiveness and efficiency is a welcome suggestion as it directly impacts the companies ability to innovate and speed to market. However, the time in which it takes to implement the suggestion should be weighed up against the time savings that the suggestion will enable. As an extreme example, if the suggestion is to change a piece of fundamental architecture or the language the application is written in, it can take many months if not years to achieve, at which point it's worth questioning whether the benefits of stopping any improvements to the product during this time is worth the risk.
+
+### Does this suggestion enable making changes to the codebase with more trust and safety? By how much?
+
+
+
+### What will happen if the suggestion isn't addressed now?
+
+Likened to monetary debt, there is an intrinsic property of technical debt that the longer it takes to address, the larger the debt is to repay. This is the snowball effect and it applies to a particular class of technical debt that infects other areas of the codebase and gets worse over time.
+
+This class of technical debt can become extremely costly, if not impossible to address beyond a certain time frame. Examples of this type of debt include the prolonged use of esoteric or depreciated frameworks / programming languages, lack of adequate acceptance testing etc.
+
+Conversely, if the technical debt is too minor in severity and isn't contagious then it's likely not important enough to warrant spending time on. Examples of this type of debt include code-style choice (semicolons anyone?), minor inconsistencies, naming conventions etc.
+
+The technical debt that resides between these two extremes is the type of technical debt that is worth investigating.
+
+### How isolated is the technical debt? Will it resolve itself?
+
+Depending on the architecture of the codebase, the maturity of the product and the goals of the business, it's entirely possible that the technical debt may resolve itself by simply getting removed from the product at some point in the future. For example, what would be the point in solving some technical debt in the username/password authentication journey if this particular feature will be replaced by social sign-in in the next sprint?
+
+### How much time will it take to implement before seeing a benefit?
+
+If implementing a suggestion will slow down the business, or cost too much then it's not worth doing. Examples of this type of debt include application re-writes, changing programming language and/or framework where many months if not years of engineering effort are required before seeing any benefit.
+
+Conversely, if the suggestion is fairly trivial and the benefits immediate, then it's likely worth doing. Examples of this type of debt include things like continuous integration / delivery that are often fairly easy to set up and save many hours of time.
+
+### Is there capacity in the team to take this suggestion on? How will it affect other teams and work?
+
