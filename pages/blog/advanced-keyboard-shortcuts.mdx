@@ -1,0 +1,311 @@
+# Advanced keyboard shortcuts
+
+Advanced keyboard shortcuts are a useful utility for power-users of a software application. However, it can be difficult to obtain a large list of globally unique keyboard shortcuts for every function in the application, and even more challenging to ensure each and every one of them are intuitive. For example, will `ctrl+s` focus a search, save something or open a settings menu?
+
+How intuative a keyboard shortcut is is entirely dependent on context. For example, if the user is focused inside a text editor, they might expect that pressing `ctrl+s` will save what they're working on, conversely if they're focused inside a menu containing list items they might expect pressing `ctrl+s` to focus the search input at the top of the menu. However nice this sounds, there is one clear drawback - how is the user able to tell which shortcuts are available depending on the context they are in?
+
+Some shortcuts are only available when certain actions have happened beforehand. These are shortcut flows. An example could be a settings menu flow. If a settings menu can be opened via `ctrl+s` and the user is presented with a list of available options. Each of these options may have a keyboard shortcut attached to them for ease navigation and the user may be able to traverse the list by using arrow / return keys.
+
+## Designing a shortcuts system
+
+For Internote, a distraction-free text editor side-project I'm working on, these kind of complex context-driven shortcut flows are very important for the user experience. I've been using Internote as my sole writing app for around 6 months, and the most distracting thing is having to reach for the mouse to configure the editor or access functionality such as the dictionary on the fly. I wanted to design and build a powerful but user-friendly keyboard shortcut system that is both context aware and flow aware.
+
+When I embarked on adding advanced keyboard shortcuts, Internote already had a variety of useful keyboard shortcuts attached to functionality such as opening the settings menu with `ctrl+s`, opening the notes menu with `ctrl+o` and looking up a selected word in the dictionary with `ctrl+d`. However the shortcuts lack flows beyond the initial shortcut. After opening the settings menu, there's no way to select or toggle a setting without reaching for the mouse, after opening the notes menu, there's no way to navigate to a note... you get the idea.
+
+I attempted to solve both of these issues at the same time by incorporating a visual reference of available shortcuts depending on the context or shortcut journey the user is currently in and new shortcuts become available where necessary. For example, if the user presses `ctrl+s` to open the settings menu, then the list of available shortcuts shows ones that become relevant for operating the menu. Since these advanced keyboard shortcuts are a power feature and Internote is distraction-free, I was tentative to clutter the interface with the visual reference, so I placed it under a handy keyboard shortcut, `ctrl+k` which opens and closes the reference tray. Now the user only has to remember one shortcut, `ctrl+k` to see the list of available shortcuts with handy descriptions next to each one.
+
+## Building it... a naive approach
+
+A simplistic approach would be to have a central place where all keyboard shortcuts are defined and managed. Each shortcut could be defined as an object containing a keyCombo, callback and description. An event listener could be bound to the window, listening for keydown events with the event listener traversing the array of shortcuts for matching keyCombos and calling the callback of each one that matches.
+
+This would be a simple enough to implement but there are a few issues with it. For example, it would be difficult to manage dependencies between shortcuts i.e. which ones are available depending on the user's current context and/or what shortcuts have happened previously. Also, it would be fairly difficult to architect the application such that the callback for a given shortcut has access to the methods & state it needs - for example, a menu's opened state might be managed by a stateful component where the method for toggling the opened state is local to the component. Of course, a global event pub/sub model could be implemented as a potential solution to this where components can hook into the triggering of a shortcut, but this approach is not particularly declarative and feels like an anti-pattern in React.
+
+## A declarative approach
+
+Since keyboard shortcuts are context-dependent, they need to be added and removed from the list of available shortcuts depending on the state of the application. This problem is already solved at the component level by React's `v = f(s)` pattern and it would be nice to leverage the same pattern for shortcuts. If shortcuts are defined as close to the feature they pertain to using a component, then it will be much easier to maintain and the enabling or disabling of a shortcut can be managed by the familiar component rendering pattern React is so famous for.
+
+The decision is that we need some sort of component that can be used to define a keyboard shortcut. Let's define this component in pseudocode as:
+
+```typescript
+<Shortcut shortcut="ctrl+s" callback={openSettingsMenu} />
+```
+
+It's perfectly plausible that we may wish to bind other shortcuts to `ctrl+s` and we'll need a method of keeping track of which shortcuts are bound to this particular combination, and there may be a case where we wish to prevent other callbacks bound to the shortcut depending on the use case. For example, if the settings menu is opened `ctrl+s` and then a keyboard shortcut becomes available for example `ctrl+o` for opening options, the user probably doesn't want to open the notes menu which is already bound to `ctrl+o`. This is where the shortcut's context comes in to play. Let's add another property to provide this behaviour: `<Shortcut preventOtherShortcuts={true} />` where the truthiness of `preventOtherShortcuts` will determine whether this shortcut will continue traversing the array of shortcuts. Not all shortcuts will behave in this manner though, for example `esc` will likely be a shortcut that won't be prevented if bound to multiple callbacks as it's a shortcut normally bound to resetting state such as closing menus or toggles.
+
+## Managing available shortcuts
+
+A mechanism of keeping track of the list of shortcuts that are bound to each key combination is needed so that the relevant callbacks can be executed for any matching shortcut when a keyboard event triggers. An array is the most suitable structure to keep track of the shortcuts, and the array will be added to and removed from as instances of the `<Shortcut />` component are mounted or removed from the component tree.
+
+To achieve the traversal and prevention of keyboard shortcuts depending on context, there will need to be a centralised place where shortcuts are managed (but not defined!). React's Context feature is a good choice to manage this logic, as it can be written to and read from anywhere in the component hierarchy, including the `<Shortcut />` components where shortcuts are defined. The context can also be used within the visual reference to list the available shortcuts (allowing the reference component to sit decoupled from the rest of the application).
+
+## Filtering shortcuts
+
+As shortcuts come in and out of context, the ordering of the shortcut reference needs to reflect the context such that the top most shortcut in the reference is the most relevant depending on where the user is. As an example, if the user opens the settings menu, then the shortcuts that pertain to navigating and interacting with the settings need to be ordered towards the top of the shortcuts reference.
+
+To achieve this, it would make sense to include another property on a shortcut definition to define it's priority, such that the higher the priority, the higher the shortcut's position in the array and the earlier the shortcut will be handled when mapping the list of shortcuts when a keyboard event triggers:
+
+```typescript
+<Shortcut
+  shortcut="ctrl+s"
+  callback={openSettingsMenu}
+  preventOtherShortcuts={true}
+  priority={5}
+/>
+```
+
+## Creating context
+
+Now that the solution is defined, we can write the code to power the context:
+
+```typescript
+import React, { useEffect } from "react";
+import isKeyHotkey from "is-hotkey";
+import { anyOverlappingStrOccurrences } from "../utilities/string";
+
+interface Shortcut {
+  /**
+   * A globally unique ID for a shortcut.
+   * Should not clash with any other defined shortcut in the app.
+   */
+  id: string;
+  /**
+   * A description of what the shortcut does
+   */
+  description: string;
+  /**
+   * The keyboard combination used to trigger the callback function.
+   *
+   * An array of string is supported where each string in the array
+   * will become a keyCombo that will trigger the callback.
+   */
+  keyCombo: string | string[];
+  /**
+   * The callback to trigger when the keyCombo is pressed by the user.
+   */
+  callback: () => any;
+  /**
+   * When truthy, prevents other shortcuts with the same keyCombo from
+   * being called if this shortcut is higher up in the list of shortcuts.
+   */
+  preventOtherShortcuts?: boolean;
+  /**
+   * When truthy, prevents this shortcut from being triggered
+   */
+  disabled?: boolean;
+  /**
+   * Determines the priority of a given shortcut against other shortcuts.
+   * This number determines the order in which shortcuts are traversed when
+   * a keyboard shortcut is fired. It also determines the order in which
+   * shortcuts appear in the list of available shortcuts.
+   * NB: defaults to 1.
+   */
+  priority?: number;
+}
+
+interface Context {
+  /**
+   * The list of currently defined shortcuts.
+   */
+  shortcuts: Shortcut[];
+  /**
+   * Adds a given shortcut to the list of available shortcuts.
+   */
+  addShortcut: (shortcut: Shortcut) => void;
+  /**
+   * Removes a given shortcut from the list of shortcuts.
+   * NB: uses the shortcut's ID property to determine whether
+   * to remove it.
+   */
+  removeShortcut: (shortcut: Shortcut) => void;
+}
+
+/**
+ * Default context
+ */
+export const ShortcutsContext = React.createContext<Context>({
+  shortcuts: [],
+  addShortcut() {},
+  removeShortcut() {}
+});
+
+/**
+ * Context implementation and logic - wraps the app that needs
+ * shortcuts functionality
+ */
+export function ShortcutsProvider({ children }: { children: React.ReactNode }) {
+  /**
+   * Adds a given shortcut to the list of available shortcuts.
+   */
+  function addShortcut(shortcut: Shortcut) {
+    setCtx(prevState => {
+      return {
+        ...prevState,
+        shortcuts: shortcutExists(prevState.shortcuts, shortcut)
+          ? prevState.shortcuts
+          : [shortcut, ...prevState.shortcuts].sort(sortShortcuts)
+      };
+    });
+  }
+
+  /**
+   * Removes a given shortcut from the list of shortcuts.
+   * NB: uses the shortcut's ID property to determine whether
+   * to remove it.
+   */
+  function removeShortcut(shortcut: Shortcut) {
+    setCtx(prevState => {
+      return {
+        ...prevState,
+        shortcuts: prevState.shortcuts.filter(s => s.id !== shortcut.id)
+      };
+    });
+  }
+
+  /**
+   * Stores the current context including shortcuts and
+   * methods for adding and removing shortcuts.
+   */
+  const [ctx, setCtx] = React.useState<Context>({
+    shortcuts: [],
+    addShortcut,
+    removeShortcut
+  });
+
+  /**
+   * Binds window events to the shortcut list and
+   * traverses the list when a key combo is pressed.
+   */
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      let isPrevented = false;
+      ctx.shortcuts
+        .filter(shortcut => !shortcut.disabled)
+        .map(shortcut => {
+          if (!isPrevented && shouldEventTriggerShortcut(event, shortcut)) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (shortcut.preventOtherShortcuts) {
+              isPrevented = true;
+            }
+            shortcut.callback();
+          }
+        });
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return function() {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [shortcutsHash(ctx.shortcuts)]);
+
+  return (
+    <ShortcutsContext.Provider value={ctx}>
+      {children}
+    </ShortcutsContext.Provider>
+  );
+}
+
+/**
+ * Computes a unique hash of the list of shortcuts for effective
+ * diffing two lists of shortcuts for strict equality
+ */
+function shortcutsHash(shortcuts: Shortcut[]): string {
+  return shortcuts.reduce((prev, shortcut) => `${prev}-${shortcut.id}`, "");
+}
+
+/**
+ * Returns a boolean whether a given shortcut is in the list of given
+ * shortcuts.
+ *
+ * NB: uses the shortcut's ID property to determine inclusion.
+ */
+function shortcutExists(shortcuts: Shortcut[], shortcut: Shortcut): boolean {
+  return shortcuts.map(s => s.id).includes(shortcut.id);
+}
+
+/**
+ * Sorts two shortcuts according to their priority then
+ * alphabetically on description
+ */
+function sortShortcuts(
+  { priority: priorityA = 1, description: descriptionA }: Shortcut,
+  { priority: priorityB = 1, description: descriptionB }: Shortcut
+): number {
+  if (priorityB === priorityA) {
+    // Sort alphabetically on description at equal priority
+    return descriptionA < descriptionB ? -1 : 1;
+  }
+  // Sort on priority if different
+  return priorityB - priorityA;
+}
+
+/**
+ * Determines whether a given event should trigger the
+ * callback of a given shortcut according to the shortcut's
+ * keyCombo
+ */
+function shouldEventTriggerShortcut(event: any, shortcut: Shortcut): boolean {
+  return typeof shortcut.keyCombo === "object"
+    ? shortcut.keyCombo.some(keyCombo => isKeyHotkey(keyCombo, event))
+    : isKeyHotkey(shortcut.keyCombo, event);
+}
+
+/**
+ * Given a shortcut within a list of shortcuts, determines
+ * whether the shortcut will be prevented by higher priority
+ * shortcuts that are set to prevent other shortcuts
+ */
+export function shortcutWillBePrevented(
+  shortcut: Shortcut,
+  shortcuts: Shortcut[]
+): boolean {
+  const index = shortcuts.findIndex(s => s.id === shortcut.id);
+  return shortcuts.some(
+    (s, i) =>
+      s.preventOtherShortcuts &&
+      i < index &&
+      anyOverlappingStrOccurrences(shortcut.keyCombo, s.keyCombo)
+  );
+}
+```
+
+## Defining a shortcut
+
+Now that the heavy lifting is out of the way, the component for adding and removing shortcuts can be defined:
+
+```typescript
+/**
+ * Adds a shortcut to the list of available shortcuts in the app
+ * when mounted.
+ *
+ * When unmounted, removes the shortcut from the list of available
+ * shortcuts.
+ */
+export function Shortcut(shortcut: Shortcut) {
+  const { addShortcut, removeShortcut } = React.useContext(ShortcutsContext);
+  useEffect(() => {
+    addShortcut(shortcut);
+    return function() {
+      removeShortcut(shortcut);
+    };
+  }, [shortcut.id, shortcut.keyCombo, shortcut.disabled]);
+
+  return null;
+}
+```
+
+And it can be used as follows (inside a component):
+
+```typescript
+<Shortcut
+  id="open-settings-menu"
+  description="Open settings menu"
+  keyCombo="mod+shift+s"
+  preventOtherShortcuts={true}
+  callback={() => menu.toggleMenuShowing(true)}
+/>
+```
+
+## Wrapping up
+
+And that concludes how I went about designing and building an advanced keyboard shortcuts system for Internote. The result is a fairly robust and advanced shortcuts system that is simple and easy to use and maintain.
