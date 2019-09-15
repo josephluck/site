@@ -1,0 +1,45 @@
+# Full stack for everyone
+
+As a front-end designer / developer, I have always had a personal gripe with the term "full stack". I never identified myself as a full stack engineer, having spent my whole career focusing either on design or front-end development. My opinion was that a through-and-through "full stack" engineer was a bit of a myth and unobtainable to someone like myself without any experience in back-end development or infrastructure and deployment. Having spent my whole career working with engineers that were considered full stack to a degree - in my experience everyone had a vertical specialism and a broader horizontal understanding that allowed them to work well and collaborate within a team. I was content sticking to my front-end and design vertical, without ever feeling the need to get involved in the back-end, architectural or ops work.
+
+I still have this opinion, but over the last year my perspective has shifted. I now think every software engineer, no matter how specialized or skilled they are can work competently as a "full stack" engineer. In this post, I'll dive in to how I came to this conclusion.
+
+## A history in abstraction
+
+In the early days of computer programming, computer "programmers" would punch holes in to physical cards (the holes would correspond to instructions) that would be fed in to a machine the size of a room. Many days later, the results would come back to the programmer. These were simple mathematical programs performing calculations for things like aviation and mechanical engineering, and the programmers operating these instructions were typically highly skilled mathematicians and much older than the typical college grad software engineer of today. 
+
+As computing became more successful, more efficient means of communicating with computers were invented and developed with the introduction of higher level programming languages: Assembly (1951), FORTRAN (1957), C (1972), C++ (1980), Python (1991), JavaScript (1995), Go (2009), Swift (2014) and we're not finished inventing new ways of building software yet! Looking at this small subset of programming language developments, it's clear to see a trend. The more that languages are developed, the more popular computing becomes and the more accessible computing becomes for the masses.
+
+## Technology matters
+
+We've looked at how programming language design has evolved over time, and the same evolution has happened for frameworks that help software engineers build software and systems. Speaking from a front-end perspective, I'm fortunate enough to have seen front-end development grow from simple HTML based applications sprinkled with vanilla JavaScript (or jQuery) on top through to very modern front-end application stacks (and everything in-between). Looking at these frameworks and stacks side-by-side, it's hard to believe that they are related. 
+
+In some respects it's difficult to see how a new-comer to software engineering would find a modern software stack "simple", but this isn't really the point - the modern new-comer to software engineering would be able to build more complex software more quickly and with higher quality than the same software engineer entering the field 10 years ago. It's down of the development and refinement of programming languages and frameworks that allows for the accessibility and productivity of modern software engineers. 
+
+I truly believe that _anyone_ can be a productive and professional software-engineer using modern tooling should they have the necessary desire and willingness to learn. I don't think the same could be said for software engineering 20 years ago.
+
+## Modern full stack
+
+So what does this all have to do with modern full stack development? Hopefully I've made the case that software engineering is becoming more and more accessible over time, and naturally this progression means that existing software engineers are able to broaden their skill-set in to other areas of software engineering much easier than before. It's never been easier than it is _today_ to learn the skills necessary to be considered a full stack engineer. Let me repeat that. It's never been easier than it is _today_.
+
+I've thought about this over the past few years as I have grown my software engineering vertical in to front-end engineering and have made it a personal mission over the past year to broaden my skills in to more of a full stack skill-set.
+
+## The goal
+
+I set myself a goal in the summer of 2018 that I would have designed, architected and built a useful full-stack web-application using modern tools, languages and frameworks and have it running in production with all the bells and whistles that a modern web application is expected to have. I'm already pretty good at front-end design and development with modern languages and frameworks, but I've never really built any solid back-end APIs, databases, storage solutions, deployment etc etc in the past, and I knew that this would be where I needed to spent most of my time.
+
+Of course, a year really isn't very long to become proficient in all the areas I needed to be, so I needed to cut as many corners as I could. For this, I relied on some of the more recent trends in web-application development.
+
+## Introducing serverless
+
+Originally, I architected the application as a separate front-end and back-end monoliths, deployed to traditional long-running servers. Honestly, I didn't find building the back-end too difficult as I tried sticking to familiar languages and programming patterns where I could and following tutorials and examples for the parts that I hadn't eny experience in. However, what I did find particularly difficult was dealing with the "ops" of the project, that is deployment, provisioning and updates. I would often break the app completely during updates, particularly when updating the database models and running migrations. What I realized was that I had to switch my mind in to thinking about ops separately from thinking about the application code I was writing. I wondered whether there was a technology that was more suited to my developer mindset, where I could write code and have it run.
+
+I found serverless to be a good solution for me because it allowed me to write my code and deploy it through the framework _as code_. What's more, I could write my back-end business logic as I did my front-end, as functions and have it running and deployed without having to think about servers or ops at all. I didn't have to worry about the database going down, or the back-end APIs falling over with traffic spikes etc. I could plug in to a rich ecosystem of plugins and products that provided functionality such as automatic database updates, continuous integration and delivery at a push of a button and logging, metrics and exception tracking without having to build any of it myself.
+
+In some respects I feel as though I have cheated at my original goal, but really looking back at history, this trend seems like a natural evolution in abstraction. I only _really_ had to learn the framework, and the rest of my time was spent writing the code that pertained to the application I built.
+
+## Knowledge leaks out
+
+I've worked on this application for a year, and so far I have been introduced to AWS Lambda, AWS S3, AWS CloudFormation, AWS DynamoDB, AWS API Gateway, AWS IAM and many more services all abstracted away from me via the serverless framework. Although I would struggle to set up all the infrastructure and maintain it without the framework, I have working knowledge of all of these back-end / ops technologies and my goal to become a more full-stack engineer has well and truly been achieved.
+
+In retrospect, becoming more full-stack has let me become a better front-end developer and designer. I spend much more time in the planning stages of a feature, thinking about everything from the user-experience all the way down to the infrastructure deployment to support it. As a result, the features I design and build with my colleagues at work are much more robust and well thought out, leading to quicker delivery with higher quality. I'd urge any software engineer who thinks that "full stack" is out of reach to give serverless a go and build something.
