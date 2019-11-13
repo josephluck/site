@@ -1,0 +1,58 @@
+# Creating a paginated fetch custom hook
+
+In this post I will be detailing how I tackled creating a custom hook in React that abstracts the complexities of dealing with fetching paginated data for an infinite-scroll experience.
+
+## The user experience
+
+You'll likely be familiar with the typical infinite scroll list-view user-experience that's commonplace on mobile, however I'll list out the requirements for the eventual end-user experience for brevity:
+
+- Initial loading spinner state when first visiting the interface and there are no results yet.
+- Lazy-load / infinite scroll to fetch more results when nearing the end of the list.
+- Loading state for when more results are loading.
+- Pull-to-refresh when at the top of the list and scrolling up.
+
+## The problem
+
+Despite the user-experience being pretty simple, dealing will all of the states for fetching paginated data is actually pretty difficult. Let's take a look at a few of the states and methods needed to express the user-experience:
+
+- Loading state for when nothing has been fetched yet.
+- Loading state for when there are already results and the next page is loading.
+- Refreshing state for when the user issues a pull-to-refresh.
+- Error state for if a fetch goes wrong.
+- Results state for the list of results that have been returned. For infinite scroll, the results should be appended to the existing list of results.
+- The total count of all records available from the back-end.
+- State for whether the user has reached the end of the list.
+- Method for fetching the initial page.
+- Method for refreshing the list.
+- Method for fetching the next page.
+
+In an application that has many instances of paginated data, it makes sense to have a shared utility to manage and keep track of the state and provide these methods for managing paginated data. However, the utility can't know much about the actual data itself, or it would be difficult to be shared across many types of data. So, on top of the states above, the utility needs to have the following traits:
+
+- Can't know about the shape of the returned data. This means the utility can be flexible for different paginated data shapes.
+- Can't know where the data is stored once the data has been returned from the request. This means that the data can be cached.
+- Can't make any assumptions about the request to fetch data. This means any additional logic tied to fetching the data can be added outside of the utility, for example search, filtering and sorting that are managed outside of the pagination utility.
+
+As you can see there's a lot of internal complexity for this kind of utility but the external API is flexible, simple and reusable. Let's get in to the code.
+
+## The code
+
+I'll be building the paginated utility with React Hooks, and I'll assume that you're familiar with them in the rest of this post. If you're not, I highly recommend an afternoon with coffee and the official React documentation for hooks which do a much better job of explaining hooks than I can!
+
+I typically start with the external API of an abstraction, which helps formulate a blueprint of what the internals of it. Let's sketch something out:
+
+```typescript
+const {
+  ids,
+  loadingInitial,
+  loadingNextPage,
+  refreshing,
+  loaded,
+  errored,
+  endReached,
+  fetchInitial,
+  fetchNextPage,
+  refresh
+} = usePaginatedFetcher(
+  (from, size) => () => fetchSomePaginatedData(from, size);
+)
+```
