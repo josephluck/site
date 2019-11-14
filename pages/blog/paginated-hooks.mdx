@@ -40,7 +40,7 @@ I'll be building the paginated utility with React Hooks, and I'll assume that yo
 
 ## The external API
 
-I typically start with the external API of an abstraction, which helps formulate a blueprint of what the internals of it. Let's sketch something out:
+I typically start with the external API of an abstraction, which helps formulate a blueprint of what the internals requirements of it. Let's sketch something out:
 
 ```typescript
 const {
@@ -86,9 +86,11 @@ So I've sketched out the initial list of things that an external component using
 }
 ```
 
-> The reason that fetchInitial, fetchNextPage and refresh do not have any arguments is because these functions are inferred from the ReturnType of the passed fetcher function.
+> The reason that fetchInitial, fetchNextPage and refresh do not have any arguments is because these functions are inferred from the ReturnType of the passed fetcher function. More on the specifics of how this is achieved later in the post.
 
-The last thing to map out is what the fetcher function looks like. The `usePaginatedFetcher` hook takes in a function as the first argument that is responsible for actually fetching the data from somewhere. This function receives `from` and `size` as the first two arguments, to which the function is expected to return another function that performs the fetching. The reason the fetcher is structured as a higher-order function is because the hook is responsible for managing the state of `from` and `size`, but there may be additional parameters passed in to perform the fetching of the data, like ids, filters, searches, sorts, etc... Here's the definition of the fetcher function in Typescript:
+The last thing to map out is what the fetcher function looks like. The `usePaginatedFetcher` hook takes in a function as the first argument that is responsible for actually fetching the data from somewhere. This function receives `from` and `size` as the first two arguments (which represent which index of records the back-end should start returning, and how many records to return respectively). The fetcher is then expected to return another function that performs the fetching.
+
+The reason the fetcher is structured as a higher-order function is because the hook is responsible for managing the state of `from` and `size`, but there could be any number additional arguments required to perform the fetching of the data, like ids, filters, searches, sorts, etc... and the hook shouldn't make any assumptions or restrict the flexibility of the data fetching itself. Here's the type definition of the fetcher function:
 
 ```typescript
 type Fetcher = Fn extends (from: number, size: number) => (...args: any[]) => Promise<Paginated<any>>
@@ -103,7 +105,7 @@ interface Paginated<T> {
 }
 ```
 
-> Note that contradictory to what I stated above where the paginated fetcher hook mustn't know about the shape of the returned data, I am assuming that the API returns a response in the `Paginated` structure. Of course, your app will likely be different to this so feel free to amend as necessary, or refactor the hook to be even more generic.
+> Contradictory to what I stated above where the paginated fetcher hook mustn't know about the shape of the returned data, I am assuming that the API returns a response in the `Paginated` structure. Of course, your app will likely be different to this so feel free to amend as necessary, or refactor the hook to be even more generic.
 
 So now that the external API is defined, let's move on to the internals.
 
@@ -112,7 +114,7 @@ So now that the external API is defined, let's move on to the internals.
 First things first, let's set up a bunch of `useState` hooks and derived state to manage the internal (and some exposed) states:
 
 ```typescript
-type Fetcher = Fn extends (from: number, size: number ) => (...args: any[]) => Promise<Paginated<any>>
+type Fetcher = Fn extends (from: number, size: number) => (...args: any[]) => Promise<Paginated<any>>
 
 const usePaginatedFetcher = <Fn extends Fetcher>(fetch: Fn) => {
   const [ids, setIds] = useState<string[]>([]);
@@ -163,7 +165,7 @@ const fetchData = useCallback(
 
 There's a couple things to note here. The first is that the `fetchData` function is a higher-order function that takes as it's first argument `initial: boolean`. This boolean is required because the hook exposes methods `fetchInitial` and `refresh`, both of which which when called fetches data and replaces the existing list, aka, doesn't infinite scroll. The `initial` boolean is used within the `setIds` call to determine whether to append the results to the existing list (in the case of infinite scroll) or replace the results in the list.
 
-The second thing to note is that there's a variable I haven't introduced yet, `idKeyName`. As mentioned above, this paginated fetcher hook can't know about the structure of the underlying data, yet it keeps track of the list of results to ve displayed in the UI. These two things are contradictory of course, so there needs to be some way for the hook to know how to uniquely identify a particular result. For this, a `idKeyName` is passed in as a new argument to the hook and is used to pull out a unique identifier per record. This unique identifier is set in the state of the hook and passed back out to the component using the hook to map over and render the results:
+The second thing to note is that there's a variable I haven't introduced yet, `idKeyName`. The hook isn't allowed to know about the structure of the returned data, yet it's expected to keep track of the list of results to ve displayed in the UI. These two things are contradictory of course, so there needs to be some way for the hook to know how to uniquely identify a particular result. To achieve this, a `idKeyName` is passed in as a new argument to the hook and is used to map a unique identifier per record. The list of these identifiers are managed in the state of the hook and passed back out so that the component can map over them and render the results:
 
 ```typescript
 const usePaginatedFetcher = <Fn extends Fetcher>(fetch: Fn, idKeyName: string) => ...
@@ -226,10 +228,10 @@ The fetcher function type looks like this:
 type Fetcher = Fn extends (from: number, size: number ) => (...args: any[]) => Promise<Paginated<any>>
 ```
 
-However, we want the methods exposed by the hook to fetch the data to look like this:
+However, we want the methods exposed by the hook to look something like this:
 
 ```typescript
-(...args: any[]) => Promise<Paginated<any>>
+type FetchNextPage = (...args: any[]) => Promise<Paginated<any>>;
 ```
 
 With the arguments inferred of course, such that if the fetcher function requires any additional arguments such as ids, search, filter sort etc, the callee of the fetcher knows about it. Typescript comes with a handy type utility called `ReturnType` that we can use to our advantage:
@@ -251,7 +253,6 @@ Pretty neat!
 Hopefully you'll get a sense for how all the bits of this hook fit together, but here's the entire code for the custom paginated data hook!
 
 ```typescript
-
 type Fetcher = (
   from: number,
   size: number
