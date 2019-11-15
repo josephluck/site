@@ -108,7 +108,7 @@ Woah. I might have been a bit excessive in the implementation of a counter in Re
 
 # Creating a simple state library
 
-Cool, so let's get in to creating a super simple and lightweight state management library that's more than capable of managing big app state! Listing out the requirements we have:
+So let's get stuck in to creating a super simple and lightweight state management library that's more than capable of managing big app state! Listing out the requirements we have:
 
 - Powered by functions
 - Only a handful of core concepts to learn
@@ -153,7 +153,7 @@ There's a couple things to note here. The first is that we're defining the `crea
 
 However, there's a few things wrong with this, namely that the state can be mutated by the implementation of the mutator. This isn't great because mutation can lead to unpredictability in apps, and is often the cause of many bugs! The second issue is that the returned function isn't type-safe, as it's arguments are typed as `any[]`.
 
-Let's fix the first problem by introducing Immer. Immer is a fantastic library that masquerades immutability behind a mutable API. It lets developers change data in any manner they see fit whilst retaining immutability under the hood. It's perfect for our simple state management libary. Let's introduce it and change our `createMutator` function:
+Let's fix the first problem by introducing Immer. Immer is a fantastic library that masquerades immutability behind a mutable API. It lets developers change data in any manner they see fit whilst retaining immutability under the hood. It's perfect for our simple state management library. Let's introduce it and change our `createMutator` function:
 
 ```typescript
 const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
@@ -179,7 +179,7 @@ And turn it in to:
 type Add = (by: number) => S;
 ```
 
-We do this because the library handles calling the mutator and injecting `state` as the first argument. We want to infer all the remaining arguments to the mutator as to be flexible for any number of arguments that the mutator might define. Total flexibility with no boilerplate at all! Let's add some Typescript wizardry to sort it out!:
+We do this because the library handles calling the mutator and injecting `state` as the first argument. We want to infer all the remaining arguments to the mutator as to be flexible for any number of arguments that the mutator might define. Total flexibility with no boilerplate at all! Let's add some Typescript wizardry to sort it out:
 
 ```typescript
 export type RemoveFirstFromTuple<T extends any[]> = T["length"] extends 0
@@ -199,11 +199,11 @@ const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
 };
 ```
 
-I probably won't be able to do a great job of explaining how the nitty gritty of `RemoveFirstFromTuple` works, but essentially what we're doing is plucking out the arguments of the mutator's implementation function type, denoted as `Fn` as a tuple of types, and removing the first type from the tuple to be left with a resultant tuple of the remaining arguments. We then pass this resultant type in as the type of `...args` to complete the inference. Neat! That wraps up changing data.
+I won't be able to do a great job of explaining how the nitty gritty of `RemoveFirstFromTuple` works, but essentially what we're doing is plucking out the arguments of the mutator's function's implementation (denoted as `Fn`) as a tuple of types, and removing the first type from the tuple to be left with a resultant tuple of the remaining arguments. We then pass this resultant type to `...args` to complete the inference. Neat! That wraps up changing data in a fully type-safe manner.
 
 ## Subscribing to data changes
 
-Another relatively simple one is implementing pub/sub functionality. Again, another simple variable is needed to keep track of subscriptions to state changes
+Another relatively simple requirement to implement is pub/sub functionality. Another simple variable is needed to keep track of subscriptions to state changes:
 
 ```typescript
 const makeStore = <S>(state: S) => {
@@ -223,7 +223,7 @@ const subscribe = (sub: Subscription) => {
 };
 ```
 
-And then unsubscribing (so we don't end up with memory leaks!):
+And then unsubscribing (so we don't end up introducing memory leaks!):
 
 ```typescript
 const subscribe = (sub: Subscription): Unsubscribe => {
@@ -236,7 +236,7 @@ const subscribe = (sub: Subscription): Unsubscribe => {
 };
 ```
 
-Now all that's left is to notify the subscribers whenever data changes, for that, we'll add a little hook in to the calling of a mutator to map over the subscribers and call them one-by-one:
+Now all that's left is to notify the subscribers whenever data changes, for that, we'll add a little hook in to the calling of a mutator to map over the subscribers and call them one-by-one when the mutator has finished updating the state:
 
 ```typescript
 const notifySubscribers = (prevState: S, newState: S) =>
