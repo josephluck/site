@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "next",
+    "start": "next",
     "now-build": "next build && next export",
     "deploy": "now && now alias"
   },

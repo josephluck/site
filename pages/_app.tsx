@@ -55,13 +55,16 @@ const GlobalStyles = styled.createGlobalStyle`
   body {
     font-weight: ${theme.fontWeight._300};
     font-display: fallback;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.5em;
     margin: 0;
     padding: 0;
     font-family: "Inter UI", sans-serif;
     width: 100vw;
     min-width: 100vw;
+    @media (min-width: ${theme.media.tablet}) {
+      font-size: 20px;
+    }
   }
   h1,
   h2,

@@ -26,6 +26,8 @@ const Wrapper = styled.div`
   border-bottom: solid 1px ${theme.color.border};
   display: flex;
   align-items: center;
+  overflow: auto;
+  width: 100%;
 
   @media (min-width: ${theme.media.tablet}) {
     display: block;
@@ -37,9 +39,9 @@ const Inner = styled.div`
   padding: ${theme.spacing._8} ${theme.spacing._16};
   display: flex;
   align-items: center;
+  flex: 1;
 
   @media (min-width: ${theme.media.tablet}) {
-    display: block;
     padding: ${theme.spacing._8} ${theme.spacing._32};
     margin: 0 auto;
   }
@@ -60,10 +62,12 @@ const Logo = styled.span`
 
 const LogoWrap = styled.div`
   flex: 1;
+`;
 
-  @media (min-width: ${theme.media.tablet}) {
-    display: inline-block;
-  }
+const Links = styled.div`
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
 `;
 
 export const Navigation = withRouter<{ className?: string }>(props => {
@@ -79,21 +83,28 @@ export const Navigation = withRouter<{ className?: string }>(props => {
             </a>
           </Link>
         </LogoWrap>
-        <NavLink active={asPath.includes("/blog")}>
-          <Link href="/blog" passHref prefetch>
-            <a>Blog</a>
-          </Link>
-        </NavLink>
-        <NavLink active={asPath.includes("/resume")}>
-          <Link href="/resume" passHref prefetch>
-            <a>Resume</a>
-          </Link>
-        </NavLink>
-        <NavLink active={asPath.includes("/references")}>
-          <Link href="/references" passHref prefetch>
-            <a>References</a>
-          </Link>
-        </NavLink>
+        <Links>
+          <NavLink active={asPath.includes("/blog")}>
+            <Link href="/blog" passHref prefetch>
+              <a>Blog</a>
+            </Link>
+          </NavLink>
+          {/* <NavLink active={asPath.includes("/projects")}>
+            <Link href="/projects" passHref prefetch>
+              <a>Projects</a>
+            </Link>
+          </NavLink> */}
+          <NavLink active={asPath.includes("/resume")}>
+            <Link href="/resume" passHref prefetch>
+              <a>Resume</a>
+            </Link>
+          </NavLink>
+          <NavLink active={asPath.includes("/references")}>
+            <Link href="/references" passHref prefetch>
+              <a>References</a>
+            </Link>
+          </NavLink>
+        </Links>
       </Inner>
     </Wrapper>
   );
