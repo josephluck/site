@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 `;
 
 const Inner = styled.div`
-  max-width: 650px;
+  max-width: 768px;
   padding: ${theme.spacing._8} ${theme.spacing._16};
   display: flex;
   align-items: center;

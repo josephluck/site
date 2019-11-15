@@ -255,7 +255,7 @@ const Layout = styled.default.div`
 
 const Content = styled.default.div`
   padding: ${theme.spacing._16};
-  max-width: 650px;
+  max-width: 768px;
   margin: 0 auto;
 
   @media (min-width: ${theme.media.tablet}) {
