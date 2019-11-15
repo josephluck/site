@@ -1,0 +1,319 @@
+# Minimal, simple, functional, immutable, flexible state management
+
+Enough buzz words for you!?!
+
+> TLDR? Head straight to the result of this post by heading to GitHub where I've created a repo containing the library I made that you can use right away: https://github.com/josephluck/stately
+
+---
+
+## State management is... easy?
+
+I've been a front-end software engineer for a pretty long time. Long enough to know the pains and frustrations of trying (and failing pretty badly) to build webapps with prehistoric libraries like MooTools and JQuery. I've had my fair share of pain with front-end state management and I sympathize with those who say that it's difficult.
+
+I'll caveat though and say it really doesn't need to be. We've come a long way since the "old" days of managing state in the DOM, global variables and esoteric reactive frameworks, and we're still improving and figuring out new techniques.
+
+In this post I want to convince you that state management needn't be _too_ difficult, providing we leverage some nice library API design and ... types.
+
+## What's state management anyway?
+
+Before we dive in to building anything, I want to recap what state management really _is_. Here's a few statements:
+
+- Must keep hold of data of some kind and must hold this data reliably, persisted somewhere (in memory is okay!)
+- Must provide a mechanism for mutating the data
+- Must notify that data has been changed
+
+Harking back to famous computer science philosophy... "do one thing and do it well". By sticking to these three simple responsibilities, hopefully we'll see how simple state management can be.
+
+## Designing something minimal
+
+Let's start by designing a simple external library API that encompasses these three responsibilities:
+
+Keeping hold of state:
+
+```typescript
+const store = makeStore({ count: 0 });
+```
+
+That's a good start. Nothing too fancy. Now on to mutating the data:
+
+```typescript
+const store = makeStore({ count: 0 });
+const add = store.createMutator((state, by: number) => state.count + by);
+
+add(2);
+```
+
+Cool, that's pretty simple too. What about subscriptions?
+
+```typescript
+const store = makeStore({ count: 0 });
+store.subscribe(state => console.log("State updated:", state));
+const add = store.createMutator((state, by: number) => state.count + by);
+
+add(2);
+```
+
+So three lines for three rules, but is the internal implementation as simple as the external API?
+
+## Let's step back a bit
+
+I'm being a bit disingenuous when I state that state management is easy, because really (with a few exceptions) it's not _really_ any particular state management library that makes state management difficult, it's really the act of designing state structure and data flows that are difficult. What's more, with state management frameworks that are _reactive_ in nature, such as `mobx`, `vuex`, `rxjs` and the like, it can be very difficult to know _where_ a state change has taken place. In addition, it's all to easy to make a mistake when updating state where the wrong data is assigned to the wrong key etc.
+
+There are several popular libraries like `redux` etc that attempt to solve the problem of easily understandable and traceable state changes, but these libraries typically come at a cost. Let's take a look at how we might implement the above example with full type-safety using Redux:
+
+```typescript
+interface CountState {
+  readonly count: number;
+}
+const initialCountState: CountState = {
+  count: 0
+};
+
+export interface AddAction extends Action<"Add"> {
+  by: number;
+}
+const addAction = (by: number): AddAction => ({
+  by,
+  type: "Add"
+});
+
+const countReducer: Reducer<State, AddAction> = (
+  state = initialCountState,
+  action
+) => {
+  switch (action.type) {
+    case "Add": {
+      return {
+        ...state,
+        count: state.count + action.by
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+export interface AppState {
+  readonly countState: CountState;
+}
+const rootReducer = combineReducers<AppState>({ countState: countReducer });
+
+const store = createStore(rootReducer);
+store.dispatch(addAction(2));
+```
+
+Woah. I might have been a bit excessive in the implementation of a counter in Redux, but not by much. Line for line the Redux implementation is 8x more code! The majority of this is boilerplate code, including types, that make it difficult to map through the code and understand what data is what shape. Let's fix that with out little library.
+
+# Creating a simple state library
+
+Cool, so let's get in to creating a super simple and lightweight state management library that's more than capable of managing big app state! Listing out the requirements we have:
+
+- Powered by functions
+- Only a handful of core concepts to learn
+- Predictable and immutable state container
+- Mutable API for updating data for less boilerplate
+- 100% inferred type-safety
+- Subscription-based API for becoming notified of state updates
+
+And going back to our three responsibilities, we have:
+
+- Must keep hold of data of some kind and must hold this data reliably, persisted somewhere (in memory is okay!)
+- Must provide a mechanism for mutating the data
+- Must notify that data has been changed
+
+Let's go ahead and tackle these one by one.
+
+## Keeping hold of data
+
+The simplest and oldest way of keeping track of a bit of state in JavaScript is to use a variable:
+
+```typescript
+const makeStore = <S>(state: S) => {
+  let _state = state;
+};
+```
+
+Responsibility one, done!
+
+## Mutating the data
+
+Now this one is the tricky one. How do we provide a way for the user of the library to easily, predictably and simply update the state in the store without forcing them to create lots of boilerplate whilst maintaining 100% type safety? It's a pretty big ask, but let's start off small and build it up:
+
+```typescript
+const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
+  fn: Fn
+) => (...args: any[]): S => {
+  return (_state = fn(_state, ...args));
+};
+```
+
+There's a couple things to note here. The first is that we're defining the `createMutator` function as a function "builder", that is, it wraps a provided function and return a new function that can be called, and passes the latest state and callees arguments in. This means that whoever calls the mutator doesn't have to pass the latest state in every time. Neat.
+
+However, there's a few things wrong with this, namely that the state can be mutated by the implementation of the mutator. This isn't great because mutation can lead to unpredictability in apps, and is often the cause of many bugs! The second issue is that the returned function isn't type-safe, as it's arguments are typed as `any[]`.
+
+Let's fix the first problem by introducing Immer. Immer is a fantastic library that masquerades immutability behind a mutable API. It lets developers change data in any manner they see fit whilst retaining immutability under the hood. It's perfect for our simple state management libary. Let's introduce it and change our `createMutator` function:
+
+```typescript
+const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
+  fn: Fn
+) => (...args: any[]): S => {
+  const newState = immer(_state, draft => {
+    fn(draft as S, ...args);
+  });
+  _state = newState;
+  return newState;
+};
+```
+
+If you're confused at what Immer does, please give the official docs a once over, they're really good! Next, we need to fix the lack of type-safety of the returned mutator, right now the types aren't inferred. What we want to do is take the following type:
+
+```typescript
+type Add = (state: S, by: number) => S;
+```
+
+And turn it in to:
+
+```typescript
+type Add = (by: number) => S;
+```
+
+We do this because the library handles calling the mutator and injecting `state` as the first argument. We want to infer all the remaining arguments to the mutator as to be flexible for any number of arguments that the mutator might define. Total flexibility with no boilerplate at all! Let's add some Typescript wizardry to sort it out!:
+
+```typescript
+export type RemoveFirstFromTuple<T extends any[]> = T["length"] extends 0
+  ? []
+  : ((...b: T) => any) extends (a, ...b: infer I) => any
+  ? I
+  : [];
+
+const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
+  fn: Fn
+) => (...args: RemoveFirstFromTuple<Parameters<typeof fn>>): S => {
+  const newState = immer(_state, draft => {
+    fn(draft as S, ...args);
+  });
+  _state = newState;
+  return newState;
+};
+```
+
+I probably won't be able to do a great job of explaining how the nitty gritty of `RemoveFirstFromTuple` works, but essentially what we're doing is plucking out the arguments of the mutator's implementation function type, denoted as `Fn` as a tuple of types, and removing the first type from the tuple to be left with a resultant tuple of the remaining arguments. We then pass this resultant type in as the type of `...args` to complete the inference. Neat! That wraps up changing data.
+
+## Subscribing to data changes
+
+Another relatively simple one is implementing pub/sub functionality. Again, another simple variable is needed to keep track of subscriptions to state changes
+
+```typescript
+const makeStore = <S>(state: S) => {
+  type Unsubscribe = () => any;
+  type Subscription = (prevState: S, newState: S) => any;
+
+  let _state = state;
+  let _subscriptions: Subscription[] = [];
+};
+```
+
+Let's provide a mechanism for adding a new subscription:
+
+```typescript
+const subscribe = (sub: Subscription) => {
+  _subscriptions = [..._subscriptions, sub];
+};
+```
+
+And then unsubscribing (so we don't end up with memory leaks!):
+
+```typescript
+const subscribe = (sub: Subscription): Unsubscribe => {
+  _subscriptions = [..._subscriptions, sub];
+  return () => {
+    _subscriptions = _subscriptions.filter(
+      (_, i) => i !== _subscriptions.indexOf(sub)
+    );
+  };
+};
+```
+
+Now all that's left is to notify the subscribers whenever data changes, for that, we'll add a little hook in to the calling of a mutator to map over the subscribers and call them one-by-one:
+
+```typescript
+const notifySubscribers = (prevState: S, newState: S) =>
+  _subscriptions.forEach(fn => fn(prevState, newState));
+
+const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
+  fn: Fn
+) => (...args: RemoveFirstFromTuple<Parameters<typeof fn>>): S => {
+  const newState = immer(_state, draft => {
+    fn(draft as S, ...args);
+  });
+  notifySubscribers(_state, newState);
+  _state = newState;
+  return newState;
+};
+```
+
+And that wraps up subscribers!
+
+## Wrapping up
+
+Although we had to dive in to some _fairly_ complex Typescript stuff to get inference all working nicely, it's not a massive job to implement a straight-forward but effective fully type-safe state management library in less than 50 LOC. Here's the full code:
+
+```typescript
+import immer from "immer";
+
+export type RemoveFirstFromTuple<T extends any[]> = T["length"] extends 0
+  ? []
+  : ((...b: T) => any) extends (a, ...b: infer I) => any
+  ? I
+  : [];
+
+const stately = <S>(state: S) => {
+  type Unsubscribe = () => any;
+  type Subscription = (prevState: S, newState: S) => any;
+
+  let _state = state;
+  let _subscriptions: Subscription[] = [];
+
+  const notifySubscribers = (prevState: S, newState: S) =>
+    _subscriptions.forEach(fn => fn(prevState, newState));
+
+  const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
+    fn: Fn
+  ) => (...args: RemoveFirstFromTuple<Parameters<typeof fn>>): S => {
+    const newState = immer(_state, draft => {
+      fn(draft as S, ...args);
+    });
+    notifySubscribers(_state, newState);
+    _state = newState;
+    return newState;
+  };
+
+  const createEffect = <Fn extends (state: S, ...args: any[]) => any>(
+    fn: Fn
+  ) => (
+    ...args: RemoveFirstFromTuple<Parameters<typeof fn>>
+  ): ReturnType<typeof fn> => fn(_state, ...args);
+
+  const subscribe = (sub: Subscription): Unsubscribe => {
+    _subscriptions = [..._subscriptions, sub];
+    return () => {
+      _subscriptions = _subscriptions.filter(
+        (_, i) => i !== _subscriptions.indexOf(sub)
+      );
+    };
+  };
+
+  return {
+    createMutator,
+    createEffect,
+    subscribe,
+    getState: () => _state
+  };
+};
+
+export type StatelyReturn = ReturnType<typeof stately>;
+
+export default stately;
+```
+
+I've published this as an NPM library which you can find here: https://github.com/josephluck/stately. Please let me know if you have any suggestions or problems by raising an issue!
