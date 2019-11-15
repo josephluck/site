@@ -57,7 +57,9 @@ So three lines for three rules, but is the internal implementation as simple as 
 
 ## Let's step back a bit
 
-I'm being a bit disingenuous when I state that state management is easy, because really (with a few exceptions) it's not _really_ any particular state management library that makes state management difficult, it's really the act of designing state structure and data flows that are difficult. What's more, with state management frameworks that are _reactive_ in nature, such as `mobx`, `vuex`, `rxjs` and the like, it can be very difficult to know _where_ a state change has taken place. In addition, it's all to easy to make a mistake when updating state where the wrong data is assigned to the wrong key etc.
+I'm being a bit disingenuous when I say that state management is easy, because (with a few exceptions) it's not _really_ any particular library or framework that makes state management difficult, it's designing state structure and data flows that's difficult, and typically, that job is the same regardless of framework.
+
+However, with state management frameworks that are _reactive_ in nature, such as `mobx`, `vuex`, `rxjs` and the like, it can be very difficult to know _where_ a state change has taken place. In addition, it's all to easy to make a mistake when updating state where the wrong data is assigned to the wrong key etc, particularly without the help of strongly-typed languages like Typescript.
 
 There are several popular libraries like `redux` etc that attempt to solve the problem of easily understandable and traceable state changes, but these libraries typically come at a cost. Let's take a look at how we might implement the above example with full type-safety using Redux:
 
