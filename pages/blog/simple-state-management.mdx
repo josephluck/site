@@ -10,9 +10,9 @@ Enough buzz words for you!?!
 
 I've been a front-end software engineer for a pretty long time. Long enough to know the pains and frustrations of trying (and failing pretty badly) to build webapps with prehistoric libraries like MooTools and JQuery. I've had my fair share of pain with front-end state management and I sympathize with those who say that it's difficult.
 
-I'll caveat though and say it really doesn't need to be. We've come a long way since the "old" days of managing state in the DOM, global variables and esoteric reactive frameworks, and we're still improving and figuring out new techniques.
+I'll caveat though and say it really doesn't need to be. We've come a long way since the "old" days of managing state in the DOM, global variables and esoteric frameworks, and we're still improving and figuring out new techniques.
 
-In this post I want to convince you that state management needn't be _too_ difficult, providing we leverage some nice library API design and ... types.
+In this post I want to convince you that state management needn't be _too_ difficult, providing we leverage some nice library API design and ... types. We'll finish the post by building out a fully-fledged state management framework that is as simple and as easy to use as possible.
 
 ## What's state management anyway?
 
@@ -47,8 +47,8 @@ Cool, that's pretty simple too. What about subscriptions?
 
 ```typescript
 const store = makeStore({ count: 0 });
-store.subscribe(state => console.log("State updated:", state));
 const add = store.createMutator((state, by: number) => state.count + by);
+store.subscribe(state => console.log("State updated:", state));
 
 add(2);
 ```
@@ -104,7 +104,7 @@ const store = createStore(rootReducer);
 store.dispatch(addAction(2));
 ```
 
-Woah. I might have been a bit excessive in the implementation of a counter in Redux, but not by much. Line for line the Redux implementation is 8x more code! The majority of this is boilerplate code, including types, that make it difficult to map through the code and understand what data is what shape. Let's fix that with out little library.
+Woah. I might have been a bit excessive in the implementation of a counter in Redux, but not by much. Line for line the Redux implementation is 8x more code! The majority of this is boilerplate code, including types, that make it difficult to map through the code and understand what data is what shape. Let's fix that with our little library.
 
 # Creating a simple state library
 
