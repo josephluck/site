@@ -203,11 +203,11 @@ const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
 };
 ```
 
-I won't be able to do a great job of explaining how the nitty gritty of `RemoveFirstFromTuple` works, but essentially what we're doing is plucking out the arguments of the mutator's function's implementation (denoted as `Fn`) as a tuple of types, and removing the first type from the tuple to be left with a resultant tuple of the remaining arguments. We then pass this resultant type to `...args` to complete the inference. Neat! That wraps up changing data in a fully type-safe manner.
+What we're doing here is plucking out the arguments of the mutator's function's implementation (denoted as `Fn` and `typeof Fn`) as a tuple of types (using `Parameters<typeof fn>`), and removing the first type from the tuple to be left with a resultant tuple of the remaining arguments (using a combination of conditional types and `infer I`). We then pass this resultant type to `...args` to complete the inference. Neat! That wraps up changing data in a fully type-safe manner.
 
 ## Subscribing to data changes
 
-Another relatively simple requirement to implement is pub/sub functionality. Another simple variable is needed to keep track of subscriptions to state changes:
+Another relatively simple requirement to implement is pub/sub functionality. Let's add another variable to keep track of subscriptions to state changes:
 
 ```typescript
 const makeStore = <S>(state: S) => {
@@ -219,7 +219,7 @@ const makeStore = <S>(state: S) => {
 };
 ```
 
-Let's provide a mechanism for adding a new subscription:
+Also, we'll provide a mechanism for adding a new subscription:
 
 ```typescript
 const subscribe = (sub: Subscription) => {
