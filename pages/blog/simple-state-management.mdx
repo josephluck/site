@@ -167,7 +167,9 @@ const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
 };
 ```
 
-If you're confused at what Immer does, please give the official docs a once over, they're really good! Next, we need to fix the lack of type-safety of the returned mutator, right now the types aren't inferred. What we want to do is take the following type:
+> If you're unfamiliar with Immer, please give the official docs a once over, they're really good! 
+
+Next, we need to fix the lack of type-safety of the returned mutator, right now the types aren't inferred. What we want to do is take the following type:
 
 ```typescript
 type Add = (state: S, by: number) => S;
