@@ -167,7 +167,7 @@ const createMutator = <Fn extends (state: S, ...args: any[]) => any>(
 };
 ```
 
-> If you're unfamiliar with Immer, please give the official docs a once over, they're really good! 
+> If you're unfamiliar with Immer, please give the official docs a once over, they're really good!
 
 Next, we need to fix the lack of type-safety of the returned mutator, right now the types aren't inferred. What we want to do is take the following type:
 
@@ -181,7 +181,9 @@ And turn it in to:
 type Add = (by: number) => S;
 ```
 
-We do this because the library handles calling the mutator and injecting `state` as the first argument. We want to infer all the remaining arguments to the mutator as to be flexible for any number of arguments that the mutator might define. Total flexibility with no boilerplate at all! Let's add some Typescript wizardry to sort it out:
+We want to construct this type because the returned function from `createMutator` handles injecting `state` as the first argument, and spreads the remaining arguments from the callee. We want to infer all the remaining arguments to the mutator as to be flexible for any number of arguments that the mutator might define. The goal is total flexibility with no boilerplate at all!
+
+Let's add some Typescript wizardry to sort it out:
 
 ```typescript
 export type RemoveFirstFromTuple<T extends any[]> = T["length"] extends 0
