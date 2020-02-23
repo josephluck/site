@@ -67,12 +67,12 @@ function rem(val: number) {
 }
 
 export const darkTheme = {
-  background: "#000000",
+  background: "rgb(15, 13, 22)",
   text: "#F6F6F6",
   link: "rgb(116, 174, 255)",
   linkHover: "rgb(77, 151, 254)",
   linkTertiary: "#9CA7AD",
-  border: "#444444",
+  border: "#222222",
   blockQuoteBackground: "transparent",
   blockQuoteBorder: "#666666",
   blockQuoteText: "#888888",
