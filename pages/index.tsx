@@ -26,22 +26,30 @@ export default function() {
         👋 I'm a product engineer based in London.
       </HeadingTwo>
       <Paragraph style={{ marginBottom: theme.spacing._16 }}>
-        Lead front-end engineer at{" "}
-        <a href="https://www.fantastec.game/" target="_blank" rel="noopener">
-          Fantastec
+        Senior front-end engineer at{" "}
+        <a href="https://www.wearebo.co.uk/" target="_blank" rel="noopener">
+          Bó
         </a>
-        . Previously senior front-end engineer at{" "}
-        <a href="https://www.goodlord.co/" target="_blank" rel="noopener">
-          Goodlord
+        . Previously lead front-end engineer at{" "}
+        <a href="https://fantastec-swap.io/" target="_blank" rel="noopener">
+          Fantastec
         </a>
         .
       </Paragraph>
       <Paragraph style={{ marginBottom: theme.spacing._16 }}>
         Passionate about design, user experience and functional programming.
-        Expert at React and Typescript.
+        Expert at React, React Native and TypeScript.
       </Paragraph>
       <Paragraph>
         Maker of{" "}
+        <a
+          href="https://github.com/josephluck/internote"
+          target="_blank"
+          rel="noopener"
+        >
+          Internote
+        </a>
+        ,{" "}
         <a
           href="https://josephluck.gitbooks.io/helix/"
           target="_blank"
@@ -64,14 +72,6 @@ export default function() {
           rel="noopener"
         >
           wtf.js
-        </a>
-        ,{" "}
-        <a
-          href="https://github.com/josephluck/internote"
-          target="_blank"
-          rel="noopener"
-        >
-          Internote
         </a>{" "}
         and{" "}
         <a href="https://github.com/josephluck" target="_blank" rel="noopener">
