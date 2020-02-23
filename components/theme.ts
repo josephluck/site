@@ -67,7 +67,7 @@ function rem(val: number) {
 }
 
 export const darkTheme = {
-  background: "rgb(15, 13, 22)",
+  background: "#000000",
   text: "#F6F6F6",
   link: "rgb(116, 174, 255)",
   linkHover: "rgb(77, 151, 254)",
