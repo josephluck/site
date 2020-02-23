@@ -6,26 +6,26 @@ import {
   Paragraph
 } from "../components/base";
 import styled from "styled-components";
-import { theme } from "../components/theme";
+import { symbols } from "../components/theme";
 
 const Email = styled(HeadingFour)`
-  color: ${theme.color.linkTertiary}
+  color: ${props => props.theme.linkTertiary}
   font-weight: normal;
 `;
 
 export default function() {
   return (
     <>
-      <HeadingOne style={{ marginBottom: theme.spacing._16 }}>
+      <HeadingOne style={{ marginBottom: symbols.spacing._16 }}>
         Joseph Luck
       </HeadingOne>
-      <Email style={{ marginBottom: theme.spacing._32 }}>
+      <Email style={{ marginBottom: symbols.spacing._32 }}>
         josephreubenluck@gmail.com
       </Email>
-      <HeadingTwo style={{ marginBottom: theme.spacing._32 }}>
+      <HeadingTwo style={{ marginBottom: symbols.spacing._32 }}>
         👋 I'm a product engineer based in London.
       </HeadingTwo>
-      <Paragraph style={{ marginBottom: theme.spacing._16 }}>
+      <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
         Senior front-end engineer at{" "}
         <a href="https://www.wearebo.co.uk/" target="_blank" rel="noopener">
           Bó
@@ -36,7 +36,7 @@ export default function() {
         </a>
         .
       </Paragraph>
-      <Paragraph style={{ marginBottom: theme.spacing._16 }}>
+      <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
         Passionate about design, user experience and functional programming.
         Expert at React, React Native and TypeScript.
       </Paragraph>

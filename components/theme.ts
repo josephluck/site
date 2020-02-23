@@ -1,4 +1,4 @@
-export const theme = {
+export const symbols = {
   font: {
     base: "16px",
     _10: {
@@ -44,35 +44,9 @@ export const theme = {
   },
   fontWeight: {
     _300: "300",
-    _400: "400",
     _500: "500",
     _600: "600",
-    _700: "700",
-    bold: "bold"
-  },
-  color: {
-    text: "#373B3F",
-    link: "#2C92DD",
-    linkHover: "#2A59B9",
-    linkTertiary: "#9CA7AD",
-    border: "#E6E6E6",
-    navigationBackground: "#FFFFFF",
-    blockQuoteBackground: "#F6F6F6",
-    blockQuoteBorder: "#E6E6E6",
-    blockQuoteText: "#808b91",
-    syntaxPunctuation: "#373B3F",
-    syntaxComment: "#9CA7AD",
-    syntaxSelectionBg: "#9CA7AD",
-    syntaxString: "#A28972",
-    syntax4: "#36acaa",
-    syntaxDeleted: "#9a050f",
-    syntaxKeyword: "#67A1E2",
-    syntaxTag: "#557C97",
-    syntaxClassName: "#557C97",
-    syntaxAttributeName: "#373B3F",
-    syntaxFunction: "#67A1E2",
-    syntaxHighlightLine: "rgba(193, 222, 241, 0.2)",
-    syntaxLineNumberBorder: "#E6E6E6"
+    _700: "700"
   },
   spacing: {
     _2: rem(2),
@@ -91,3 +65,71 @@ export const theme = {
 function rem(val: number) {
   return `${val / 16}rem`;
 }
+
+export const darkTheme = {
+  background: "#111111",
+  text: "#F6F6F6",
+  link: "rgb(116, 174, 255)",
+  linkHover: "rgb(77, 151, 254)",
+  linkTertiary: "#9CA7AD",
+  border: "#444444",
+  blockQuoteBackground: "transparent",
+  blockQuoteBorder: "#666666",
+  blockQuoteText: "#888888",
+  syntaxBackground: "#333333",
+  syntaxBorder: "transparent",
+  syntaxPunctuation: "#F6F6F6",
+  syntaxComment: "#9CA7AD",
+  syntaxSelectionBg: "#9CA7AD",
+  syntaxString: "#A28972",
+  syntax4: "#36acaa",
+  syntaxDeleted: "#9a050f",
+  syntaxKeyword: "#67A1E2",
+  syntaxTag: "#67A1E2",
+  syntaxClassName: "#67A1E2",
+  syntaxAttributeName: "#F6F6F6",
+  syntaxFunction: "#67A1E2",
+  syntaxHighlightLine: "rgba(193, 222, 241, 0.2)",
+  syntaxLineNumberBorder: "#121212"
+};
+
+export const lightTheme: Theme = {
+  background: "#FFFFFF",
+  text: "#373B3F",
+  link: "#2C92DD",
+  linkHover: "#2A59B9",
+  linkTertiary: "#9CA7AD",
+  border: "#E6E6E6",
+  blockQuoteBackground: "#F6F6F6",
+  blockQuoteBorder: "#E6E6E6",
+  blockQuoteText: "#808b91",
+  syntaxBackground: "#F6F6F6",
+  syntaxBorder: "#E6E6E6",
+  syntaxPunctuation: "#373B3F",
+  syntaxComment: "#9CA7AD",
+  syntaxSelectionBg: "#9CA7AD",
+  syntaxString: "#A28972",
+  syntax4: "#36acaa",
+  syntaxDeleted: "#9a050f",
+  syntaxKeyword: "#67A1E2",
+  syntaxTag: "#67A1E2",
+  syntaxClassName: "#67A1E2",
+  syntaxAttributeName: "#373B3F",
+  syntaxFunction: "#67A1E2",
+  syntaxHighlightLine: "rgba(193, 222, 241, 0.2)",
+  syntaxLineNumberBorder: "#E6E6E6"
+};
+
+/**
+ * TODO: store this in local storage. Add user preference for it similar to https://overreacted.io/
+ */
+const hasMedia = typeof window !== "undefined" && !!window.matchMedia;
+
+export const isDarkMode =
+  false && hasMedia
+    ? window.matchMedia("(prefers-color-scheme: dark)").matches
+    : true;
+
+export const defaultTheme = isDarkMode ? darkTheme : lightTheme;
+
+export type Theme = typeof darkTheme;

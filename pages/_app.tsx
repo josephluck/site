@@ -2,13 +2,14 @@ import * as React from "react";
 import App, { Container } from "next/app";
 import { Navigation } from "../components/navigation";
 import * as styled from "styled-components";
-import { theme } from "../components/theme";
+import { symbols, defaultTheme } from "../components/theme";
 import { MDXProvider } from "@mdx-js/tag";
 import * as Base from "../components/base";
 import Link from "next/link";
 import { GA_CODE } from "../env";
 import Router from "next/router";
 import Head from "next/head";
+import { ThemeProvider } from "styled-components";
 
 // Map HTML tags to React components
 const components = {
@@ -53,16 +54,18 @@ const GlobalStyles = styled.createGlobalStyle`
   }
   html,
   body {
-    font-weight: ${theme.fontWeight._300};
+    background-color: ${props => props.theme.background};
+    color: ${props => props.theme.text};
+    font-weight: ${symbols.fontWeight._300};
     font-display: fallback;
     font-size: 18px;
     line-height: 1.5em;
     margin: 0;
     padding: 0;
-    font-family: "Inter UI", sans-serif;
+    font-family: "Work Sans", sans-serif;
     width: 100vw;
     min-width: 100vw;
-    @media (min-width: ${theme.media.tablet}) {
+    @media (min-width: ${symbols.media.tablet}) {
       font-size: 20px;
     }
   }
@@ -78,26 +81,26 @@ const GlobalStyles = styled.createGlobalStyle`
     height: auto;
   }
   p {
-    font-size: ${theme.font.paragraph.size};
-    line-height: ${theme.font.paragraph.lineHeight};
+    font-size: ${symbols.font.paragraph.size};
+    line-height: ${symbols.font.paragraph.lineHeight};
   }
   a {
-    color: ${theme.color.link};
-    transition: ${theme.transition.standard};
+    color: ${props => props.theme.link};
+    transition: ${symbols.transition.standard};
     text-decoration: none;
     &:hover {
-      color: ${theme.color.linkHover};
+      color: ${props => props.theme.linkHover};
     }
   }
 
   code[class*="language-"],
   pre[class*="language-"] {
-    color: ${theme.color.syntaxPunctuation};
-    background: ${theme.color.blockQuoteBackground};
-    border: solid 1px ${theme.color.border};
+    color: ${props => props.theme.syntaxPunctuation};
+    background: ${props => props.theme.syntaxBackground};
+    border: solid 1px ${props => props.theme.syntaxBorder};
     border-radius: 6px;
-    padding: ${theme.spacing._8};
-    font-family: "Inconsolata", monospace;
+    padding: ${symbols.spacing._8};
+    font-family: "Source Code Pro", monospace;
     direction: ltr;
     text-align: left;
     white-space: pre;
@@ -120,13 +123,13 @@ const GlobalStyles = styled.createGlobalStyle`
   pre[class*="language-"] ::-moz-selection,
   code[class*="language-"]::-moz-selection,
   code[class*="language-"] ::-moz-selection {
-    background: ${theme.color.syntaxSelectionBg};
+    background: ${props => props.theme.syntaxSelectionBg};
   }
   pre[class*="language-"]::selection,
   pre[class*="language-"] ::selection,
   code[class*="language-"]::selection,
   code[class*="language-"] ::selection {
-    background: ${theme.color.syntaxSelectionBg};
+    background: ${props => props.theme.syntaxSelectionBg};
   }
 
   /* Code blocks */
@@ -135,15 +138,15 @@ const GlobalStyles = styled.createGlobalStyle`
   }
 
   :not(pre) > code[class*="language-"] {
-    padding: ${theme.spacing._4};
-    border: 1px solid ${theme.color.border};
+    padding: ${symbols.spacing._4};
+    border: 1px solid ${props => props.theme.border};
   }
 
   .token.comment,
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: ${theme.color.syntaxComment};
+    color: ${props => props.theme.syntaxComment};
     font-style: italic;
   }
 
@@ -152,12 +155,12 @@ const GlobalStyles = styled.createGlobalStyle`
   }
 
   .token.string {
-    color: ${theme.color.syntaxString};
+    color: ${props => props.theme.syntaxString};
   }
 
   .token.punctuation,
   .token.operator {
-    color: ${theme.color.syntaxPunctuation};
+    color: ${props => props.theme.syntaxPunctuation};
     font-weight: normal;
   }
 
@@ -168,7 +171,7 @@ const GlobalStyles = styled.createGlobalStyle`
   .token.variable,
   .token.constant,
   .token.inserted {
-    color: ${theme.color.syntax4};
+    color: ${props => props.theme.syntax4};
   }
 
   .token.atrule,
@@ -178,23 +181,23 @@ const GlobalStyles = styled.createGlobalStyle`
   .language-json .token.boolean,
   .language-json .token.number,
   code[class*="language-css"] {
-    color: ${theme.color.syntaxKeyword};
-    font-weight: ${theme.fontWeight._700};
+    color: ${props => props.theme.syntaxKeyword};
+    font-weight: ${symbols.fontWeight._700};
   }
 
   .token.deleted,
   .language-autohotkey .token.tag {
-    color: ${theme.color.syntaxDeleted};
+    color: ${props => props.theme.syntaxDeleted};
   }
 
   .token.selector,
   .language-autohotkey .token.keyword {
-    color: ${theme.color.syntaxKeyword};
+    color: ${props => props.theme.syntaxKeyword};
   }
 
   .token.important,
   .token.bold {
-    font-weight: ${theme.fontWeight._700};
+    font-weight: ${symbols.fontWeight._700};
   }
 
   .token.italic {
@@ -204,48 +207,48 @@ const GlobalStyles = styled.createGlobalStyle`
   .token.class-name,
   .token.function,
   .language-json .token.property {
-    color: ${theme.color.syntaxClassName};
-    font-weight: ${theme.fontWeight._700};
+    color: ${props => props.theme.syntaxClassName};
+    font-weight: ${symbols.fontWeight._700};
   }
 
   .token.tag,
   .token.selector {
-    color: ${theme.color.syntaxTag};
+    color: ${props => props.theme.syntaxTag};
   }
 
   .token.attr-name,
   .token.property,
   .token.regex,
   .token.entity {
-    color: ${theme.color.syntaxAttributeName};
+    color: ${props => props.theme.syntaxAttributeName};
     font-weight: normal;
   }
 
   .token.directive.tag .tag {
     background: transparent;
-    color: ${theme.color.syntaxPunctuation};
+    color: ${props => props.theme.syntaxPunctuation};
   }
 
   .line-numbers .line-numbers-rows {
-    border-right-color: ${theme.color.syntaxLineNumberBorder};
+    border-right-color: ${props => props.theme.syntaxLineNumberBorder};
   }
 
   .line-numbers-rows > span:before {
-    color: ${theme.color.syntaxClassName};
+    color: ${props => props.theme.syntaxClassName};
   }
 
   .line-highlight {
-    background: ${theme.color.syntaxHighlightLine};
+    background: ${props => props.theme.syntaxHighlightLine};
   }
 
   p code,
   li code {
-    font-family: "Inconsolata", monospace;
-    font-size: ${theme.font._12.size};
-    line-height: ${theme.font._12.size};
-    border: solid 1px ${theme.color.border};
+    font-family: "Source Code Pro", monospace;
+    font-size: ${symbols.font._12.size};
+    line-height: ${symbols.font._12.size};
+    border: solid 1px ${props => props.theme.border};
     border-radius: 6px;
-    padding: ${theme.spacing._2};
+    padding: ${symbols.spacing._2};
   }
 `;
 
@@ -254,12 +257,12 @@ const Layout = styled.default.div`
 `;
 
 const Content = styled.default.div`
-  padding: ${theme.spacing._16};
+  padding: ${symbols.spacing._16};
   max-width: 768px;
   margin: 0 auto;
 
-  @media (min-width: ${theme.media.tablet}) {
-    padding: ${theme.spacing._32};
+  @media (min-width: ${symbols.media.tablet}) {
+    padding: ${symbols.spacing._32};
   }
 `;
 
@@ -280,20 +283,24 @@ export default class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <Container>
-        <GlobalStyles />
-        <MDXProvider components={components}>
-          <Layout>
-            <Head>
-              <title>Joseph Luck - Product Engineer</title>
-            </Head>
-            <Navigation />
-            <Content>
-              <Component {...pageProps} />
-            </Content>
-          </Layout>
-        </MDXProvider>
-      </Container>
+      <ThemeProvider theme={defaultTheme}>
+        <Container>
+          <>
+            <GlobalStyles />
+            <MDXProvider components={components}>
+              <Layout>
+                <Head>
+                  <title>Joseph Luck - Product Engineer</title>
+                </Head>
+                <Navigation />
+                <Content>
+                  <Component {...pageProps} />
+                </Content>
+              </Layout>
+            </MDXProvider>
+          </>
+        </Container>
+      </ThemeProvider>
     );
   }
 }

@@ -35,13 +35,17 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <link
+          {/* <link
             type="text/css"
             rel="stylesheet"
             href="https://rsms.me/inter/inter-ui.css"
+          /> */}
+          <link
+            href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700&display=swap"
+            rel="stylesheet"
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Inconsolata"
+            href="https://fonts.googleapis.com/css?family=Source+Code+Pro"
             rel="stylesheet"
           />
           {this.props.styles}
