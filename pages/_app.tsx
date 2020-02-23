@@ -56,7 +56,7 @@ const GlobalStyles = styled.createGlobalStyle`
   body {
     background-color: ${props => props.theme.background};
     color: ${props => props.theme.text};
-    font-weight: ${symbols.fontWeight._300};
+    font-weight: ${symbols.fontWeight._400};
     font-display: fallback;
     font-size: 18px;
     line-height: 1.5em;
