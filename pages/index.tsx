@@ -26,7 +26,7 @@ export default function() {
         👋 I'm a product engineer based in London.
       </HeadingTwo>
       <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
-        Senior front-end engineer at{" "}
+        Building banks at{" "}
         <a href="https://www.wearebo.co.uk/" target="_blank" rel="noopener">
           Bó
         </a>
