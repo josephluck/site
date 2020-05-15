@@ -1,0 +1,43 @@
+# Safe side effects
+
+I'm a user interface developer. Typically this means that I spend a lot of time dealing with _side effects_, for example, reading in a user input from a form, requesting data from a back-end service or displaying some dynamic data on a page or application. Side effects are inherently dangerous though. For example, if the user enters some incorrect information, the backend service returns something unexpected or we need to chain a series of asynchronous tasks together of which any can fail, the user interface and system needs to be robust enough to deal with it.
+
+## Imperative
+
+Normally I see code along the lines of this:
+
+```typescript
+// Stub API..
+const api = {
+  fetchData: async () => "Hey.."
+};
+
+let cachedData: string | null = null;
+
+const fetchDataIfNotFetched = async () => {
+  if (cachedData) {
+    return cachedData;
+  }
+  cachedData = await api.fetchData();
+  return cachedData;
+};
+```
+
+At first glance there's nothing really that bad about this.. but what if our requirements change?
+
+```typescript
+// Stub API..
+const api = {
+  fetchData: async () => "Hey.."
+};
+
+let cachedData: string | null = null;
+
+const fetchDataIfNotFetched = async () => {
+  if (cachedData) {
+    return cachedData;
+  }
+  cachedData = await api.fetchData();
+  return cachedData;
+};
+```
