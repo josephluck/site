@@ -1,0 +1,37 @@
+# Tools that empower
+
+Fundamentally, software engineering is about problem solving using technology. Typically this means modelling a problem domain using programming languages, patterns, libraries and abstractions that enable groups of developers to reason about the problem in a way that delivers value for it's intended purpose. In this post I'll be exploring how the choice of abstraction plays a big part in focusing on the problem.
+
+## Cognitive effort
+
+The brain has a limited capacity in which it can spend on tasks . There are several stages of skill acquisition starting with the _highly cognitive_ categorised by frequent error and the need for regular feedback. For example, learning a new programming language takes a lot of cognitive effort as an engineer is required to think deeply about the syntax, patterns and structure of the code in order to solve even the most simple problem. One method of enabling fast and contextual feedback for a particular type of error is by leveraging static type systems whereby trivial errors such as typos or data type mismatches are offloaded from the brain to the compiler, releasing more cognitive capacity to spend on the problem domain.
+
+_Associative cognitive_ skill development stage is achieved through continued practise, errors become less frequent and feedback is less important. Less cognitive effort is required on the mechanics of the skill itself and therefore it's easier to think at a higher level about the problem domain, leading to more efficient, well structured and better performing solutions as a whole.
+
+The last stage of cognitive effort is the _autonomous_ level whereby little to no cognitive effort is spent on the skill itself and cognitive effort is spent almost exclusively on solutionising the problem. Think about walking, reading or writing - when performing these activities, little to no cognitive effort is required, it just happens whilst thinking at a higher level of abstraction; the desired outcome.
+
+## Offloading cognitive effort
+
+As software engineers, we are intimately familiar with these stages of skill development - we discover, learn and write new tools, patterns and abstractions frequently. Depending on the size and our own skill level, we progress through the cognitive skill levels at different paces. However, there are some guiding principles we can use to elevate our progression through to mastery.
+
+One key aspect of choosing what tools to use is how abstract they are. This is what makes the difference between learning a language like Assembly vs Python so profound. Choosing a higher level language such as Python has many benefits that make it the better choice over Assembly for many categories of problem. One example is memory management; typically a very difficult problem to solve when managing memory manually, it's one more thing to need to think about when writing the program. Python abstracts this away from the developer, affording more cognitive space to focus on the business problem.
+
+Similarly the surface area of the abstraction plays a big part in how concise and productive the team can become. For example, languages such as C++ are often criticised for having an enormous syntactical surface area that makes it taxing for the developer - more cognitive effort is spent on remembering and recalling syntax when writing and reading code as apposed to a language such as Clojure whose terse syntax affords good re-usability and simplicity.
+
+## Building trust in to the system
+
+Another crucial aspect of building good software is trust, and trust can be built into the system by choosing tools, libraries and patterns that increase trust and safety. For example, I shouldn't have to worry about the consequences of loosing work if my computer breaks - version control is a good solution to this. Similarly, it would be beneficial if I didn't have to spend time thinking about whether my servers are online - containerisation and fault-tolerant infrastructure is a good solution to this and allows me to focus more time and energy on delivering business value.
+
+Inside the code, I can choose to implement static type systems to enable safe and efficient refactoring, leading to less technical debt and bugs caused by regressions. I can choose to implement tests to increase my confidence in changes to the code made over time. I can pick patterns such as event-sourcing to facilitate changes to my domain model in response to changes in business requirements without having to think about the scary consequences of data loss.
+
+In addition to the concrete benefits, building trust in to the system has a positive effect on the ways in which groups of software engineers collaborate with one another. For example, picking a battle-tested front-end framework such as React affords high confidence and trust that the likelihood of encountering insurmountable problems is small; it's a tool that has been used to build some of the most complex applications already.
+
+## Doing less with more
+
+Occams Razor states that the simplest solution is often the correct one, and this is certainly something that applies to software engineering. This is the reason why paradigms such as functional programming are becoming popular - there are constraints introduced by the system that encourage structuring programs in a pure and composable way. Often constraints such as these force principles that further reduce cognitive load once the principles become autonomous and second-nature.
+
+One of React's founding principles is that the view is a pure function of state. This simple principle yields a deliberate separation between the notion of state, side effects and output which encourages good programming principles more generally; for example, it's easier to refactor and improve code if it's state and side effects are loosely coupled.
+
+## Wrapping up
+
+We've explored how being intentional around the languages, tools, patterns and libraries we choose can have a profound impact on our cognitive load, and consequently our ability to deliver business value as software engineers. Remember Occams Razor, often the simplest solution is the correct one.
