@@ -3,17 +3,17 @@ import {
   HeadingOne,
   HeadingFour,
   HeadingTwo,
-  Paragraph
+  Paragraph,
 } from "../components/base";
 import styled from "styled-components";
 import { symbols } from "../components/theme";
 
 const Email = styled(HeadingFour)`
-  color: ${props => props.theme.linkTertiary}
+  color: ${(props) => props.theme.linkTertiary}
   font-weight: normal;
 `;
 
-export default function() {
+export default function () {
   return (
     <>
       <HeadingOne style={{ marginBottom: symbols.spacing._16 }}>
@@ -26,9 +26,9 @@ export default function() {
         👋 I'm a product engineer based in London.
       </HeadingTwo>
       <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
-        Building banks at{" "}
-        <a href="https://www.wearebo.co.uk/" target="_blank" rel="noopener">
-          Bó
+        Building a bank at{" "}
+        <a href="https://www.mettle.co.uk/" target="_blank" rel="noopener">
+          Mettle
         </a>
         . Previously lead front-end engineer at{" "}
         <a href="https://fantastec-swap.io/" target="_blank" rel="noopener">
