@@ -1,4 +1,4 @@
-import { Gif } from "../../components/gif";
+import { Image } from "../../components/image";
 
 # 135 years of work at your fingertips
 
@@ -16,7 +16,7 @@ As Internote is a side-project, I'm free to design and build features that I per
 
 I wanted to integrate the dictionary in to the product and allow it to be accessible as easily as possible.
 
-<Gif src="../../static/internote/dictionary.gif" />
+<Image src="../../static/internote/dictionary.gif" />
 
 ## The experience
 
@@ -34,7 +34,7 @@ Once the user journey and experience is designed, I move on to the visuals. Inte
 
 The part that took the longest to design was where the dictionary results would display. I had two major options. The first being a pop-over that displays close to the selected word. This is the option that OSX & iOS use, however since the primary control for initiating Internote's dictionary is towards the bottom of the screen, I thought it would be strange for the user to move their attention to the bottom of the screen, and then back up to the word they selected to see the results. I went for the second major option, a tray that appears near the button.
 
-<Gif src="../../static/internote/dictionary2.gif" />
+<Image src="../../static/internote/dictionary2.gif" />
 
 The second part that took a while to design was what to show to the user when the results are loading. I'm not a massive fan of loading spinners and have tried to avoid them in this project where I can. I quite like placeholder elements, or skeleton screens as they are sometimes known. This technique worked particularly well for this feature as the skeleton screen let's the user know where the results will appear when they are ready and the user becomes familiar with the layout ahead of time. The animation used on the expanding tray in combination with the skeleton screen gives the user a sense of perceived speed and makes the loading feel quicker.
 
@@ -48,7 +48,7 @@ Internote is a serverless application, so when the request from the front-end co
 
 ## The result
 
-<Gif src="../../static/internote/dictionary3.gif" />
+<Image src="../../static/internote/dictionary3.gif" />
 
 I'm really pleased with how the dictionary feature turned out, and it only took a few evenings to create thanks to the well documented Oxford Dictionary API and the tech-stack I have used to build Internote in.
 

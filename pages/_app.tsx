@@ -43,7 +43,7 @@ const components = {
   strong: ({ children }) => <Base.Strong>{children}</Base.Strong>,
   blockquote: ({ children }) => <Base.BlockQuote>{children}</Base.BlockQuote>,
   code: ({ children }) => <Base.Code>{children}</Base.Code>,
-  li: ({ children }) => <Base.ListItem>{children}</Base.ListItem>
+  li: ({ children }) => <Base.ListItem>{children}</Base.ListItem>,
 };
 
 const GlobalStyles = styled.createGlobalStyle`
@@ -54,8 +54,8 @@ const GlobalStyles = styled.createGlobalStyle`
   }
   html,
   body {
-    background-color: ${props => props.theme.background};
-    color: ${props => props.theme.text};
+    background-color: ${(props) => props.theme.background};
+    color: ${(props) => props.theme.text};
     font-weight: ${symbols.fontWeight._400};
     font-display: fallback;
     font-size: 18px;
@@ -85,19 +85,19 @@ const GlobalStyles = styled.createGlobalStyle`
     line-height: ${symbols.font.paragraph.lineHeight};
   }
   a {
-    color: ${props => props.theme.link};
+    color: ${(props) => props.theme.link};
     transition: ${symbols.transition.standard};
     text-decoration: none;
     &:hover {
-      color: ${props => props.theme.linkHover};
+      color: ${(props) => props.theme.linkHover};
     }
   }
 
   code[class*="language-"],
   pre[class*="language-"] {
-    color: ${props => props.theme.syntaxPunctuation};
-    background: ${props => props.theme.syntaxBackground};
-    border: solid 1px ${props => props.theme.syntaxBorder};
+    color: ${(props) => props.theme.syntaxPunctuation};
+    background: ${(props) => props.theme.syntaxBackground};
+    border: solid 1px ${(props) => props.theme.syntaxBorder};
     border-radius: 6px;
     padding: ${symbols.spacing._8};
     font-family: "Source Code Pro", monospace;
@@ -123,13 +123,13 @@ const GlobalStyles = styled.createGlobalStyle`
   pre[class*="language-"] ::-moz-selection,
   code[class*="language-"]::-moz-selection,
   code[class*="language-"] ::-moz-selection {
-    background: ${props => props.theme.syntaxSelectionBg};
+    background: ${(props) => props.theme.syntaxSelectionBg};
   }
   pre[class*="language-"]::selection,
   pre[class*="language-"] ::selection,
   code[class*="language-"]::selection,
   code[class*="language-"] ::selection {
-    background: ${props => props.theme.syntaxSelectionBg};
+    background: ${(props) => props.theme.syntaxSelectionBg};
   }
 
   /* Code blocks */
@@ -139,14 +139,14 @@ const GlobalStyles = styled.createGlobalStyle`
 
   :not(pre) > code[class*="language-"] {
     padding: ${symbols.spacing._4};
-    border: 1px solid ${props => props.theme.border};
+    border: 1px solid ${(props) => props.theme.border};
   }
 
   .token.comment,
   .token.prolog,
   .token.doctype,
   .token.cdata {
-    color: ${props => props.theme.syntaxComment};
+    color: ${(props) => props.theme.syntaxComment};
     font-style: italic;
   }
 
@@ -155,12 +155,12 @@ const GlobalStyles = styled.createGlobalStyle`
   }
 
   .token.string {
-    color: ${props => props.theme.syntaxString};
+    color: ${(props) => props.theme.syntaxString};
   }
 
   .token.punctuation,
   .token.operator {
-    color: ${props => props.theme.syntaxPunctuation};
+    color: ${(props) => props.theme.syntaxPunctuation};
     font-weight: normal;
   }
 
@@ -171,7 +171,7 @@ const GlobalStyles = styled.createGlobalStyle`
   .token.variable,
   .token.constant,
   .token.inserted {
-    color: ${props => props.theme.syntax4};
+    color: ${(props) => props.theme.syntax4};
   }
 
   .token.atrule,
@@ -181,18 +181,18 @@ const GlobalStyles = styled.createGlobalStyle`
   .language-json .token.boolean,
   .language-json .token.number,
   code[class*="language-css"] {
-    color: ${props => props.theme.syntaxKeyword};
+    color: ${(props) => props.theme.syntaxKeyword};
     font-weight: ${symbols.fontWeight._700};
   }
 
   .token.deleted,
   .language-autohotkey .token.tag {
-    color: ${props => props.theme.syntaxDeleted};
+    color: ${(props) => props.theme.syntaxDeleted};
   }
 
   .token.selector,
   .language-autohotkey .token.keyword {
-    color: ${props => props.theme.syntaxKeyword};
+    color: ${(props) => props.theme.syntaxKeyword};
   }
 
   .token.important,
@@ -204,41 +204,45 @@ const GlobalStyles = styled.createGlobalStyle`
     font-style: italic;
   }
 
+  .token.comment {
+    white-space: pre-wrap;
+  }
+
   .token.class-name,
   .token.function,
   .language-json .token.property {
-    color: ${props => props.theme.syntaxClassName};
+    color: ${(props) => props.theme.syntaxClassName};
     font-weight: ${symbols.fontWeight._700};
   }
 
   .token.tag,
   .token.selector {
-    color: ${props => props.theme.syntaxTag};
+    color: ${(props) => props.theme.syntaxTag};
   }
 
   .token.attr-name,
   .token.property,
   .token.regex,
   .token.entity {
-    color: ${props => props.theme.syntaxAttributeName};
+    color: ${(props) => props.theme.syntaxAttributeName};
     font-weight: normal;
   }
 
   .token.directive.tag .tag {
     background: transparent;
-    color: ${props => props.theme.syntaxPunctuation};
+    color: ${(props) => props.theme.syntaxPunctuation};
   }
 
   .line-numbers .line-numbers-rows {
-    border-right-color: ${props => props.theme.syntaxLineNumberBorder};
+    border-right-color: ${(props) => props.theme.syntaxLineNumberBorder};
   }
 
   .line-numbers-rows > span:before {
-    color: ${props => props.theme.syntaxClassName};
+    color: ${(props) => props.theme.syntaxClassName};
   }
 
   .line-highlight {
-    background: ${props => props.theme.syntaxHighlightLine};
+    background: ${(props) => props.theme.syntaxHighlightLine};
   }
 
   p code,
@@ -246,7 +250,7 @@ const GlobalStyles = styled.createGlobalStyle`
     font-family: "Source Code Pro", monospace;
     font-size: ${symbols.font._12.size};
     line-height: ${symbols.font._12.size};
-    border: solid 1px ${props => props.theme.border};
+    border: solid 1px ${(props) => props.theme.border};
     border-radius: 6px;
     padding: ${symbols.spacing._2};
   }
@@ -275,7 +279,7 @@ export default class MyApp extends App {
     if (window && (window as any).gtag) {
       (window as any).gtag("config", GA_CODE, {
         page_title: document.title,
-        page_path: url
+        page_path: url,
       });
     }
   };

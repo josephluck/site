@@ -1,4 +1,4 @@
-import { Gif } from "../../components/gif";
+import { Image } from "../../components/image";
 
 # Animating width in a React Hooks world
 
@@ -8,7 +8,7 @@ I'm working on a side-project at the moment called Internote. Internote is a dis
 
 I've blogged about how I designed a [unique approach to tooltips](/blog/a-unique-approach-to-tooltips) but I didn't talk much about how I went about building the animation that powers them.
 
-<Gif src="/static/internote/tooltips2.gif" />
+<Image src="/static/internote/tooltips2.gif" />
 
 As you can see from the gif above, there's a nice width animation that happens when the user hovers over the icon to reveal the tooltip. Each tooltip is a different width, and I didn't want to hard-code the width as if I change the font-size, spacing, or inner content over time, it wouldn't be a robust solution. I needed to calculate the inner content width at run-time and animate the width value using a transition.
 
@@ -27,7 +27,7 @@ import * as React from "react";
 import { styled } from "../theming/styled";
 
 const Wrapper = styled.div`
-  cursor: ${props => (props.onClick ? "pointer" : "default")};
+  cursor: ${(props) => (props.onClick ? "pointer" : "default")};
 `;
 
 const InnerWrap = styled.div`
@@ -64,7 +64,7 @@ export class CollapseWidthOnHover extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isHovering: false
+      isHovering: false,
     };
     this.collapsedContentRef = React.createRef();
     this.innerWrapRef = React.createRef();
@@ -230,7 +230,7 @@ export function CollapseWidthOnHover({
   children,
   onClick,
   collapsedContent,
-  forceShow
+  forceShow,
 }: {
   children: (renderProps: RenderProps) => React.ReactNode;
   collapsedContent: React.ReactNode;
@@ -308,7 +308,7 @@ import * as React from "react";
 import { styled } from "../theming/styled";
 
 const Wrapper = styled.div`
-  cursor: ${props => (props.onClick ? "pointer" : "default")};
+  cursor: ${(props) => (props.onClick ? "pointer" : "default")};
 `;
 
 const InnerWrap = styled.div`
@@ -331,7 +331,7 @@ export function CollapseWidthOnHover({
   children,
   onClick,
   collapsedContent,
-  forceShow
+  forceShow,
 }: {
   children: (renderProps: RenderProps) => React.ReactNode;
   collapsedContent: React.ReactNode;
