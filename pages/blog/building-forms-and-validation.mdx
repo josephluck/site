@@ -1,0 +1,86 @@
+# Building forms and validation
+
+In this post I'll be detailing how I approached form state management and validation for a side-project of mine, [Urban Jungle](https://github.com/josephluck/urban-jungle). Typically in side projects, I like to solve problems in a novel way, ways that I would not usually have the fortune to explore in my professional day job as a software engineer. Often by exploring new solutions, I further my understanding of the problem in a way that generalises to solutions I _do_ need to explore in my day to day.
+
+## What's the problem we're solving?
+
+Urban Jungle doesn't have _that many_ forms, however I wanted to build an abstraction in React that would allow me to define a data schema in TypeScript and to be able to build state management and validation on top of that well-defined schema in a way that afforded great editor auto completion and full type safety.
+
+I also wanted a clear separation of concerns, i.e. I didn't want to litter my business logic with form state management too much (though the abstraction should allow the consumer to manually change values and internal state where required) - for that reason I wanted a separate library to deal with form state management that I could use independently from the rest of the logic of the feature.
+
+I also explored a purely functional and strongly typed approach with Urban Jungle and leveraged the amazing [fp-ts](https://github.com/gcanti/fp-ts) library to do so. For this reason, I'm using fp-ts inside the implementation of the form library. Apologies if you're not massively familiar with fp-ts or functional programming in general, I hope that the ideas I'm showing here will have merit despite the implementation details of the actual code demonstrated.
+
+## What does it look like?
+
+Whenever I build an abstraction like this, I always try to start with what the requirements are (See above) and then the external API will look like. Usually I'll go through a few different ideas before I settle on one, but I usually put code to editor to "prototype" the external API before I implement the internals. Enough talk though, here's what I came up with:
+
+```typescript
+// we'll define a schema of our form fields as a simple object type
+type Fields = {
+  name: string; // a simple scalar value
+  nickname: string;
+  location: string;
+  avatar: ImageModel; // application-specific data types should be supported too, i.e. we'll have a CameraField component that produces an `ImageModel`.
+};
+
+type ImageModel = {
+  uri: string;
+  width: number;
+  height: number;
+};
+
+const {
+  submit, // submit should run the validation and let the caller know whether everything's valid or not
+  registerTextInput, // a function that binds a text field to the form. Provides state management for the field as well as error, touched state and any other information the field needs. MUST be strongly typed to the schema i.e. `registerTextInput('name')` works, but `registerTextInput('nameee')` and `registerTextInput('avatar')` throw compile time errors.
+  registerSinglePickerInput,
+  registerCameraField, // here, only keys in the schema that match the camera field's value requirements can be registered, i.e. `registerCameraField('avatar')` will work, whereas `registerCameraField('location')` will not.
+} = useForm<Fields>(
+  // the first argument will be the default values for the form
+  {
+    name: "",
+    nickname: "",
+    location: "",
+    avatar: {
+      uri: "",
+      width: 0,
+      height: 0,
+    },
+  },
+  // the second argument will be our validation constraints for each field. We'll use Valley to actually implement validation: https://github.com/josephluck/valley
+  {
+    name: [constraints.isRequired, constraints.alphaNumeric], // multiple constraints are supported
+    nickname: [constraints.atLeastLength(5)],
+    location: [], // optional fields are supported
+    avatar: [constraints.isValidImageModel],
+  }
+);
+
+const onSubmit = () => {
+  // validation uses fp-ts
+  pipe(
+    TE.fromEither(submit()),
+    TE.chain((values) => save(values)) // submit returns the values of the form for ergonomics
+  );
+};
+
+return (
+  <FormContainer>
+    <TextField label="Name" {...registerTextInput("name")} />
+    <TextField label="Nickname" {...registerTextInput("nickname")} />
+    <PickerField
+      label="Location"
+      multiValue={false}
+      options={locations.map((value) => ({
+        value,
+        label: location,
+      }))}
+      {...registerSinglePickerInput("location")}
+    />
+    <CameraField
+      label="Picture"
+      type="plant"
+      {...registerCameraField("avatar")}
+    />
+  </FormContainer>
+);
+```
