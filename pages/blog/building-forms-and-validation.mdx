@@ -13,13 +13,13 @@ Urban Jungle doesn't have _that many_ forms, however I wanted to build an abstra
 
 I also wanted a clear separation of concerns, i.e. I didn't want to litter my business logic with form state management too much (though the abstraction should allow the consumer to manually change values and internal state where required) - for that reason I wanted a separate library to deal with form state management that I could use independently from the rest of the logic of the feature.
 
-I also explored a purely functional and strongly typed approach with Urban Jungle and leveraged the amazing [fp-ts](https://github.com/gcanti/fp-ts) library to do so. For this reason, I'm using fp-ts inside the implementation of the form library. Apologies if you're not massively familiar with fp-ts or functional programming in general, I hope that the ideas I'm showing here will have merit despite the implementation details of the actual code demonstrated.
+I also explored a purely functional and strongly typed approach with Urban Jungle and leveraged the amazing [fp-ts](https://github.com/gcanti/fp-ts) library for the app, and for the form library. Apologies if you're not massively familiar with fp-ts or functional programming in general, I hope that the ideas I'm showing here will have merit irrespective of the actual implementation.
 
 ## What does it look like?
 
-Whenever I build an abstraction like this, I always try to start with what the requirements are (see above) and then what the external API will look like. Usually I'll go through a few different ideas before I settle on one, but I usually put code to editor to "prototype" the external API before I implement the internals.
+Whenever I build an abstraction like this, I always list out the requirements and then sketch out what the external API should look like. Usually I'll go through a few iterations before settling on the final API, and I do this inside my editor before I implement the internals.
 
-Enough talk though, here's a quick snapshot of what I imagined the use of the library to be like (I've cheated here and actually recorded myself building a new form using the library post-facto!):
+That's more than enough talk - here's a quick video showcasing what it's like to use of the library to build a form:
 
 <Video src="/static/use-form/use-form.mp4" />
 
@@ -92,7 +92,7 @@ return (
 );
 ```
 
-And here's the same code with comments explaining a few bits and pieces:
+Here's the same code with inline comments explaining a few bits and pieces:
 
 ```typescript
 // we'll define a schema of our form fields as a simple object type
@@ -165,13 +165,13 @@ return (
 );
 ```
 
-There are a few key things I would like to point out about this implementation:
+There are a few key things I would like to point out about the libraries use:
 
 **Type safety**
 
-I focused on ensuring that the usage of the `useForm` hook is _fully_ type safe. And I don't mean simply that `useForm` returns type safe functions and values (i.e. `type RegisterTextInput = (key: string) => TextFieldProps`), but rather the type safety _knows about the schema_ (i.e. `type RegisterTextInput = (key: StringKeys<Fields>) => TextFieldProps`) - no compromises!.
+I focused on ensuring that the `useForm` hook is _fully_ type safe. And I don't just mean that `useForm` returns type safe functions and values (i.e. `type RegisterTextInput = (key: string) => TextFieldProps`), but rather the type system _knows about the schema passed to the hook_ (i.e. `type RegisterTextInput = (key: StringKeys<Fields>) => TextFieldProps`).
 
-I'm a strong believer that leveraging the type system to this extent greatly reduces the number of bugs and inconsistencies that develop in a code base, allows for much easier and safer refactoring, as well as serving as a form of documentation for developers - not to mention the editor autocompletion which we'll get to later on.
+I'm a strong believer that leveraging the type system to this extent greatly reduces the number of bugs and inconsistencies that build up over time in a code base in addition to allowing for much easier and safer refactoring, as well as serving as a form of documentation for developers - not to mention the editor autocompletion which we'll get to later on.
 
 Here's an example of a type error when using an incompatible key when registering a field:
 
@@ -181,13 +181,13 @@ Here's an example of a type error when using an incompatible key when registerin
 
 **Developer experience**
 
-With everything I build, I strive to deliver the best developer experience. There are many principles that I value when it comes to this, however one that I find incredibly valuable is leveraging TypeScript's ability to provide editor auto completion. As shown in the video above, users of this library are able to leverage very good editor auto completion driven by the schema when registering inputs and using return values of the library.
+With everything I build, I strive to deliver the best developer experience I can. There are many different and important things that make for a great developer experience, however one that I find incredibly useful is to leverage TypeScript's ability to provide editor auto completion for domain specific types. I stove to implement `useForm` leveraging strong types as much as possible, to help with editor autocompletion.
 
 Here's a couple of examples of editor autocompletion when registering a image fields:
 
 <Image src="/static/use-form/editor-autocompletion.png" />
 
-> Because we're so strongly typed, vscode gives us a choice of keys that are compatible for registration with the `<CameraField />`
+> Because `useForm` is so strongly typed, vscode gives us a choice of keys that are compatible for registration with the `<CameraField />`
 
 And another example for string fields:
 
@@ -197,29 +197,29 @@ And another example for string fields:
 
 **Separation of concerns**
 
-The form state management as well as validation are grouped together in a single concern (and a single place) allowing the state and validation to be managed independently from the UI components. As an example, the `<TextField />` has no knowledge of the internal workings of the form state management or validation, all it cares about is receiving a value, letting the parent component know when the value changes (as well as an error prop for displaying error messages). This separation of concerns means that the form state management and the `<TextField />` component can change independently, as they have no direct dependency on one another (other than the facility to spread props over to "register" a component, but this is done through the type system rather than being a tight runtime coupling of the two).
+The form state management (and validation) are grouped together in a single concern and is managed independently from the UI components. As an example, the `<TextField />` has no knowledge of the internal workings of the library, all it cares about is receiving a value and letting the parent component know when the value changes (as well as displaying error messages). This separation of concerns means that the form state management and the `<TextField />` component can change independently, as they have no direct dependency on one another (other than the facility to spread props over a field component to "register" register it, however this is simply a useful ergonomic shortcut, not a core part of the library).
 
-In addition, the form state management and validation are completely separate to the business logic of what happens when the data is actually used (i.e. what happens when the form is submitted). The library provides a `submit` function that simply runs validation and provides the current values of the form fields, but it does not manage actually doing anything with the data, loading states or anything else. It's carefully and intentionally scoped in it's responsibility to simply manage form state and validation really well, and nothing more.
+In addition, the form state management and validation are completely separate to the business logic of what happens when the data is actually used (i.e. what happens when the form is submitted). The library provides a `submit` function that simply runs validation and provides the current values of the form fields, but it does not actually do anything with the data, not does it provide loading states or anything else. It's intentionally scoped to manage form state and validation really well and nothing more.
 
 **Constraints**
 
 The final thing I would like to point out is that not only are the fields themselves fully type safe to the schema, but the constraints are too.
 
-This library uses Valley (a validation library I wrote) for it's validation, which expects strongly-typed constraint functions. These strong types are fed through from the schema such that it's only permitted by the compiler to provide a string constraint to a constraint configuration for a schema key that is a string for example.
+The library uses [Valley](https://github.com/josephluck/valley) (a validation library I wrote) for it's validation, which expects strongly-typed constraint functions. These strong types are fed through from the schema such that it's only permitted by the compiler to provide string constraints for a schema key whose value a string.
 
-Again, I find this to be a really important feature, as it allows the user to be confident that they are configuring their form correctly by ensuring that only compatible constraints are permitted be used against the schema.
+I find this to be a really important part of both the developer experience and the safety afforded by the library as it allows the developer to be confident that they are configuring their form correctly by ensuring that only compatible constraints are permitted be used against the strongly typed schema.
 
 Here's an example of the type error when using an incompatible number constraint against a string field:
 
 <Image src="/static/use-form/invalid-constraint.png" />
 
-> The library enforces the constraints for the schema to be compatible with the value types. Here it's complaining because we've attempted to use a constraint that operates on numbers against the `name` key in the schema, which is a string.
+> The library enforces the constraints for the schema to be compatible with the schema's values. Here we see a compile time error because we've uses a constraint that operates on numbers against the `name` key in the schema, which is a string - only string constraints are permitted.
 
 ---
 
 # The implementation
 
-Now we'll dive in to the implementation, which I will first show you and then attempt to explain key areas of interest:
+Now we'll dive in to the implementation, which I will show you first and then attempt to explain key areas of interest:
 
 ```typescript
 import { FieldConstraintsMap, makeValidator } from "@josephluck/valley/lib/fp";
@@ -512,25 +512,25 @@ const getInitialErrors = <Fs extends Record<string, any>>(
 
 ### How the types work
 
-The first thing I'd like to pull out is how the type safety works from the schema. You'll notice that there's a generic type argument to `useForm` which extends a `Record<string, any>` type. This type constraint means that the form hook only manages objects.
+The first thing I'd like to pull out is how the type safety works from the schema. You'll notice that there's a generic type argument to `useForm` which is constrained to a `Record<string, any>` type. This constraint ensures that the form hook only manages objects. The generic type argument can be inferred from the initial data argument, but it's advised to manually provide an explicit type.
 
-From the generic type, additional types are created such as `type StringKeys`, `type NumberKeys`, `type MultiPickerKeys` and `type CameraKeys`. These additional types are used in the registration functions to strongly type the name of the field that should be registered.
+Built up from the generic type, additional types are created such as `type StringKeys`, `type NumberKeys`, `type MultiPickerKeys` and `type CameraKeys`. These additional types are used in the registration functions to strongly type the name of the field that should be registered according to compatible keys in the schema.
 
 ## Registration functions
 
-One thing I quite like about this library is the ease in which you can bind values, callbacks, error states etc to a field. For example, `<TextField {...registerTextInput('name')} />` is all you need.
+One thing I quite like about this library is the ease in which you can bind values, callbacks, error states etc to a component. For example, `<TextField {...registerTextInput('name')} />` is all you need.
 
-The registration functions are typed to take a string key which is one of the strongly-typed keys from the schema that match the type of input, aka, `string` for `<TextField />` components, `number` for `<NumberField />` components, etc, and are expected to return an object of props that the respective component expects. You'll see the prop types imported at the top of the library.
-
-Unfortunately, it's for this very reason that this library cannot effectively be open-sourced, as the requirements for these registration functions are heavily dependent on the specifics of the internals of the components that use these registration functions.
+The registration functions are typed to take a key from the schema that matches the type of input, aka, `string` for `<TextField />` components via `registerTextInput()`, `number` for `<NumberField />` components (via `registerNumberInput()`), etc. The registration functions return an object of props that the respective component uses. In the libraries implementation, you'll notice the prop types are imported and are the return types of the registration functions.
 
 One of the great aspects of the registration functions is that if the requirements of the field component change, the compiler will let us know and we can ensure that the form state management conforms to what the components are expecting.
 
+Unfortunately, as the requirements for these registration functions are heavily dependent on the prop requirements of custom components, it's not viable to open source the library.
+
 ## Validation
 
-You'll notice a `doValidate` function that uses Valley's `makeValidator` factory function. Valley is a validation library I made, and I wanted to use it for Urban Jungle, however it would be trivial to swap out Valley for another validation library for example, `yup` would make a good choice.
+You'll notice a `doValidate` function that uses Valley's `makeValidator` factory function. Valley is a validation library I made (that I wanted to use for Urban Jungle), however it would be trivial to swap out Valley for another validation library. `yup` would make a good replacement.
 
-I chose to use Valley as it implements `fp-ts` compatible validation using `Either` and `TaskEither` which Urban Jungle uses heavily for controlling business logic.
+I chose to use Valley as it implements `fp-ts` compatible validation constraints requirements using `Either` and `TaskEither` which Urban Jungle uses heavily for controlling business logic in a pure and functional way.
 
 The bulk of the validation logic resides in the `validate` function which simply calls `doValidate` and sets errors in the state (if there are any).
 
