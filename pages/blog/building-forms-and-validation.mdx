@@ -169,9 +169,9 @@ There are a few key things I would like to point out about this implementation:
 
 **Type safety**
 
-I focused on ensuring that the usage of the `useForm` hook is _fully_ type safe. And I don't mean simply that `useForm` returns type safe functions and values (i.e `<TextField />` only supports managing strings, so it's only allowed to register keys using `registerTextInput()` from the schema whose values _are_ strings).
+I focused on ensuring that the usage of the `useForm` hook is _fully_ type safe. And I don't mean simply that `useForm` returns type safe functions and values (i.e. `type RegisterTextInput = (key: string) => TextFieldProps`), but rather the type safety _knows about the schema_ (i.e. `type RegisterTextInput = (key: StringKeys<Fields>) => TextFieldProps`) - no compromises!.
 
-I'm a strong believer that leveraging type systems to this extent greatly reduced the number of bugs and inconsistencies in a code base, as well as serving as a form of documentation for developers.
+I'm a strong believer that leveraging the type system to this extent greatly reduces the number of bugs and inconsistencies that develop in a code base, allows for much easier and safer refactoring, as well as serving as a form of documentation for developers - not to mention the editor autocompletion which we'll get to later on.
 
 Here's an example of a type error when using an incompatible key when registering a field:
 
