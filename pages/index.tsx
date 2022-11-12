@@ -27,7 +27,7 @@ export default function () {
       </HeadingTwo>
       <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
         Working on mobile and web design systems for undisclosed (under NDA).
-        Previously senior engineer at Mettle by Natwest. .
+        Previously senior engineer at Mettle by Natwest.
       </Paragraph>
       <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
         Passionate about design, user experience and functional programming.
