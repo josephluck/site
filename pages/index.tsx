@@ -26,15 +26,8 @@ export default function () {
         👋 I'm a product engineer based in London.
       </HeadingTwo>
       <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
-        Building a bank at{" "}
-        <a href="https://www.mettle.co.uk/" target="_blank" rel="noopener">
-          Mettle
-        </a>
-        . Previously lead front-end engineer at{" "}
-        <a href="https://fantastec-swap.io/" target="_blank" rel="noopener">
-          Fantastec
-        </a>
-        .
+        Working on mobile and web design systems for undisclosed (under NDA).
+        Previously senior engineer at Mettle by Natwest. .
       </Paragraph>
       <Paragraph style={{ marginBottom: symbols.spacing._16 }}>
         Passionate about design, user experience and functional programming.
