@@ -44,27 +44,27 @@ export default function () {
         </a>
         ,{" "}
         <a
-          href="https://josephluck.gitbooks.io/helix/"
+          href="https://github.com/josephluck/urban-jungle" 
           target="_blank"
           rel="noopener"
         >
-          Helix
+          Urban Jungle
         </a>
         ,{" "}
         <a
-          href="https://github.com/josephluck/sparkdown"
+          href="https://github.com/josephluck/machi"
           target="_blank"
           rel="noopener"
         >
-          Sparkdown
+          Machi
         </a>
-        , <a href="https://github.com/josephluck/keepies">Keepies</a>,{" "}
+        , <a href="https://github.com/josephluck/valley">Valley</a>,{" "}
         <a
-          href="https://github.com/josephluck/wtf"
+          href="https://github.com/josephluck/stately"
           target="_blank"
           rel="noopener"
         >
-          wtf.js
+          Stately
         </a>{" "}
         and{" "}
         <a href="https://github.com/josephluck" target="_blank" rel="noopener">
