@@ -63,8 +63,6 @@ const GlobalStyles = styled.createGlobalStyle`
     margin: 0;
     padding: 0;
     font-family: "Work Sans", sans-serif;
-    width: 100vw;
-    min-width: 100vw;
     @media (min-width: ${symbols.media.tablet}) {
       font-size: 20px;
     }

@@ -47,7 +47,7 @@ export const ContentParagraph = styled(Paragraph)`
 
 // NB: only applies to formatted code blocks i.e. ```[code]```
 export const Code = styled.code`
-  font-family: "Source Code Pro", monospace;
+  font-family: "Overpass Mono", monospace;
 `;
 
 export const Hr = styled.hr`

@@ -45,7 +45,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700"
+            href="https://fonts.googleapis.com/css?family=Overpass+Mono:400,700"
             rel="stylesheet"
           />
           {this.props.styles}
