@@ -101,7 +101,7 @@ export const Navigation = ({ className }: { className?: string }) => (
         <NavigationLink href="/blog">Blog</NavigationLink>
         <NavigationLink href="/resume">Resume</NavigationLink>
         {/* <NavigationLink href="/projects">Projects</NavigationLink> */}
-        <NavigationLink href="/references">References</NavigationLink>
+        <NavigationLink href="/recommendations">Recommendations</NavigationLink>
       </Links>
     </Inner>
   </Wrapper>
