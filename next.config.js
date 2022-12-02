@@ -11,6 +11,7 @@ const withMDX = require("@zeit/next-mdx")({
 module.exports = withTypescript(
   withCSS(
     withMDX({
+      target: 'serverless',
       pageExtensions: ["js", "jsx", "mdx"]
     })
   )

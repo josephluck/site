@@ -5,7 +5,7 @@
   "description": "",
   "scripts": {
     "start": "next",
-    "now-build": "next build && next export",
+    "now-build": "next build",
     "deploy": "now && now alias"
   },
   "repository": "git+https://github.com/josephluck/site.git",
