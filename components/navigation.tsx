@@ -8,7 +8,7 @@ const NavLink = styled.span<{ active: boolean }>`
   font-size: ${symbols.font._12.size};
   line-height: ${symbols.font._12.size};
   font-weight: ${symbols.fontWeight._500};
-  color: ${props =>
+  color: ${(props) =>
     props.active ? props.theme.linkHover : props.theme.linkTertiary};
   a {
     color: inherit;
@@ -20,10 +20,10 @@ const NavLink = styled.span<{ active: boolean }>`
 `;
 
 const Wrapper = styled.div`
-  background-color: ${props => props.theme.background};
+  background-color: ${(props) => props.theme.background};
   position: sticky;
   top: 0;
-  border-bottom: solid 1px ${props => props.theme.border};
+  border-bottom: solid 1px ${(props) => props.theme.border};
   display: flex;
   align-items: center;
   overflow: auto;
@@ -53,7 +53,7 @@ const Logo = styled.span`
   text-transform: uppercase;
   font-weight: ${symbols.fontWeight._700};
   letter-spacing: 2px;
-  color: ${props => props.theme.text};
+  color: ${(props) => props.theme.text};
   margin-right: ${symbols.spacing._8};
   font-family: "Source Code Pro", sans-serif;
   @media (min-width: ${symbols.media.tablet}) {
@@ -98,10 +98,12 @@ export const Navigation = ({ className }: { className?: string }) => (
         </Link>
       </LogoWrap>
       <Links>
-        <NavigationLink href="/blog">Blog</NavigationLink>
         <NavigationLink href="/resume">Resume</NavigationLink>
         {/* <NavigationLink href="/projects">Projects</NavigationLink> */}
         <NavigationLink href="/recommendations">Recommendations</NavigationLink>
+        <NavigationLink href="https://photography.josephluck.co.uk">
+          Photography
+        </NavigationLink>
       </Links>
     </Inner>
   </Wrapper>
